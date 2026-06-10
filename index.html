@@ -1,0 +1,3139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<title>Analisador SPED PISCOFINS</title>
+<style>
+:root{
+  --bg:#f5f7fa;--bg2:#ffffff;--fg:#1a202c;--fg2:#4a5568;--fg3:#718096;
+  --accent:#2b6cb0;--accent2:#3182ce;--accent3:#ebf8ff;
+  --ok:#38a169;--warn:#d69e2e;--err:#e53e3e;
+  --border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08);
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1a202c;--bg2:#2d3748;--fg:#f7fafc;--fg2:#e2e8f0;--fg3:#a0aec0;--accent:#63b3ed;--accent2:#4299e1;--accent3:#2a4365;--border:#4a5568;--shadow:0 1px 3px rgba(0,0,0,.3)}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;min-height:100vh}
+.container{max-width:1900px;margin:0 auto;padding:24px}
+header{text-align:center;margin-bottom:32px}
+header h1{font-size:28px;font-weight:600;color:var(--accent);margin-bottom:8px}
+header .subtitle{color:var(--fg3);font-size:14px}
+.dropzone{border:2px dashed var(--border);border-radius:10px;padding:24px 16px;text-align:center;background:var(--bg2);cursor:pointer;transition:.2s;position:relative}
+.dropzone:hover,.dropzone.dragover{border-color:var(--accent);background:var(--accent3)}
+.dropzone.dragover{transform:scale(1.01)}
+.dropzone.collapsed{padding:8px 16px;cursor:pointer}
+.dropzone.collapsed .dropzone-body{display:none}
+.dropzone.collapsed .file-list{display:none}
+.dropzone-toggle{position:absolute;top:8px;right:8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:12px;color:var(--fg3);line-height:1.4}
+.dropzone-toggle:hover{color:var(--accent);border-color:var(--accent)}
+.dropzone.collapsed .dropzone-toggle{position:static}
+.dropzone-collapsed-label{display:none;color:var(--fg3);font-size:13px;padding:4px 0}
+.dropzone.collapsed .dropzone-collapsed-label{display:inline}
+.dropzone-icon{font-size:32px;margin-bottom:6px}
+.dropzone-text{font-size:15px;font-weight:500;margin-bottom:4px}
+.dropzone-subtext{color:var(--fg3);font-size:12px}
+.dropzone-subtext button{background:none;border:none;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;padding:0}
+.dropzone-subtext button:hover{color:var(--accent2)}
+.dropzone-hint{color:var(--fg3);font-size:11px;margin-top:10px;padding:8px 12px;background:var(--accent3);border-radius:6px;line-height:1.5;text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
+.dropzone-hint code{background:var(--bg);padding:1px 6px;border-radius:3px;font-size:11px;color:var(--accent);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.file-list{margin-top:20px;text-align:left;max-width:600px;margin-left:auto;margin-right:auto}
+.file-list .file-item{display:flex;justify-content:space-between;padding:6px 12px;background:var(--accent3);border-radius:6px;margin-bottom:4px;font-size:13px}
+.file-summary{padding:12px 16px;background:var(--accent3);border-radius:8px;margin-bottom:8px;font-size:14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.file-summary:hover{background:var(--accent)}
+.file-summary-detail{margin-top:8px;padding:8px 12px;background:var(--bg2);border-radius:6px;font-size:12px;max-height:240px;overflow-y:auto}
+.file-summary-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:11px;line-height:1.4}
+.file-summary-table th,.file-summary-table td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--border)}
+.file-summary-table th{font-weight:600;color:var(--fg2);background:var(--bg);text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+.file-summary-table td:first-child{text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:500}
+.file-summary-table tr.section td{background:var(--accent3);font-weight:600;color:var(--fg);text-align:left;padding:6px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--accent)}
+.file-summary-table tr.section:first-child td{border-top:0}
+.file-summary-table tr.total td{background:var(--bg);font-weight:600;color:var(--accent);border-top:2px solid var(--accent);border-bottom:1px solid var(--border)}
+.file-summary-diag{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);color:var(--fg3);font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.file-summary-detail .file-item{padding:4px 8px;margin-bottom:2px;font-size:12px}
+.progress{background:var(--bg2);border-radius:8px;padding:20px;margin-top:24px;box-shadow:var(--shadow)}
+.progress-text{font-size:14px;color:var(--fg2);margin-bottom:10px;text-align:center}
+.progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .3s}
+.results{margin-top:32px;display:none}
+.results.active{display:block}
+.sticky-top{position:sticky;top:0;z-index:3;background:var(--bg);padding:8px 0 0 0;margin:0 0 16px 0;box-shadow:0 4px 8px -4px rgba(0,0,0,.06)}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--bg2);padding:16px;border-radius:8px;box-shadow:var(--shadow);margin-bottom:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1}
+.filters select,.filters input{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--fg);font:inherit;font-size:13px;min-width:120px}
+.filters input{min-width:100px}
+.filters button{padding:6px 12px;background:transparent;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:13px;color:var(--fg2)}
+.filters button:hover{background:var(--accent3);border-color:var(--accent);color:var(--accent)}
+.actions button{padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font:inherit;font-size:14px;font-weight:500;transition:.2s}
+.actions button:hover{background:var(--accent2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat-card{background:var(--bg2);padding:12px 14px;border-radius:8px;box-shadow:var(--shadow);border-left:4px solid var(--accent);position:relative;cursor:help}
+.stat-label{font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-value{font-size:14px;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
+.stat-value.money{color:var(--ok)}
+.stat-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a202c;color:#f7fafc;padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.6;min-width:240px;max-width:320px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.35);white-space:normal}
+.stat-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a202c}
+.stat-card:hover .stat-tooltip{opacity:1}
+.stat-tooltip-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#63b3ed;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #4a5568}
+.stat-tooltip-line{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.stat-tooltip-line .lbl{color:#a0aec0}
+.stat-tooltip-line .val{font-variant-numeric:tabular-nums;color:#f7fafc;font-weight:600;white-space:nowrap}
+.stat-tooltip-result{margin-top:6px;padding-top:6px;border-top:1px dashed #4a5568;display:flex;justify-content:space-between;font-weight:700}
+.stat-tooltip-result .val{color:#38a169;white-space:nowrap}
+.painel-section{background:var(--bg2);border-radius:8px;box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
+.painel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.painel-header h3{margin:0;font-size:16px;color:var(--fg)}
+.painel-toggle{background:var(--bg3);color:var(--fg);border:1px solid var(--border);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.painel-toggle:hover{background:var(--accent);color:#fff}
+.painel-row{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;max-width:100%;margin:0 auto 18px auto}
+.painel-row .painel-block{flex:1;margin:0;min-width:0;overflow-x:auto}
+.painel-row .painel-block:nth-child(2){margin-left:24px}
+.painel-block{max-width:920px;margin:0 auto 18px auto}
+.painel-block-title{font-size:12px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;padding:6px 10px;border-radius:4px;display:flex;align-items:center;gap:8px}
+.painel-block-title.entr{background:rgba(99,179,237,.15);color:var(--accent);border-left:3px solid var(--accent)}
+.painel-block-title.said{background:rgba(56,161,105,.15);color:var(--ok);border-left:3px solid var(--ok)}
+.painel-block-title .badge{font-size:10px;padding:2px 6px;border-radius:3px;background:var(--bg2);font-weight:600}
+.painel-table{border-collapse:collapse;font-size:11px;width:100%;min-width:0}
+.painel-table th,.painel-table td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+.painel-table th:first-child,.painel-table td:first-child{text-align:center;font-weight:700;color:var(--fg3);background:var(--bg3);width:60px}
+.painel-table thead th{color:var(--fg3);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+.painel-table th.col-fiscal{background:rgba(99,179,237,.18);color:var(--accent);border-bottom:2px solid var(--accent)}
+.painel-table th.col-contrib{background:rgba(56,161,105,.18);color:var(--ok);border-bottom:2px solid var(--ok)}
+.painel-table th.col-diff{background:rgba(214,158,46,.15);color:var(--warn);border-bottom:2px solid var(--warn);white-space:nowrap;min-width:220px}
+.painel-table td.col-fiscal{background:rgba(99,179,237,.05);color:var(--fg2)}
+.painel-table td.col-contrib{background:rgba(56,161,105,.05);color:var(--fg)}
+.painel-table td.col-diff{background:rgba(214,158,46,.05)}
+.painel-table tfoot td,.painel-table .total-row{background:var(--bg3);font-weight:700;border-top:2px solid var(--border)}
+.painel-table .negative{color:var(--err);font-weight:700}
+.painel-table .opportunity{color:var(--ok);font-weight:700}
+.painel-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;padding:12px;background:var(--bg3);border-radius:6px;max-width:920px;margin-left:auto;margin-right:auto}
+.painel-summary-item{display:flex;flex-direction:column;gap:2px;padding:8px;background:var(--bg2);border-radius:4px;border-left:3px solid var(--border);position:relative;cursor:help}
+.painel-summary-item.contrib{border-left-color:var(--ok)}
+.painel-summary-item.diff{border-left-color:var(--warn)}
+.painel-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a202c;color:#f7fafc;padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.6;min-width:280px;max-width:340px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.35);white-space:normal}
+.painel-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a202c}
+.painel-summary-item:hover .painel-tooltip{opacity:1}
+.painel-tooltip-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#63b3ed;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #4a5568}
+.painel-tooltip-line{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.painel-tooltip-line .lbl{color:#a0aec0}
+.painel-tooltip-line .val{font-variant-numeric:tabular-nums;color:#f7fafc;font-weight:600;white-space:nowrap}
+.painel-tooltip-line .val.aliq{color:#d69e2e}
+.painel-tooltip-result{margin-top:6px;padding-top:6px;border-top:1px dashed #4a5568;display:flex;justify-content:space-between;font-weight:700}
+.painel-tooltip-result .val{color:#38a169;white-space:nowrap}
+.painel-tooltip-result.warn .val{color:#d69e2e;white-space:nowrap}
+.painel-tooltip-result.err .val{color:#e53e3e;white-space:nowrap}
+.painel-summary-label{font-size:10px;color:var(--fg3);text-transform:uppercase;letter-spacing:.3px}
+.painel-summary-value{font-size:13px;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
+.painel-summary-value.warn{color:var(--warn)}
+.painel-summary-value.ok{color:var(--ok)}
+.painel-summary-value.err{color:var(--err)}
+.painel-oport{background:var(--bg3);padding:10px 12px;border-radius:6px;margin-top:12px;border-left:3px solid var(--accent);max-width:920px;margin-left:auto;margin-right:auto;font-size:12px}
+.painel-oport-label{font-size:12px;color:var(--fg3);margin-bottom:4px}
+.painel-oport-value{font-size:13px;font-weight:600}
+.table-wrapper{background:var(--bg2);border-radius:8px;box-shadow:var(--shadow);overflow:auto;max-height:70vh}
+table{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
+thead{position:sticky;top:0;background:var(--bg2);box-shadow:0 1px 0 var(--border);z-index:1}
+th{padding:8px 6px;text-align:left;font-weight:600;color:var(--fg2);border-bottom:2px solid var(--border);cursor:pointer;user-select:none;white-space:normal;word-break:break-word;line-height:1.2;vertical-align:bottom}
+th:hover{color:var(--accent)}
+th.sorted-asc::after{content:" \25B2";color:var(--accent)}
+th.sorted-desc::after{content:" \25BC";color:var(--accent)}
+td{padding:5px 5px;border-bottom:1px solid var(--border);user-select:text;cursor:text;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#col-filter-row th{padding:2px 3px;vertical-align:middle}
+#col-filter-row input,#col-filter-row select{width:100%;box-sizing:border-box;padding:2px 5px;border:1px solid transparent;border-radius:3px;background:var(--bg3);color:var(--fg);font-size:11px;outline:none;transition:border-color .15s}
+#col-filter-row select{cursor:pointer}
+#col-filter-row input:focus,#col-filter-row select:focus{border-color:var(--accent);background:var(--bg2)}
+td.chave{overflow:hidden;text-overflow:ellipsis}
+th .resizer{position:absolute;right:-4px;top:0;bottom:0;width:14px;cursor:col-resize;user-select:none;z-index:2}
+th .resizer::after{content:'';position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--border);border-radius:2px;transition:background .15s}
+th .resizer:hover::after{background:var(--accent2);width:3px}
+th{position:relative;overflow:visible}
+tbody tr:hover{background:var(--accent3)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.money{text-align:right;font-variant-numeric:tabular-nums;color:var(--ok);font-weight:500}
+td.center{text-align:center}
+.error{background:#fed7d7;color:#742a2a;padding:16px;border-radius:8px;border-left:4px solid var(--err);margin-top:16px}
+.empty{text-align:center;padding:40px;color:var(--fg3)}
+.hidden{display:none}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s}
+.modal-box{background:var(--bg2);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);padding:24px 28px;max-width:420px;width:90%;text-align:center;animation:scaleIn .2s}
+.modal-icon{font-size:32px;margin-bottom:12px}
+.modal-title{font-size:16px;font-weight:700;color:var(--fg);margin-bottom:8px}
+.modal-desc{font-size:13px;color:var(--fg2);line-height:1.5;margin-bottom:20px}
+.modal-actions{display:flex;gap:10px;justify-content:center}
+.modal-actions button{padding:8px 20px;border-radius:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--fg2);transition:.15s}
+.modal-actions button:hover{background:var(--bg3)}
+.modal-actions button.modal-confirm{background:var(--err);color:#fff;border-color:var(--err);font-weight:700}
+.modal-actions button.modal-confirm:hover{opacity:.85}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.summary-row{background:var(--accent3);font-weight:600}
+th.summary-row th, .summary-row td{border-top:2px solid var(--accent)}
+thead .summary-row td{border-top:none;border-bottom:2px solid var(--accent)}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Analisador SPED PISCOFINS</h1>
+    <p class="subtitle">Arraste arquivos ou a pasta-pai do SPED <strong>Contribuições</strong> e/ou <strong>Fiscal</strong> (subpastas são varridas; pode misturar)</p>
+  </header>
+  <div id="dropzone" class="dropzone">
+    <button class="dropzone-toggle" id="dropzone-toggle" type="button" title="Recolher/Expandir">▼</button>
+    <span class="dropzone-collapsed-label">📁 Importar arquivos (clique para expandir)</span>
+    <div class="dropzone-body" id="dropzone-body">
+      <div class="dropzone-icon">📁</div>
+      <div class="dropzone-text">Arraste arquivos ou a pasta inteira aqui</div>
+      <div class="dropzone-subtext">
+        ou
+        <button id="select-btn">selecionar arquivos</button>
+        ·
+        <button id="select-folder-btn">📂 selecionar pasta (varre subpastas)</button>
+      </div>
+      <div class="dropzone-hint">
+        <div class="hint-row"><span class="hint-icon">📂</span><span><strong>Arraste a pasta-pai</strong> (ex: <code>Arquivos_SPED</code>) diretamente aqui — sem diálogos, sem permissões, varre tudo. Alternativamente, clique em <strong>selecionar pasta</strong> (pede permissão uma única vez).</span></div>
+      </div>
+    </div>
+    <input type="file" id="file-input" multiple accept=".txt" hidden>
+    <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
+    <div class="file-list" id="file-list"></div>
+  </div>
+  <div id="progress" class="progress hidden">
+    <div class="progress-text" id="progress-text">Carregando DuckDB...</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <div id="error" class="error hidden"></div>
+  <div id="results" class="results">
+    <div class="sticky-top">
+      <div class="toolbar">
+        <div class="filters">
+          <select id="filter-periodo-ini" style="width:150px">
+            <option value="">Período início (todos)</option>
+          </select>
+          <select id="filter-periodo-fim" style="width:150px">
+            <option value="">Período fim (todos)</option>
+          </select>
+
+          <select id="filter-origem" style="width:170px">
+            <option value="">Sped Origem (todos)</option>
+          </select>
+
+          <select id="filter-situacao" style="width:160px">
+            <option value="">Situação (todas)</option>
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
+          </select>
+
+          <select id="filter-registro" style="width:150px">
+            <option value="">Registro (todos)</option>
+          </select>
+
+          <input type="text" id="filter-cfop" placeholder="CFOP" list="list-cfop" style="width:110px">
+          <datalist id="list-cfop"></datalist>
+
+          <input type="text" id="filter-cst" placeholder="CST" list="list-cst" style="width:90px">
+          <datalist id="list-cst"></datalist>
+
+          <input type="text" id="filter-nat-bc-cred" placeholder="CST PIS" list="list-nat-bc-cred" style="width:90px" title="Filtrar por CST PIS">
+          <datalist id="list-nat-bc-cred"></datalist>
+
+          <input type="text" id="filter-cnpj" placeholder="CNPJ" list="list-cnpj" style="width:150px" title="Filtrar por CNPJ (chave única)">
+          <datalist id="list-cnpj"></datalist>
+
+          <button id="clear-filters">Limpar filtros</button>
+        </div>
+        <div class="actions">
+          <button id="clear-data" title="Remove todos os arquivos importados">🗑️ Limpar dados</button>
+          <button id="export-csv">📥 Baixar CSV</button>
+          <button id="export-xlsx">📊 Baixar XLSX</button>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div id="painel-section" class="painel-section hidden">
+      <div class="painel-header">
+        <h3>📊 Painel Comparativo SPEDs</h3>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label class="painel-toggle" style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--fg)" title="Operações geradoras de créditos:&#10;• CSTs de 50 a 66&#10;• CFOPs cujo nat_bc_cred seja diferente de N/A&#10;• Aplica-se apenas a CONTRIBUIÇÕES de Entrada">
+            <input type="checkbox" id="painel-credito-toggle">
+            <span>Só CFOPs / CSTs geradores de créditos</span>
+          </label>
+          <button id="toggle-painel" class="painel-toggle">Ocultar</button>
+        </div>
+      </div>
+      <div class="painel-body" id="painel-body"></div>
+    </div>
+    <div class="table-wrapper">
+      <table id="result-table">
+        <thead><tr id="thead-row"></tr></thead>
+        <tbody id="tbody"></tbody>
+        <tfoot id="tfoot"></tfoot>
+      </table>
+    </div>
+    <div class="empty hidden" id="empty">Nenhum registro encontrado com os filtros atuais.</div>
+  </div>
+</div><script type="module">
+const SQL_TEMPLATE = `------------------------------------------------------------------------------
+-- 0. CONFIGURAÇÃO
+-------------------------------------------------------------------------------
+SET preserve_insertion_order = false;
+SET memory_limit = '2048MB';
+SET threads = 1;
+
+-- Altere aqui se mudar a pasta dos SPEDs:
+
+
+------------------------------------------------------------------------------
+-- 1. LEITURA RAW DOS .TXT (delim=|, latin-1, padding de nulos)
+--    Cada linha do SPED vira uma linha aqui, com 50 colunas c00..c49.
+--    c00 é o vazio antes do primeiro pipe; c01 é o REG (0000, C100, etc.).
+------------------------------------------------------------------------------
+CREATE OR REPLACE TEMP TABLE _sped_raw AS
+SELECT
+    filename,
+    ROW_NUMBER() OVER () AS gln,
+    NULLIF(c01, '') AS reg,
+    c02, c03, c04, c05, c06, c07, c08, c09, c10,
+    c11, c12, c13, c14, c15, c16, c17, c18, c19, c20,
+    c21, c22, c23, c24, c25, c26, c27, c28, c29, c30,
+    c31, c32, c33, c34, c35, c36, c37, c38, c39, c40,
+    c41, c42, c43, c44, c45, c46, c47, c48, c49
+FROM read_csv(
+    getvariable('caminho_sped'),
+    delim       = '|',
+    quote       = '',
+    escape      = '',
+    header      = false,
+    null_padding= true,
+    ignore_errors = true,
+    filename    = true,
+    auto_detect = false,
+    strict_mode = false,
+    -- OBS: SPED é Latin-1. Lemos como UTF-8 + strict_mode=false porque os
+    -- campos usados (REG/CFOP/CST/números/datas) são ASCII puro. Apenas
+    -- razão social/endereço (não usados) ficariam com acentos garbled.
+    -- auto_detect=false é obrigatório porque DuckDB sniffer rejeita
+    -- assinatura digital binária no fim dos SPED.
+    columns     = {
+        'c00':'VARCHAR','c01':'VARCHAR','c02':'VARCHAR','c03':'VARCHAR','c04':'VARCHAR',
+        'c05':'VARCHAR','c06':'VARCHAR','c07':'VARCHAR','c08':'VARCHAR','c09':'VARCHAR',
+        'c10':'VARCHAR','c11':'VARCHAR','c12':'VARCHAR','c13':'VARCHAR','c14':'VARCHAR',
+        'c15':'VARCHAR','c16':'VARCHAR','c17':'VARCHAR','c18':'VARCHAR','c19':'VARCHAR',
+        'c20':'VARCHAR','c21':'VARCHAR','c22':'VARCHAR','c23':'VARCHAR','c24':'VARCHAR',
+        'c25':'VARCHAR','c26':'VARCHAR','c27':'VARCHAR','c28':'VARCHAR','c29':'VARCHAR',
+        'c30':'VARCHAR','c31':'VARCHAR','c32':'VARCHAR','c33':'VARCHAR','c34':'VARCHAR',
+        'c35':'VARCHAR','c36':'VARCHAR','c37':'VARCHAR','c38':'VARCHAR','c39':'VARCHAR',
+        'c40':'VARCHAR','c41':'VARCHAR','c42':'VARCHAR','c43':'VARCHAR','c44':'VARCHAR',
+        'c45':'VARCHAR','c46':'VARCHAR','c47':'VARCHAR','c48':'VARCHAR','c49':'VARCHAR'
+    }
+);
+
+------------------------------------------------------------------------------
+-- 2. NUMERAÇÃO POR ARQUIVO + GROUP IDs PARA LINKAGEM PAI-FILHO
+--    g_xxxx incrementa a cada novo registro pai, "carimbando" os filhos
+--    seguintes com o mesmo número.
+------------------------------------------------------------------------------
+CREATE OR REPLACE TEMP TABLE _sped AS
+SELECT
+    *,
+    ROW_NUMBER() OVER (PARTITION BY filename ORDER BY gln) AS rn,
+    SUM(CASE WHEN reg = 'A100' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_a100,
+    SUM(CASE WHEN reg = 'C100' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_c100,
+    SUM(CASE WHEN reg = 'C180' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_c180,
+    SUM(CASE WHEN reg = 'C190' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_c190,
+    SUM(CASE WHEN reg = 'C500' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_c500,
+    SUM(CASE WHEN reg = 'D100' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_d100,
+    SUM(CASE WHEN reg = 'D200' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_d200,
+    SUM(CASE WHEN reg = 'D500' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_d500,
+    SUM(CASE WHEN reg = 'D700' THEN 1 ELSE 0 END)
+        OVER (PARTITION BY filename ORDER BY gln ROWS UNBOUNDED PRECEDING) AS g_d700
+FROM _sped_raw
+WHERE reg IS NOT NULL
+  AND length(reg) = 4;
+
+------------------------------------------------------------------------------
+-- 3. MACRO para converter texto SPED em DECIMAL (vírgula como separador)
+------------------------------------------------------------------------------
+CREATE OR REPLACE TEMP MACRO num(v) AS
+    COALESCE(
+        TRY_CAST(REPLACE(NULLIF(TRIM(v), ''), ',', '.') AS DECIMAL(18,6)),
+        0
+    );
+
+------------------------------------------------------------------------------
+-- 4. EXTRATORES POR REGISTRO (cada CTE tipa os campos via macro num())
+--    Esses TEMP TABLEs equivalem às tabelas pc_xxxx do SAAM.
+------------------------------------------------------------------------------
+
+-- Header 0000 (uma linha por arquivo, fornece dt_fim no formato DDMMAAAA)
+-- Layout EFD Fiscal (ICMS/IPI): DT_FIM em c05; Layout EFD Contribuições retificadora: DT_FIM em c07
+-- (c05 do Contribuições retificadora guarda o hash de retificação, não é data)
+-- CNPJ: Contribuições em c09 (após hash e datas), Fiscal em c07
+CREATE OR REPLACE TEMP TABLE _t_0000 AS
+SELECT filename,
+       TRIM(c02) AS cod_ver,
+       CASE
+           WHEN LENGTH(REGEXP_REPLACE(c05,'[^0-9]','','g')) = 8 THEN TRIM(c05)
+           ELSE TRIM(c07)
+       END AS dt_fim,
+        CASE
+            WHEN LENGTH(REGEXP_REPLACE(c07,'[^0-9]','','g')) = 14 THEN TRIM(c07)
+            WHEN LENGTH(REGEXP_REPLACE(c09,'[^0-9]','','g')) = 14 THEN TRIM(c09)
+            WHEN LENGTH(REGEXP_REPLACE(c03,'[^0-9]','','g')) = 14 THEN TRIM(c03)
+            ELSE NULL
+        END AS cnpj
+FROM _sped WHERE reg = '0000';
+
+-- 0200 (item master - fornece descrição e NCM)
+CREATE OR REPLACE TEMP TABLE _t_0200 AS
+SELECT filename,
+       TRIM(c02) AS cod_item,
+       TRIM(c03) AS descr_item,
+       TRIM(c08) AS cod_ncm
+FROM _sped WHERE reg = '0200';
+
+-- A100 (parente do A170 - serviços)
+CREATE OR REPLACE TEMP TABLE _t_a100 AS
+SELECT filename, g_a100,
+       TRIM(c02) AS ind_oper,
+       TRIM(c08) AS num_doc,
+       TRIM(c09) AS chv_doce,
+       TRIM(c11) AS dt_e_s,
+       num(c12)  AS vl_doc,
+       num(c13)  AS vl_desc,
+       num(c21)  AS vl_iss
+FROM _sped WHERE reg = 'A100';
+
+-- A170 (itens de servicos) - EFD-Contribuicoes: sem QTD/UNID
+-- c02=NUM_ITEM, c03=COD_ITEM, c04=DESCR_COMPL, c05=VL_ITEM, c06=VL_DESC,
+-- c07=NAT_BC_CRED, c08=IND_ORIG_CRED, c09=CST_PIS, c10=VL_BC_PIS,
+-- c11=ALIQ_PIS, c12=VL_PIS, c13=CST_COFINS, c14=VL_BC_COFINS,
+-- c15=ALIQ_COFINS, c16=VL_COFINS, c17=COD_CTA, c18=COD_CCUS
+CREATE OR REPLACE TEMP TABLE _t_a170 AS
+SELECT filename, g_a100,
+       TRIM(c02) AS num_item,
+       TRIM(c03) AS cod_item,
+       TRIM(c04) AS descr_compl,
+       num(c05)  AS vl_item,
+       num(c06)  AS vl_desc,
+       TRIM(c07) AS nat_bc_cred,
+       TRIM(c09) AS cst_pis,
+       num(c10)  AS vl_bc_pis,
+       num(c11)  AS aliq_pis,
+       num(c12)  AS vl_pis,
+       TRIM(c13) AS cst_cofins,
+       num(c14)  AS vl_bc_cofins,
+       num(c15)  AS aliq_cofins,
+       num(c16)  AS vl_cofins,
+       TRIM(c17) AS cod_cta
+FROM _sped WHERE reg = 'A170';
+
+-- C100 (parente do C170/C175 - mercadorias)
+CREATE OR REPLACE TEMP TABLE _t_c100 AS
+SELECT filename, g_c100,
+       TRIM(c02) AS ind_oper,
+       TRIM(c08) AS num_doc,
+       TRIM(c09) AS chv_doce,
+       TRIM(c11) AS dt_e_s,
+       num(c12)  AS vl_doc,
+       num(c13)  AS vl_desc,
+       num(c21)  AS vl_bc_icms,
+       num(c22)  AS vl_icms,
+       num(c23)  AS vl_bc_icms_st,
+       num(c24)  AS vl_icms_st
+FROM _sped WHERE reg = 'C100';
+
+-- C170 (itens de mercadorias) - Layout único (EFD-Fiscal e EFD-Contribuições)
+-- c02=NUM_ITEM, c03=COD_ITEM, c04=DESCR_COMPL, c07=VL_ITEM, c08=VL_DESC,
+-- c10=CST_ICMS, c11=CFOP, c13=VL_BC_ICMS, c15=VL_ICMS,
+-- c16=VL_BC_ICMS_ST, c17=ALIQ_ST, c18=VL_ICMS_ST, c24=VL_IPI,
+-- c25=CST_PIS, c26=VL_BC_PIS, c27=ALIQ_PIS, c30=VL_PIS,
+-- c31=CST_COFINS, c32=VL_BC_COFINS, c33=ALIQ_COFINS, c36=VL_COFINS,
+-- c37=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_c170 AS
+SELECT filename, g_c100,
+       TRIM(c02) AS num_item,
+       TRIM(c03) AS cod_item,
+       TRIM(c04) AS descr_compl,
+       num(c07)  AS vl_item,
+       num(c08)  AS vl_desc,
+       TRIM(c10) AS cst_icms,
+       TRIM(c11) AS cfop,
+       num(c13)  AS vl_bc_icms,
+       num(c15)  AS vl_icms,
+       num(c16)  AS vl_bc_icms_st,
+       num(c17)  AS aliq_icms_st,
+       num(c18)  AS vl_icms_st,
+       num(c24)  AS vl_ipi,
+       TRIM(c25) AS cst_pis,
+       num(c26)  AS vl_bc_pis,
+       num(c27)  AS aliq_pis,
+       num(c30)  AS vl_pis,
+       TRIM(c31) AS cst_cofins,
+       num(c32)  AS vl_bc_cofins,
+       num(c33)  AS aliq_cofins,
+       num(c36)  AS vl_cofins,
+       TRIM(c37) AS cod_cta
+FROM _sped WHERE reg = 'C170';
+
+-- C175 (vendas consumidor)
+CREATE OR REPLACE TEMP TABLE _t_c175 AS
+SELECT filename, g_c100,
+       TRIM(c02) AS cfop,
+       num(c03)  AS vl_opr,
+       num(c04)  AS vl_desc,
+       TRIM(c05) AS cst_pis,
+       num(c06)  AS vl_bc_pis,
+       num(c07)  AS aliq_pis,
+       num(c08)  AS vl_pis,
+       TRIM(c09) AS cst_cofins,
+       num(c10)  AS vl_bc_cofins,
+       num(c11)  AS aliq_cofins,
+       num(c12)  AS vl_cofins
+FROM _sped WHERE reg = 'C175';
+
+-- C180 (parente do C181/C185 - vendas consolidadas)
+CREATE OR REPLACE TEMP TABLE _t_c180 AS
+SELECT filename, g_c180
+FROM _sped WHERE reg = 'C180';
+
+-- C181 (PIS C180)
+CREATE OR REPLACE TEMP TABLE _t_c181 AS
+SELECT filename, g_c180,
+       TRIM(c02) AS cst_pis,
+       TRIM(c03) AS cfop,
+       num(c04)  AS vl_item,
+       num(c05)  AS vl_desc,
+       num(c06)  AS vl_bc_pis,
+       num(c07)  AS aliq_pis,
+       num(c10)  AS vl_pis
+FROM _sped WHERE reg = 'C181';
+
+-- C185 (COFINS C180)
+CREATE OR REPLACE TEMP TABLE _t_c185 AS
+SELECT filename, g_c180,
+       TRIM(c02) AS cst_cofins,
+       TRIM(c03) AS cfop,
+       num(c04)  AS vl_item,
+       num(c05)  AS vl_desc,
+       num(c06)  AS vl_bc_cofins,
+       num(c07)  AS aliq_cofins,
+       num(c10)  AS vl_cofins
+FROM _sped WHERE reg = 'C185';
+
+-- C190 (parente do C191/C195 - entradas consolidadas)
+CREATE OR REPLACE TEMP TABLE _t_c190 AS
+SELECT filename, g_c190
+FROM _sped WHERE reg = 'C190';
+
+-- C191 (PIS C190)
+CREATE OR REPLACE TEMP TABLE _t_c191 AS
+SELECT filename, g_c190,
+       TRIM(c03) AS cst_pis,
+       TRIM(c04) AS cfop,
+       num(c05)  AS vl_item,
+       num(c06)  AS vl_desc,
+       num(c07)  AS vl_bc_pis,
+       num(c08)  AS aliq_pis,
+       num(c11)  AS vl_pis
+FROM _sped WHERE reg = 'C191';
+
+-- C195 (COFINS C190)
+CREATE OR REPLACE TEMP TABLE _t_c195 AS
+SELECT filename, g_c190,
+       TRIM(c03) AS cst_cofins,
+       TRIM(c04) AS cfop,
+       num(c05)  AS vl_item,
+       num(c06)  AS vl_desc,
+       num(c07)  AS vl_bc_cofins,
+       num(c08)  AS aliq_cofins,
+       num(c11)  AS vl_cofins
+FROM _sped WHERE reg = 'C195';
+
+-- C500 (energia/água/comb. - parente C501/C505)
+-- Layout EFD-Contribuições: VL_DOC=c10, VL_ICMS=c11
+-- Layout EFD-Fiscal:          VL_DOC=c13, VL_ICMS=c20
+CREATE OR REPLACE TEMP TABLE _t_c500 AS
+SELECT t.filename, t.g_c500,
+       num(t.c10) AS vl_doc_contrib,
+       num(t.c11) AS vl_icms_contrib,
+       num(t.c13) AS vl_doc_fiscal,
+       num(t.c20) AS vl_icms_fiscal
+FROM _sped t
+WHERE t.reg = 'C500';
+
+-- C501 (PIS C500)
+CREATE OR REPLACE TEMP TABLE _t_c501 AS
+SELECT filename, g_c500,
+       TRIM(c02) AS cst_pis,
+       num(c05)  AS vl_bc_pis,
+       num(c06)  AS aliq_pis,
+       num(c07)  AS vl_pis
+FROM _sped WHERE reg = 'C501';
+
+-- C505 (COFINS C500)
+CREATE OR REPLACE TEMP TABLE _t_c505 AS
+SELECT filename, g_c500,
+       TRIM(c02) AS cst_cofins,
+       num(c05)  AS vl_bc_cofins,
+       num(c06)  AS aliq_cofins,
+       num(c07)  AS vl_cofins
+FROM _sped WHERE reg = 'C505';
+
+-- C870 (ECF - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_c870 AS
+SELECT filename,
+       TRIM(c02) AS cfop,
+       num(c03)  AS vl_item,
+       num(c04)  AS vl_desc,
+       TRIM(c05) AS cst_pis,
+       num(c06)  AS vl_bc_pis,
+       num(c07)  AS aliq_pis,
+       num(c08)  AS vl_pis,
+       TRIM(c09) AS cst_cofins,
+       num(c10)  AS vl_bc_cofins,
+       num(c11)  AS aliq_cofins,
+       num(c12)  AS vl_cofins
+FROM _sped WHERE reg = 'C870';
+
+-- D190 (ICMS D100 - FISCAL: CST_ICMS, CFOP, ALIQ_ICMS, VL_BC_ICMS, VL_ICMS)
+-- Layout EFD ICMS/IPI: c02=CST_ICMS, c03=CFOP, c04=ALIQ_ICMS, c05=VL_OPR, c06=VL_BC_ICMS, c07=VL_ICMS, c08=VL_RED_BC, c09=VL_IPI
+CREATE OR REPLACE TEMP TABLE _t_d190 AS
+SELECT filename, g_d100,
+       TRIM(c02) AS cst_icms,
+       TRIM(c03) AS cfop,
+       num(c04)  AS aliq_icms,
+       num(c05)  AS vl_opr,
+       num(c06)  AS vl_bc_icms,
+       num(c07)  AS vl_icms,
+       num(c08)  AS vl_red_bc,
+       num(c09)  AS vl_ipi
+FROM _sped WHERE reg = 'D190';
+
+-- D100 (transporte entrada - parente D101/D105)
+-- Layout EFD: c12=VL_DOC, c13=VL_DESC, c14=vazio, c15=VL_SERV, c16=VL_BC_ICMS,
+--   c17=VL_ICMS, c18=VL_NT, c19=?, c20=VL_ICMS (12% do VL_SERV), c23=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d100 AS
+SELECT filename, g_d100,
+       TRIM(c02) AS ind_oper,
+       num(c12)  AS vl_doc,
+       num(c13)  AS vl_desc,
+       num(c15)  AS vl_serv,
+       num(c16)  AS vl_bc_icms,
+       num(c20)  AS vl_icms
+FROM _sped WHERE reg = 'D100';
+
+-- D101 (PIS D100) - Layout CONTRIB 9 campos: c02=IND_NAT_FRT, c03=VL_ITEM, c04=CST_PIS, c05=NAT_BC_CRED, c06=VL_BC_PIS, c07=ALIQ_PIS, c08=VL_PIS, c09=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d101 AS
+SELECT filename, g_d100,
+       TRIM(c04) AS cst_pis,
+       num(c06)  AS vl_bc_pis,
+       num(c07)  AS aliq_pis,
+       num(c08)  AS vl_pis
+FROM _sped WHERE reg = 'D101';
+
+-- D105 (COFINS D100) - Layout CONTRIB 9 campos: c02=IND_NAT_FRT, c03=VL_ITEM, c04=CST_COFINS, c05=NAT_BC_CRED, c06=VL_BC_COFINS, c07=ALIQ_COFINS, c08=VL_COFINS, c09=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d105 AS
+SELECT filename, g_d100,
+       TRIM(c04) AS cst_cofins,
+       num(c06)  AS vl_bc_cofins,
+       num(c07)  AS aliq_cofins,
+       num(c08)  AS vl_cofins
+FROM _sped WHERE reg = 'D105';
+
+-- D200 (transporte saída - parente D201/D205)
+CREATE OR REPLACE TEMP TABLE _t_d200 AS
+SELECT filename, g_d200,
+       TRIM(c08) AS cfop,
+       num(c10)  AS vl_doc,
+       num(c11)  AS vl_desc
+FROM _sped WHERE reg = 'D200';
+
+-- D201 (PIS D200) - Layout CONTRIB 7 campos: c02=CST_PIS, c03=VL_ITEM, c04=VL_BC_PIS, c05=ALIQ_PIS, c06=VL_PIS, c07=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d201 AS
+SELECT filename, g_d200,
+       TRIM(c02) AS cst_pis,
+       num(c03)  AS vl_item,
+       num(c04)  AS vl_bc_pis,
+       num(c05)  AS aliq_pis,
+       num(c06)  AS vl_pis
+FROM _sped WHERE reg = 'D201';
+
+-- D205 (COFINS D200) - Layout CONTRIB 7 campos: c02=CST_COFINS, c03=VL_ITEM, c04=VL_BC_COFINS, c05=ALIQ_COFINS, c06=VL_COFINS, c07=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d205 AS
+SELECT filename, g_d200,
+       TRIM(c02) AS cst_cofins,
+       num(c03)  AS vl_item,
+       num(c04)  AS vl_bc_cofins,
+       num(c05)  AS aliq_cofins,
+       num(c06)  AS vl_cofins
+FROM _sped WHERE reg = 'D205';
+
+-- D500 (telecom - parente D501/D505)
+CREATE OR REPLACE TEMP TABLE _t_d500 AS
+SELECT filename, g_d500,
+       TRIM(c02) AS ind_oper,
+       num(c13)  AS vl_desc,
+       num(c14)  AS vl_serv,
+       num(c19)  AS vl_icms
+FROM _sped WHERE reg = 'D500';
+
+-- D501 (PIS D500) - Layout CONTRIB 9 campos: c02=IND_NAT_FRT, c03=VL_ITEM, c04=CST_PIS, c05=NAT_BC_CRED, c06=VL_BC_PIS, c07=ALIQ_PIS, c08=VL_PIS, c09=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d501 AS
+SELECT filename, g_d500,
+       TRIM(c04) AS cst_pis,
+       num(c06)  AS vl_bc_pis,
+       num(c07)  AS aliq_pis,
+       num(c08)  AS vl_pis
+FROM _sped WHERE reg = 'D501';
+
+-- D505 (COFINS D500) - Layout CONTRIB 9 campos: c02=IND_NAT_FRT, c03=VL_ITEM, c04=CST_COFINS, c05=NAT_BC_CRED, c06=VL_BC_COFINS, c07=ALIQ_COFINS, c08=VL_COFINS, c09=COD_CTA
+CREATE OR REPLACE TEMP TABLE _t_d505 AS
+SELECT filename, g_d500,
+       TRIM(c04) AS cst_cofins,
+       num(c06)  AS vl_bc_cofins,
+       num(c07)  AS aliq_cofins,
+       num(c08)  AS vl_cofins
+FROM _sped WHERE reg = 'D505';
+
+-- D700 (serviços telecom - parente D701/D705) — exclusivo EFD FISCAL
+CREATE OR REPLACE TEMP TABLE _t_d700 AS
+SELECT filename, g_d700,
+       TRIM(c02) AS ind_oper,
+       num(c10)  AS vl_doc,
+       num(c11)  AS vl_desc,
+       num(c15)  AS vl_bc_icms,
+       num(c16)  AS vl_icms
+FROM _sped WHERE reg = 'D700';
+
+CREATE OR REPLACE TEMP TABLE _t_d701 AS
+SELECT filename, g_d700,
+       TRIM(c02) AS cst_pis,
+       num(c04)  AS vl_bc_pis,
+       num(c05)  AS aliq_pis,
+       num(c06)  AS vl_pis
+FROM _sped WHERE reg = 'D701';
+
+CREATE OR REPLACE TEMP TABLE _t_d705 AS
+SELECT filename, g_d700,
+       TRIM(c02) AS cst_cofins,
+       num(c04)  AS vl_bc_cofins,
+       num(c05)  AS aliq_cofins,
+       num(c06)  AS vl_cofins
+FROM _sped WHERE reg = 'D705';
+
+-- Detecta tipo do arquivo pelo CNPJ no registro 0000:
+-- FISCAL (ICMS/IPI): CNPJ no campo 07 (c07)
+-- CONTRIB (PIS/COFINS): CNPJ no campo 09 (c09)
+CREATE OR REPLACE TEMP TABLE _is_fiscal AS
+SELECT filename,
+       MAX(CASE
+           WHEN reg = '0000'
+            AND LENGTH(REGEXP_REPLACE(c07,'[^0-9]','','g')) = 14
+           THEN 1 ELSE 0
+       END) AS is_fiscal
+FROM _sped
+GROUP BY filename;
+
+-- F100 (demais documentos - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f100 AS
+SELECT filename,
+       TRIM(c02) AS ind_oper,
+       num(c06)  AS vl_oper,
+       TRIM(c07) AS cst_pis,
+       num(c08)  AS vl_bc_pis,
+       num(c09)  AS aliq_pis,
+       num(c10)  AS vl_pis,
+       TRIM(c11) AS cst_cofins,
+       num(c12)  AS vl_bc_cofins,
+       num(c13)  AS aliq_cofins,
+       num(c14)  AS vl_cofins,
+       TRIM(c15) AS nat_bc_cred
+FROM _sped WHERE reg = 'F100';
+
+-- F120 (ativo imobilizado depreciação - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f120 AS
+SELECT filename,
+       TRIM(c02) AS nat_bc_cred,
+       num(c06)  AS vl_oper_dep,
+       TRIM(c08) AS cst_pis,
+       num(c09)  AS vl_bc_pis,
+       num(c10)  AS aliq_pis,
+       num(c11)  AS vl_pis,
+       TRIM(c12) AS cst_cofins,
+       num(c13)  AS vl_bc_cofins,
+       num(c14)  AS aliq_cofins,
+       num(c15)  AS vl_cofins
+FROM _sped WHERE reg = 'F120';
+
+-- F130 (ativo imobilizado aquisição - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f130 AS
+SELECT filename,
+       TRIM(c02) AS nat_bc_cred,
+       num(c07)  AS vl_oper_aquis,
+       TRIM(c11) AS cst_pis,
+       num(c12)  AS vl_bc_pis,
+       num(c13)  AS aliq_pis,
+       num(c14)  AS vl_pis,
+       TRIM(c15) AS cst_cofins,
+       num(c16)  AS vl_bc_cofins,
+       num(c17)  AS aliq_cofins,
+       num(c18)  AS vl_cofins
+FROM _sped WHERE reg = 'F130';
+
+-- F150 (estoque abertura - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f150 AS
+SELECT filename,
+       TRIM(c02) AS nat_bc_cred,
+       num(c05)  AS vl_bc_est,
+       TRIM(c07) AS cst_pis,
+       num(c08)  AS aliq_pis,
+       num(c09)  AS vl_cred_pis,
+       TRIM(c10) AS cst_cofins,
+       num(c11)  AS aliq_cofins,
+       num(c12)  AS vl_cred_cofins
+FROM _sped WHERE reg = 'F150';
+
+-- F500 (receitas próprias - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f500 AS
+SELECT filename,
+       num(c02)  AS vl_rec_caixa,
+       TRIM(c03) AS cst_pis,
+       num(c05)  AS vl_bc_pis,
+       num(c06)  AS aliq_pis,
+       num(c07)  AS vl_pis,
+       TRIM(c08) AS cst_cofins,
+       num(c10)  AS vl_bc_cofins,
+       num(c11)  AS aliq_cofins,
+       num(c12)  AS vl_cofins,
+       TRIM(c14) AS cfop
+FROM _sped WHERE reg = 'F500';
+
+-- F550 (receitas por operação - autocontido)
+CREATE OR REPLACE TEMP TABLE _t_f550 AS
+SELECT filename,
+       num(c02)  AS vl_rec_comp,
+       TRIM(c03) AS cst_pis,
+       num(c05)  AS vl_bc_pis,
+       num(c06)  AS aliq_pis,
+       num(c07)  AS vl_pis,
+       TRIM(c08) AS cst_cofins,
+       num(c10)  AS vl_bc_cofins,
+       num(c11)  AS aliq_cofins,
+       num(c12)  AS vl_cofins,
+       TRIM(c14) AS cfop
+FROM _sped WHERE reg = 'F550';
+
+
+------------------------------------------------------------------------------
+-- 5. CTE PRINCIPAL — réplica do Relatorio_CFOP_SAAM.sql, blocos 06–21
+------------------------------------------------------------------------------
+WITH _orig AS (
+WITH CFOP_NAT_BC_CRED(cfop, nat_bc_cred) AS (
+    VALUES
+        ('1101','02'),('1102','01'),('1111','02'),('1113','01'),('1116','02'),
+        ('1117','01'),('1118','01'),('1120','02'),('1121','01'),('1122','02'),
+        ('1124','03'),('1125','03'),('1126','02'),('1128','02'),('1132','02'),
+        ('1135','02'),('1159','01'),('1201','12'),('1202','12'),('1203','12'),
+        ('1204','12'),('1206','12'),('1207','12'),('1215','12'),('1216','12'),
+        ('1251','04'),('1252','04'),('1253','04'),('1254','04'),('1255','04'),
+        ('1256','04'),('1257','04'),('1351','07'),('1352','07'),('1353','07'),
+        ('1354','07'),('1355','07'),('1356','07'),('1360','07'),('1401','02'),
+        ('1403','01'),('1406','10'),('1407','02'),('1410','12'),('1411','12'),
+        ('1456','02'),('1551','10'),('1556','02'),('1651','02'),('1652','01'),
+        ('1653','02'),('1660','12'),('1661','12'),('1662','12'),('1932','07'),
+        ('1933','03'),('2101','02'),('2102','01'),('2111','02'),('2113','01'),
+        ('2116','02'),('2117','01'),('2118','01'),('2120','02'),('2121','01'),
+        ('2122','02'),('2124','03'),('2125','03'),('2126','02'),('2128','02'),
+        ('2132','02'),('2135','02'),('2159','01'),('2201','12'),('2202','12'),
+        ('2206','12'),('2207','12'),('2215','12'),('2216','12'),('2251','04'),
+        ('2252','04'),('2253','04'),('2254','04'),('2255','04'),('2256','04'),
+        ('2257','04'),('2351','07'),('2352','07'),('2353','07'),('2354','07'),
+        ('2355','07'),('2356','07'),('2401','02'),('2403','01'),('2406','10'),
+        ('2407','02'),('2410','12'),('2411','12'),('2456','02'),('2551','10'),
+        ('2556','02'),('2651','02'),('2652','01'),('2653','02'),('2660','12'),
+        ('2661','12'),('2662','12'),('2932','07'),('2933','03'),('3101','02'),
+        ('3102','01'),('3126','02'),('3128','02'),('3251','01'),('3556','02'),
+        ('3651','02'),('3652','01'),('3653','02'),
+        ('D100','Escolher Nat'),('F100','Escolher Nat'),('F120','Escolher Nat'),
+        ('F130','Escolher Nat'),('F150','Escolher Nat'),('F550','Escolher Nat')
+),
+
+DATA_POOL AS (
+
+    /* ==========================================
+       06. CONTRIB - A170 (SERVIÇOS)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim, '19000101')                                         AS dt_ref,
+        CASE WHEN COALESCE(pa100.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'A170'                                                                  AS registro,
+        COALESCE(pa100.num_doc,'')                                              AS num_doc,
+        COALESCE(pa100.chv_doce,'')                                             AS chv_doce,
+        COALESCE(pa100.dt_e_s,'')                                               AS dt_e_s,
+        COALESCE(pa170.num_item,'')                                             AS num_item,
+        TRIM(pa170.cod_item)                                                    AS cod_item,
+        TRIM(pa170.descr_compl)                                                 AS descr_compl,
+        '1933'                                                                  AS cfop,
+        COALESCE(NULLIF(pa170.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pa170.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pa170.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pa170.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pa170.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pa170.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pa170.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pa170.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pa170.vl_item,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pa170.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        COALESCE(pa170.cod_cta,'')                                              AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_a170 pa170
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_a100 pa100 USING (filename, g_a100)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        07. CONTRIB - C170 (MERCADORIAS)
+        ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        CASE WHEN COALESCE(pc100.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'C170'                                                                  AS registro,
+        COALESCE(pc100.num_doc,'')                                              AS num_doc,
+        COALESCE(pc100.chv_doce,'')                                             AS chv_doce,
+        COALESCE(pc100.dt_e_s,'')                                               AS dt_e_s,
+        COALESCE(pc170.num_item,'')                                             AS num_item,
+        TRIM(pc170.cod_item)                                                    AS cod_item,
+        TRIM(pc170.descr_compl)                                                 AS descr_compl,
+        COALESCE(NULLIF(pc170.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pc170.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc170.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc170.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc170.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc170.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pc170.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pc170.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pc170.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pc170.vl_item,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pc170.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        COALESCE(pc170.cod_cta,'')                                              AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c170 pc170
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_c100 pc100 USING (filename, g_c100)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       08. CONTRIB - C175 (VENDAS CONSUMIDOR)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'C175'                                                                  AS registro,
+        COALESCE(pc100.num_doc,'')                                              AS num_doc,
+        COALESCE(pc100.chv_doce,'')                                             AS chv_doce,
+        COALESCE(pc100.dt_e_s,'')                                               AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pc175.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pc175.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc175.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc175.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc175.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc175.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pc175.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pc175.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pc175.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pc175.vl_opr,0)::DECIMAL(18,6)                                 AS vl_item,
+        COALESCE(pc175.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c175 pc175
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_c100 pc100 USING (filename, g_c100)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        09. CONTRIB - C180 (SAÍDAS CONSOLIDADAS)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'C180'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pc181.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pc181.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc181.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc181.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc181.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc181.cst_pis,''),'00')                                 AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pc185_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pc185_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pc181.vl_item,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pc181.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c181 pc181
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_c180, cfop, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_c185
+        GROUP BY filename, g_c180, cfop, cst_cofins
+    ) pc185_agr
+        ON pc185_agr.filename = pc181.filename
+       AND pc185_agr.g_c180   = pc181.g_c180
+       AND pc185_agr.cfop     = pc181.cfop
+       AND pc185_agr.cst_cofins = pc181.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        10. CONTRIB - C190 (ENTRADAS CONSOLIDADAS)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Entrada'                                                               AS sentido,
+        'C190'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pc191.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pc191.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc191.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc191.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc191.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc191.cst_pis,''),'00')                                 AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pc195_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pc195_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pc191.vl_item,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pc191.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c191 pc191
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_c190, cfop, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_c195
+        GROUP BY filename, g_c190, cfop, cst_cofins
+    ) pc195_agr
+        ON pc195_agr.filename = pc191.filename
+       AND pc195_agr.g_c190   = pc191.g_c190
+       AND pc195_agr.cfop     = pc191.cfop
+       AND pc195_agr.cst_cofins = pc191.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       11. CONTRIB - C500 (ENERGIA / ÁGUA)
+       Layout EFD-Contribuições: VL_DOC=c10, VL_ICMS=c11
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Entrada'                                                               AS sentido,
+        'C500'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        '1253'                                                                  AS cfop,
+        COALESCE(NULLIF(pc501.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc501.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc501.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc501.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc505_agr.cst_cofins,''),'00')                          AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pc505_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pc505_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pc500.vl_doc_contrib,0)::DECIMAL(18,6)                         AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c500 pc500
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_c501 pc501 USING (filename, g_c500)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_c500, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_c505
+        GROUP BY filename, g_c500, cst_cofins
+    ) pc505_agr
+        ON pc505_agr.filename = pc500.filename
+       AND pc505_agr.g_c500   = pc500.g_c500
+       AND pc505_agr.cst_cofins = pc501.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       12. CONTRIB - C870 (ECF)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'C870'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pc870.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pc870.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pc870.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pc870.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pc870.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pc870.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pc870.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pc870.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pc870.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pc870.vl_item,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pc870.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c870 pc870
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        13. CONTRIB - D100 (ENTRADAS DE TRANSPORTES)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        CASE WHEN COALESCE(pd100.ind_oper,'0')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'D100'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        '1353'                                                                  AS cfop,
+        COALESCE(NULLIF(pd101.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pd101.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pd101.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pd101.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pd105_agr.cst_cofins,''),'00')                          AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pd105_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pd105_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pd100.vl_serv,0)::DECIMAL(18,6)                                AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_d100 pd100
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d101 pd101 USING (filename, g_d100)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_d100, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_d105
+        GROUP BY filename, g_d100, cst_cofins
+    ) pd105_agr
+        ON pd105_agr.filename = pd100.filename
+       AND pd105_agr.g_d100   = pd100.g_d100
+       AND pd105_agr.cst_cofins = pd101.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       14. CONTRIB - D200 (SAÍDAS DE TRANSPORTES)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'D200'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pd200.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pd201.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pd201.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pd201.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pd201.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pd205_agr.cst_cofins,''),'00')                          AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pd205_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pd205_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pd200.vl_doc,0)::DECIMAL(18,6)                                 AS vl_item,
+        COALESCE(pd200.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_d200 pd200
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d201 pd201 USING (filename, g_d200)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_d200, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_d205
+        GROUP BY filename, g_d200, cst_cofins
+    ) pd205_agr
+        ON pd205_agr.filename = pd200.filename
+       AND pd205_agr.g_d200   = pd200.g_d200
+       AND pd205_agr.cst_cofins = pd201.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       15. CONTRIB - D500 (TELECOM)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        CASE WHEN COALESCE(pd500.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'D500'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        '1352'                                                                  AS cfop,
+        COALESCE(NULLIF(pd501.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pd501.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pd501.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pd501.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pd505_agr.cst_cofins,''),'00')                          AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                            AS vl_bc_cofins,
+        COALESCE(pd505_agr.aliq_cofins,0)::DECIMAL(18,6)                        AS aliq_cofins,
+        GREATEST(COALESCE(pd505_agr.vl_cofins,0),0)::DECIMAL(18,6)              AS vl_cofins,
+        COALESCE(pd500.vl_serv,0)::DECIMAL(18,6)                                AS vl_item,
+        COALESCE(pd500.vl_desc,0)::DECIMAL(18,6)                                AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_d500 pd500
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d501 pd501 USING (filename, g_d500)
+    LEFT JOIN _t_0000 p0    USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_d500, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_d505
+        GROUP BY filename, g_d500, cst_cofins
+    ) pd505_agr
+        ON pd505_agr.filename = pd500.filename
+       AND pd505_agr.g_d500   = pd500.g_d500
+       AND pd505_agr.cst_cofins = pd501.cst_pis
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+       16. CONTRIB - F100 (DEMAIS DOCUMENTOS)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        CASE WHEN COALESCE(pf100.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'F100'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        'F100'                                                                  AS cfop,
+        COALESCE(NULLIF(pf100.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf100.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf100.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf100.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pf100.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf100.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pf100.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf100.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pf100.vl_oper,0)::DECIMAL(18,6)                                AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f100 pf100
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        17. CONTRIB - F120 (ATIVO IMOBILIZADO DEPREC.)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Entrada'                                                               AS sentido,
+        'F120'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        'F120'                                                                  AS cfop,
+        COALESCE(NULLIF(pf120.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf120.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf120.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf120.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pf120.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf120.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pf120.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf120.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pf120.vl_oper_dep,0)::DECIMAL(18,6)                            AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f120 pf120
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        18. CONTRIB - F130 (ATIVO IMOBILIZADO AQUIS.)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Entrada'                                                               AS sentido,
+        'F130'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        'F130'                                                                  AS cfop,
+        COALESCE(NULLIF(pf130.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf130.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf130.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf130.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pf130.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf130.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pf130.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf130.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pf130.vl_oper_aquis,0)::DECIMAL(18,6)                          AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f130 pf130
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        19. CONTRIB - F150 (ESTOQUE ABERTURA)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Entrada'                                                               AS sentido,
+        'F150'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        'F150'                                                                  AS cfop,
+        COALESCE(NULLIF(pf150.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf150.vl_bc_est,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf150.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf150.vl_cred_pis,0),0)::DECIMAL(18,6)                AS vl_pis,
+        COALESCE(NULLIF(pf150.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf150.vl_bc_est,0),0)::DECIMAL(18,6)                  AS vl_bc_cofins,
+        COALESCE(pf150.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf150.vl_cred_cofins,0),0)::DECIMAL(18,6)             AS vl_cofins,
+        COALESCE(pf150.vl_bc_est,0)::DECIMAL(18,6)                              AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f150 pf150
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        20. CONTRIB - F500 (RECEITAS PRÓPRIAS)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'F500'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pf500.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pf500.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf500.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf500.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf500.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pf500.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf500.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pf500.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf500.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pf500.vl_rec_caixa,0)::DECIMAL(18,6)                           AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f500 pf500
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        21. CONTRIB - F550 (RECEITAS POR OPERAÇÃO)
+       ========================================== */
+    SELECT
+        'CONTRIBUIÇÕES'                                                         AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                          AS dt_ref,
+        'Saída'                                                                 AS sentido,
+        'F550'                                                                  AS registro,
+        ''                                                                      AS num_doc,
+        ''                                                                      AS chv_doce,
+        ''                                                                      AS dt_e_s,
+        ''                                                                      AS num_item,
+        ''                                                                      AS cod_item,
+        ''                                                                      AS descr_compl,
+        COALESCE(NULLIF(pf550.cfop,''),'N/A')                                   AS cfop,
+        COALESCE(NULLIF(pf550.cst_pis,''),'00')                                 AS cst_pis,
+        GREATEST(COALESCE(pf550.vl_bc_pis,0),0)::DECIMAL(18,6)                  AS vl_bc_pis,
+        COALESCE(pf550.aliq_pis,0)::DECIMAL(18,6)                               AS aliq_pis,
+        GREATEST(COALESCE(pf550.vl_pis,0),0)::DECIMAL(18,6)                     AS vl_pis,
+        COALESCE(NULLIF(pf550.cst_cofins,''),'00')                              AS cst_cofins,
+        GREATEST(COALESCE(pf550.vl_bc_cofins,0),0)::DECIMAL(18,6)               AS vl_bc_cofins,
+        COALESCE(pf550.aliq_cofins,0)::DECIMAL(18,6)                            AS aliq_cofins,
+        GREATEST(COALESCE(pf550.vl_cofins,0),0)::DECIMAL(18,6)                  AS vl_cofins,
+        COALESCE(pf550.vl_rec_comp,0)::DECIMAL(18,6)                            AS vl_item,
+        0::DECIMAL(18,6)                                                        AS vl_desc,
+        ''                                                                      AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_f550 pf550
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_0000 p0 USING (filename)
+    WHERE ft.is_fiscal = 0
+
+    UNION ALL
+
+    /* ==========================================
+        22. FISCAL - C170 (MERCADORIAS)
+        ========================================== */
+    SELECT
+        'FISCAL'                                                            AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                      AS dt_ref,
+        CASE WHEN COALESCE(reg_c100.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'C170'                                                              AS registro,
+        COALESCE(reg_c100.num_doc,'')                                        AS num_doc,
+        COALESCE(reg_c100.chv_doce,'')                                       AS chv_doce,
+        COALESCE(reg_c100.dt_e_s,'')                                         AS dt_e_s,
+        COALESCE(reg_c170.num_item,'')                                       AS num_item,
+        TRIM(COALESCE(reg_c170.cod_item,''))                                 AS cod_item,
+        TRIM(COALESCE(reg_c170.descr_compl,''))                              AS descr_compl,
+        COALESCE(NULLIF(reg_c170.cfop,''),'N/A')                             AS cfop,
+        COALESCE(NULLIF(reg_c170.cst_pis,''),'00')                            AS cst_pis,
+        GREATEST(COALESCE(reg_c170.vl_bc_pis,0),0)::DECIMAL(18,6)            AS vl_bc_pis,
+        COALESCE(reg_c170.aliq_pis,0)::DECIMAL(18,6)                         AS aliq_pis,
+        GREATEST(COALESCE(reg_c170.vl_pis,0),0)::DECIMAL(18,6)               AS vl_pis,
+        COALESCE(NULLIF(reg_c170.cst_cofins,''),'00')                         AS cst_cofins,
+        GREATEST(COALESCE(reg_c170.vl_bc_cofins,0),0)::DECIMAL(18,6)         AS vl_bc_cofins,
+        COALESCE(reg_c170.aliq_cofins,0)::DECIMAL(18,6)                      AS aliq_cofins,
+        GREATEST(COALESCE(reg_c170.vl_cofins,0),0)::DECIMAL(18,6)            AS vl_cofins,
+        COALESCE(reg_c170.vl_item,0)::DECIMAL(18,6)                          AS vl_item,
+        COALESCE(reg_c170.vl_desc,0)::DECIMAL(18,6)                          AS vl_desc,
+        COALESCE(reg_c170.cod_cta,'')                                        AS cod_cta,
+        p0.filename                                                          AS filename,
+        'Não conferido'                                                         AS st_conf
+    FROM _t_c170 reg_c170
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_c100 reg_c100 USING (filename, g_c100)
+    LEFT JOIN _t_0000 p0       USING (filename)
+    WHERE ft.is_fiscal = 1
+
+    UNION ALL
+
+    /* ==========================================
+       23. FISCAL - C500 (ENERGIA / ÁGUA)
+       Layout EFD-Fiscal: VL_DOC=c13, VL_ICMS=c20
+       ========================================== */
+    SELECT
+        'FISCAL'                                                            AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                      AS dt_ref,
+        'Entrada'                                                           AS sentido,
+        'C500'                                                              AS registro,
+        ''                                                                  AS num_doc,
+        ''                                                                  AS chv_doce,
+        ''                                                                  AS dt_e_s,
+        ''                                                                  AS num_item,
+        ''                                                                  AS cod_item,
+        ''                                                                  AS descr_compl,
+        '1253'                                                              AS cfop,
+        COALESCE(NULLIF(reg_c501.cst_pis,''),'00')                          AS cst_pis,
+        GREATEST(COALESCE(reg_c501.vl_bc_pis,0),0)::DECIMAL(18,6)           AS vl_bc_pis,
+        COALESCE(reg_c501.aliq_pis,0)::DECIMAL(18,6)                        AS aliq_pis,
+        GREATEST(COALESCE(reg_c501.vl_pis,0),0)::DECIMAL(18,6)              AS vl_pis,
+        COALESCE(NULLIF(reg_c505_agr.cst_cofins,''),'00')                   AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                        AS vl_bc_cofins,
+        COALESCE(reg_c505_agr.aliq_cofins,0)::DECIMAL(18,6)                 AS aliq_cofins,
+        GREATEST(COALESCE(reg_c505_agr.vl_cofins,0),0)::DECIMAL(18,6)       AS vl_cofins,
+        COALESCE(reg_c500.vl_doc_fiscal,0)::DECIMAL(18,6)                   AS vl_item,
+        0::DECIMAL(18,6)                                                    AS vl_desc,
+        ''                                                                  AS cod_cta,
+        p0.filename                                                            AS filename,
+        'Não conferido'                                                     AS st_conf
+    FROM _t_c500 reg_c500
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_c501 reg_c501 USING (filename, g_c500)
+    LEFT JOIN _t_0000 p0       USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_c500, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_c505
+        GROUP BY filename, g_c500, cst_cofins
+    ) reg_c505_agr
+        ON reg_c505_agr.filename = reg_c500.filename
+       AND reg_c505_agr.g_c500   = reg_c500.g_c500
+       AND reg_c505_agr.cst_cofins = reg_c501.cst_pis
+    WHERE ft.is_fiscal = 1
+
+    UNION ALL
+
+    /* ==========================================
+       24. FISCAL - D100 (ENTR E SAÍDAS DE TRANSP.)
+       ========================================== */
+    SELECT
+        'FISCAL'                                                            AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                      AS dt_ref,
+        CASE WHEN COALESCE(reg_d100.ind_oper,'0')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'D100'                                                              AS registro,
+        ''                                                                  AS num_doc,
+        ''                                                                  AS chv_doce,
+        ''                                                                  AS dt_e_s,
+        ''                                                                  AS num_item,
+        ''                                                                  AS cod_item,
+        ''                                                                  AS descr_compl,
+        COALESCE(NULLIF(reg_d190.cfop,''), CASE WHEN COALESCE(reg_d100.ind_oper,'0')='0' THEN '1352' ELSE '5352' END) AS cfop,
+        ''                                                                  AS cst_pis,
+        0::DECIMAL(18,6)                                                    AS vl_bc_pis,
+        0::DECIMAL(18,6)                                                    AS aliq_pis,
+        0::DECIMAL(18,6)                                                    AS vl_pis,
+        ''                                                                  AS cst_cofins,
+        0::DECIMAL(18,6)                                                    AS vl_bc_cofins,
+        0::DECIMAL(18,6)                                                    AS aliq_cofins,
+        0::DECIMAL(18,6)                                                    AS vl_cofins,
+        COALESCE(reg_d100.vl_serv,0)::DECIMAL(18,6)                         AS vl_item,
+        COALESCE(reg_d100.vl_desc,0)::DECIMAL(18,6)                         AS vl_desc,
+        ''                                                                  AS cod_cta,
+        p0.filename                                                            AS filename,
+        'Não conferido'                                                     AS st_conf
+    FROM _t_d100 reg_d100
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d190 reg_d190 USING (filename, g_d100)
+    LEFT JOIN _t_0000 p0       USING (filename)
+    WHERE ft.is_fiscal = 1
+
+    UNION ALL
+
+    /* ==========================================
+       25. FISCAL - D500 (TELECOM)
+       ========================================== */
+    SELECT
+        'FISCAL'                                                            AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                      AS dt_ref,
+        CASE WHEN COALESCE(reg_d500.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'D500'                                                              AS registro,
+        ''                                                                  AS num_doc,
+        ''                                                                  AS chv_doce,
+        ''                                                                  AS dt_e_s,
+        ''                                                                  AS num_item,
+        ''                                                                  AS cod_item,
+        ''                                                                  AS descr_compl,
+        '1352'                                                              AS cfop,
+        COALESCE(NULLIF(reg_d501.cst_pis,''),'00')                          AS cst_pis,
+        GREATEST(COALESCE(reg_d501.vl_bc_pis,0),0)::DECIMAL(18,6)           AS vl_bc_pis,
+        COALESCE(reg_d501.aliq_pis,0)::DECIMAL(18,6)                        AS aliq_pis,
+        GREATEST(COALESCE(reg_d501.vl_pis,0),0)::DECIMAL(18,6)              AS vl_pis,
+        COALESCE(NULLIF(reg_d505_agr.cst_cofins,''),'00')                   AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                        AS vl_bc_cofins,
+        COALESCE(reg_d505_agr.aliq_cofins,0)::DECIMAL(18,6)                 AS aliq_cofins,
+        GREATEST(COALESCE(reg_d505_agr.vl_cofins,0),0)::DECIMAL(18,6)       AS vl_cofins,
+        COALESCE(reg_d500.vl_serv,0)::DECIMAL(18,6)                         AS vl_item,
+        COALESCE(reg_d500.vl_desc,0)::DECIMAL(18,6)                         AS vl_desc,
+        ''                                                                  AS cod_cta,
+        p0.filename                                                            AS filename,
+        'Não conferido'                                                     AS st_conf
+    FROM _t_d500 reg_d500
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d501 reg_d501 USING (filename, g_d500)
+    LEFT JOIN _t_0000 p0       USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_d500, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_d505
+        GROUP BY filename, g_d500, cst_cofins
+    ) reg_d505_agr
+        ON reg_d505_agr.filename = reg_d500.filename
+       AND reg_d505_agr.g_d500   = reg_d500.g_d500
+       AND reg_d505_agr.cst_cofins = reg_d501.cst_pis
+    WHERE ft.is_fiscal = 1
+
+    UNION ALL
+
+    /* ==========================================
+       26. FISCAL - D700 (SERVIÇOS TELECOM)
+       ========================================== */
+    SELECT
+        'FISCAL'                                                            AS sped_origem,
+        COALESCE(p0.dt_fim,'19000101')                                      AS dt_ref,
+        CASE WHEN COALESCE(reg_d700.ind_oper,'1')='0' THEN 'Entrada' ELSE 'Saída' END AS sentido,
+        'D700'                                                              AS registro,
+        ''                                                                  AS num_doc,
+        ''                                                                  AS chv_doce,
+        ''                                                                  AS dt_e_s,
+        ''                                                                  AS num_item,
+        ''                                                                  AS cod_item,
+        ''                                                                  AS descr_compl,
+        '1352'                                                              AS cfop,
+        COALESCE(NULLIF(reg_d701.cst_pis,''),'00')                          AS cst_pis,
+        GREATEST(COALESCE(reg_d701.vl_bc_pis,0),0)::DECIMAL(18,6)           AS vl_bc_pis,
+        COALESCE(reg_d701.aliq_pis,0)::DECIMAL(18,6)                        AS aliq_pis,
+        GREATEST(COALESCE(reg_d701.vl_pis,0),0)::DECIMAL(18,6)              AS vl_pis,
+        COALESCE(NULLIF(reg_d705_agr.cst_cofins,''),'00')                   AS cst_cofins,
+        GREATEST(0,0)::DECIMAL(18,6)                                        AS vl_bc_cofins,
+        COALESCE(reg_d705_agr.aliq_cofins,0)::DECIMAL(18,6)                 AS aliq_cofins,
+        GREATEST(COALESCE(reg_d705_agr.vl_cofins,0),0)::DECIMAL(18,6)       AS vl_cofins,
+        COALESCE(reg_d700.vl_doc,0)::DECIMAL(18,6)                          AS vl_item,
+        COALESCE(reg_d700.vl_desc,0)::DECIMAL(18,6)                         AS vl_desc,
+        ''                                                                  AS cod_cta,
+        p0.filename                                                            AS filename,
+        'Não conferido'                                                     AS st_conf
+    FROM _t_d700 reg_d700
+    INNER JOIN _is_fiscal ft USING (filename)
+    LEFT JOIN _t_d701 reg_d701 USING (filename, g_d700)
+    LEFT JOIN _t_0000 p0       USING (filename)
+    LEFT JOIN (
+        SELECT filename, g_d700, cst_cofins,
+               AVG(COALESCE(aliq_cofins,0))::DECIMAL(18,6) AS aliq_cofins,
+               SUM(COALESCE(vl_cofins,0))::DECIMAL(18,6)   AS vl_cofins
+        FROM _t_d705
+        GROUP BY filename, g_d700, cst_cofins
+    ) reg_d705_agr
+        ON reg_d705_agr.filename = reg_d700.filename
+       AND reg_d705_agr.g_d700   = reg_d700.g_d700
+       AND reg_d705_agr.cst_cofins = reg_d701.cst_pis
+    WHERE ft.is_fiscal = 1
+
+),
+
+
+BASE AS (
+    SELECT
+        dp.*,
+        dp.cnpj AS cnpj,
+        CASE
+            WHEN SUBSTRING(dt_ref_digitos FROM 1 FOR 4) BETWEEN '1900' AND '2099'
+                THEN SUBSTRING(dt_ref_digitos FROM 5 FOR 2) || '/' || SUBSTRING(dt_ref_digitos FROM 1 FOR 4)
+            ELSE SUBSTRING(dt_ref_digitos FROM 3 FOR 2) || '/' || SUBSTRING(dt_ref_digitos FROM 5 FOR 4)
+        END AS periodo_competencia,
+        TRIM(i.descr_item) AS descr_item_0200,
+        TRIM(i.cod_ncm) AS cod_ncm_0200,
+        TRIM(nc.nat_bc_cred) AS nat_bc_cred
+    FROM (
+        SELECT
+            DATA_POOL.*,
+            LEFT(COALESCE(NULLIF(REGEXP_REPLACE(dt_ref,'[^0-9]','','g'),''),'01011900'),8) AS dt_ref_digitos,
+            _t_0000.cnpj AS cnpj
+        FROM DATA_POOL
+        LEFT JOIN _t_0000 USING (filename)
+    ) dp
+    LEFT JOIN _t_0200 i
+        ON i.filename = dp.filename
+        AND i.cod_item = dp.cod_item
+    LEFT JOIN CFOP_NAT_BC_CRED nc
+        ON nc.cfop = dp.cfop
+)
+
+/* ====================================================================================
+   SELEÇÃO FINAL (23 COLUNAS R00 + Status)
+   ==================================================================================== */
+SELECT
+    periodo_competencia                             AS "Período",
+    CASE
+        WHEN LENGTH(TRIM(dt_e_s)) = 8
+        THEN SUBSTRING(dt_e_s,1,2) || '/' || SUBSTRING(dt_e_s,3,2) || '/' || SUBSTRING(dt_e_s,5,4)
+        ELSE COALESCE(dt_e_s,'')
+    END                                             AS "Data de Entrada/Saída",
+    CASE
+        WHEN LENGTH(REGEXP_REPLACE(cnpj,'[^0-9]','','g')) = 14
+        THEN SUBSTRING(cnpj,1,2) || '.' || SUBSTRING(cnpj,3,3) || '.' || SUBSTRING(cnpj,6,3) || '/' || SUBSTRING(cnpj,9,4) || '-' || SUBSTRING(cnpj,13,2)
+        ELSE cnpj
+    END                                             AS "CNPJ Empresa",
+    COALESCE(chv_doce,'')                           AS "Chave de acesso",
+    COALESCE(num_doc,'')                            AS "Número do Documento",
+    sentido                                         AS "Indicador de Operação",
+    COALESCE(num_item,'')                           AS "Número do Item",
+    COALESCE(cod_item,'')                           AS "Código do Produto/Item",
+    COALESCE(NULLIF(TRIM(descr_item_0200),''), TRIM(descr_compl), '') AS "Descrição do Produto/Item",
+    COALESCE(cfop,'N/A')                            AS "CFOP",
+    COALESCE(TRIM(cod_ncm_0200),'')                 AS "NCM",
+    GREATEST(COALESCE(vl_item,0),0)::DECIMAL(18,2)  AS "Valor do Item",
+    GREATEST(COALESCE(vl_desc,0),0)::DECIMAL(18,2)  AS "Valor do Desconto",
+    COALESCE(cst_pis,'')                            AS "CST PIS/COFINS",
+    GREATEST(COALESCE(vl_bc_pis,0),0)::DECIMAL(18,2) AS "BC PIS/COFINS",
+    GREATEST(COALESCE(aliq_pis,0),0)::DECIMAL(18,6) AS "Alíquota do PIS (Percentual)",
+    GREATEST(COALESCE(vl_pis,0),0)::DECIMAL(18,2)   AS "Valor do PIS",
+    GREATEST(COALESCE(aliq_cofins,0),0)::DECIMAL(18,6) AS "Alíquota da COFINS (Percentual)",
+    GREATEST(COALESCE(vl_cofins,0),0)::DECIMAL(18,2) AS "Valor da COFINS",
+    COALESCE(nat_bc_cred,'')                            AS "Nat. BC Créd",
+    sped_origem                                     AS sped_origem,
+    registro                                        AS registro,
+    st_conf                                         AS st_conf
+FROM BASE
+ORDER BY
+    "Período" ASC,
+    registro ASC
+)
+SELECT
+    COALESCE("Chave de acesso",'') || COALESCE("Número do Item",'') AS chave_unica,
+    "Período"                       AS periodo,
+    "Data de Entrada/Saída"         AS dt_e_s,
+    "CNPJ Empresa"                  AS cnpj_empresa,
+    "Chave de acesso"               AS chv_doce,
+    "Indicador de Operação"         AS sentido,
+    registro                        AS registro,
+    "Número do Documento"           AS num_doc,
+    "Número do Item"                AS num_item,
+    "Código do Produto/Item"        AS cod_item,
+    "Descrição do Produto/Item"     AS descricao,
+    "CFOP"                          AS cfop,
+    "NCM"                           AS ncm,
+    "Valor do Item"::DOUBLE         AS vl_item,
+    "Valor do Desconto"::DOUBLE     AS vl_desc,
+    "CST PIS/COFINS"                AS cst_pis_cofins,
+    "BC PIS/COFINS"::DOUBLE         AS vl_bc_pis_cofins,
+    "Alíquota do PIS (Percentual)"::DOUBLE AS aliq_pis,
+    "Valor do PIS"::DOUBLE          AS vl_pis,
+    "Alíquota da COFINS (Percentual)"::DOUBLE AS aliq_cofins,
+    "Valor da COFINS"::DOUBLE       AS vl_cofins,
+    "Nat. BC Créd"                  AS nat_bc_cred,
+    sped_origem                     AS sped_origem,
+    st_conf                         AS st_conf
+FROM _orig`;
+
+const els = {
+  dropzone: document.getElementById('dropzone'),
+  dropzoneToggle: document.getElementById('dropzone-toggle'),
+  fileInput: document.getElementById('file-input'),
+  folderInput: document.getElementById('folder-input'),
+  selectBtn: document.getElementById('select-btn'),
+  selectFolderBtn: document.getElementById('select-folder-btn'),
+  fileList: document.getElementById('file-list'),
+  progress: document.getElementById('progress'),
+  progressFill: document.getElementById('progress-fill'),
+  progressText: document.getElementById('progress-text'),
+  error: document.getElementById('error'),
+  results: document.getElementById('results'),
+  filterPeriodoIni: document.getElementById('filter-periodo-ini'),
+  filterPeriodoFim: document.getElementById('filter-periodo-fim'),
+  filterOrigem: document.getElementById('filter-origem'),
+  filterSituacao: document.getElementById('filter-situacao'),
+  filterRegistro: document.getElementById('filter-registro'),
+  filterCfop: document.getElementById('filter-cfop'),
+  filterCst: document.getElementById('filter-cst'),
+  filterNatBcCred: document.getElementById('filter-nat-bc-cred'),
+  listNatBcCred: document.getElementById('list-nat-bc-cred'),
+  filterCnpj: document.getElementById('filter-cnpj'),
+  listCnpj: document.getElementById('list-cnpj'),
+
+  listCfop: document.getElementById('list-cfop'),
+  listCst: document.getElementById('list-cst'),
+  clearFilters: document.getElementById('clear-filters'),
+  clearData: document.getElementById('clear-data'),
+  exportCsv: document.getElementById('export-csv'),
+  exportXlsx: document.getElementById('export-xlsx'),
+  stats: document.getElementById('stats'),
+  theadRow: document.getElementById('thead-row'),
+  tbody: document.getElementById('tbody'),
+  tfoot: document.getElementById('tfoot'),
+  empty: document.getElementById('empty'),
+  resultTable: document.getElementById('result-table'),
+  tableWrapper: document.querySelector('.table-wrapper'),
+};
+els.tableWrapper.addEventListener('wheel', e => {
+  e.preventDefault();
+  els.tableWrapper.scrollTop += e.deltaY;
+}, { passive: false });
+
+let db, conn;
+let rawData = [];
+let registeredFiles = [];
+let registeredTexts = {};
+let filteredData = [];
+let sortCol = null, sortDir = 'asc';
+let colWidths = {};
+let columnFilters = {};
+let colFilterTimer = null;
+let registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+let dbReady = false;
+
+const COLUMNS = [
+  { key: 'chave_unica',       label: 'Chave unica',              type: 'text' },
+  { key: 'periodo',            label: 'Período',                  type: 'text' },
+  { key: 'dt_e_s',             label: 'Data de Entrada / Sa\u00edda', type: 'text' },
+  { key: 'cnpj_empresa',       label: 'CNPJ Empresa',             type: 'text' },
+  { key: 'chv_doce',           label: 'Chave de acesso',          type: 'text' },
+  { key: 'sentido',            label: 'Indicador de Operação',    type: 'text' },
+  { key: 'registro',           label: 'Registro',                 type: 'text' },
+  { key: 'num_doc',            label: 'Número do Documento',      type: 'text' },
+  { key: 'num_item',           label: 'Número do Item',           type: 'text' },
+  { key: 'cod_item',           label: 'Código do Produto / Item', type: 'text' },
+  { key: 'descricao',          label: 'Descrição do Produto/Item',type: 'text' },
+  { key: 'cfop',               label: 'CFOP',                     type: 'text' },
+  { key: 'ncm',                label: 'NCM',                      type: 'text' },
+  { key: 'vl_item',            label: 'Valor do Item',            type: 'money' },
+  { key: 'vl_desc',            label: 'Valor do Desconto',        type: 'money' },
+  { key: 'cst_pis_cofins',     label: 'CST PIS/COFINS',           type: 'text' },
+  { key: 'vl_bc_pis_cofins',   label: 'BC PIS/COFINS',            type: 'money' },
+  { key: 'aliq_pis',           label: 'Alíquota do PIS (Percentual)', type: 'pct' },
+  { key: 'vl_pis',             label: 'Valor do PIS',            type: 'money' },
+  { key: 'aliq_cofins',        label: 'Alíquota da COFINS (Percentual)', type: 'pct' },
+  { key: 'vl_cofins',          label: 'Valor da COFINS',          type: 'money' },
+  { key: 'nat_bc_cred',        label: 'Nat. BC Créd',            type: 'text' },
+  { key: 'st_conf',            label: 'Status conferencia',       type: 'text' },
+];
+
+const DECIMAL_SCALES = {
+  aliq_pis: 6,
+  aliq_cofins: 6,
+  descricao: 0,
+  ncm: 0,
+  vl_item: 2,
+  vl_desc: 2,
+  vl_bc_pis_cofins: 2,
+  vl_pis: 2,
+  vl_cofins: 2,
+  nat_bc_cred: 0,
+};
+
+function setProgress(pct, text){
+  els.progress.classList.remove('hidden');
+  els.progressFill.style.width = pct + '%';
+  els.progressText.textContent = `${Math.round(pct)}% — ${text}`;
+}
+function hideProgress(){ els.progress.classList.add('hidden'); }
+function showError(msg){
+  els.error.textContent = msg;
+  els.error.classList.remove('hidden');
+  console.error(msg);
+}
+function hideError(){ els.error.classList.add('hidden'); }
+
+async function initDuckDB(){
+  setProgress(5, 'Carregando DuckDB-WASM (CDN)...');
+  const duckdb = await import('https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.32.0/+esm');
+  const JSDELIVR_BUNDLES = duckdb.getJsDelivrBundles();
+  const bundle = await duckdb.selectBundle(JSDELIVR_BUNDLES);
+  const worker_url = URL.createObjectURL(
+    new Blob([`importScripts("${bundle.mainWorker}");`], { type: 'text/javascript' })
+  );
+  const worker = new Worker(worker_url);
+  const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING);
+  db = new duckdb.AsyncDuckDB(logger, worker);
+  await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+  URL.revokeObjectURL(worker_url);
+  conn = await db.connect();
+  dbReady = true;
+  setProgress(15, 'DuckDB pronto. Aguardando arquivos...');
+}
+
+function extractCnpjAndPeriod(name){
+  let m = name.match(/^(\d{12,14})-\d+-(\d{8})-(\d{8})/);
+  if (m){
+    return { cnpj: m[1], period: m[2].substring(0,4) + '/' + m[2].substring(4,6), size: 0 };
+  }
+  m = name.match(/_(\d{8})_(\d{8})_(\d{12,14})_/);
+  if (m){
+    return { cnpj: m[3], period: m[1].substring(0,4) + '/' + m[1].substring(4,6), size: 0 };
+  }
+  return null;
+}
+
+function fmtCnpj(cnpj){
+  if (!cnpj) return '';
+  const d = cnpj.replace(/\D/g,'');
+  if (d.length === 14){
+    return d.substring(0,2) + '.' + d.substring(2,5) + '.' + d.substring(5,8) + '/' + d.substring(8,12) + '-' + d.substring(12);
+  }
+  return d;
+}
+
+function getFilePath(f){
+  return (f.webkitRelativePath && f.webkitRelativePath.length) ? f.webkitRelativePath : f.name;
+}
+
+async function traverseEntry(entry, out){
+  if (entry.isFile){
+    const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+    if (/\.txt$/i.test(file.name)) out.push(file);
+  } else if (entry.isDirectory){
+    const reader = entry.createReader();
+    const readBatch = () => new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+    let batch;
+    do {
+      batch = await readBatch();
+      for (const e of batch) await traverseEntry(e, out);
+    } while (batch.length > 0);
+  }
+}
+
+async function readDirHandle(handle, prefix, out){
+  for await (const [name, child] of handle.entries()){
+    const childPath = prefix ? prefix + '/' + name : name;
+    if (child.kind === 'file'){
+      if (!/\.txt$/i.test(name)) continue;
+      const file = await child.getFile();
+      try { Object.defineProperty(file, 'webkitRelativePath', { value: childPath, configurable: true }); } catch(e){}
+      out.push(file);
+    } else if (child.kind === 'directory'){
+      await readDirHandle(child, childPath, out);
+    }
+  }
+}
+
+function pickFolder(){
+  return new Promise(resolve => {
+    const msg = 'Para importar pastas inteiras, o navegador precisa de uma autorização única.';
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box">
+        <div class="modal-icon">🔐</div>
+        <div class="modal-title">Acesso às pastas</div>
+        <div class="modal-desc">${msg}<br><br>Quando o navegador pedir permissão, clique em <strong>Permitir</strong> (é padrão de segurança, uma vez só). Depois escolha a pasta desejada.</div>
+        <div class="modal-actions">
+          <button class="modal-cancel" data-action="cancel">Cancelar</button>
+          <button class="modal-confirm" data-action="confirm" style="background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700">Continuar</button>
+        </div>
+      </div>`;
+    overlay.querySelector('.modal-cancel').addEventListener('click', () => { overlay.remove(); resolve([]); });
+    overlay.querySelector('.modal-confirm').addEventListener('click', async () => {
+      overlay.remove();
+      try {
+        if (window.showDirectoryPicker){
+          const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
+          const out = [];
+          await readDirHandle(dirHandle, dirHandle.name, out);
+          resolve(out);
+        } else {
+          const tmp = document.createElement('input');
+          tmp.type = 'file'; tmp.webkitdirectory = true; tmp.directory = true; tmp.multiple = true;
+          tmp.style.display = 'none'; document.body.appendChild(tmp);
+          tmp.addEventListener('change', () => {
+            const files = Array.from(tmp.files).filter(f => /\.txt$/i.test(f.name));
+            document.body.removeChild(tmp); resolve(files);
+          });
+          tmp.click();
+        }
+      } catch(e){
+        if (e.name === 'AbortError') resolve([]);
+        else { console.error('pickFolder:', e); resolve([]); }
+      }
+    });
+    overlay.addEventListener('click', e => { if (e.target === overlay){ overlay.remove(); resolve([]); } });
+    document.body.appendChild(overlay);
+  });
+}
+
+function renderFileList(files, cnpjByFilename){
+  els.fileList.innerHTML = '';
+  const groups = {};
+  let totalSize = 0;
+  const allNames = new Set(files.map(f => f.name));
+  const cumFiles = [];
+  for (const f of files) cumFiles.push({ name: f.name, size: f.size });
+  for (const origName of Object.values(registeredTexts)){
+    if (!allNames.has(origName)){
+      cumFiles.push({ name: origName, size: 0 });
+    }
+  }
+  for (const f of cumFiles){
+    totalSize += f.size;
+    let cnpj = null, period = null;
+    if (cnpjByFilename && cnpjByFilename[f.name]){
+      cnpj = cnpjByFilename[f.name].cnpj.replace(/\D/g,'');
+      if (cnpjByFilename[f.name].period && cnpjByFilename[f.name].period.length === 8){
+        period = cnpjByFilename[f.name].period.substring(4) + '/' + cnpjByFilename[f.name].period.substring(0,4);
+      }
+    } else {
+      const info = extractCnpjAndPeriod(f.name);
+      if (info){ cnpj = info.cnpj; period = info.period; }
+    }
+    if (cnpj){
+      if (!groups[cnpj]) groups[cnpj] = { cnpj: fmtCnpj(cnpj), periods: new Set(), count: 0, size: 0 };
+      if (period) groups[cnpj].periods.add(period);
+      groups[cnpj].count++;
+      groups[cnpj].size += f.size;
+    } else {
+      if (!groups['__outros__']) groups['__outros__'] = { cnpj: 'Outros', periods: new Set(), count: 0, size: 0 };
+      groups['__outros__'].count++;
+      groups['__outros__'].size += f.size;
+    }
+  }
+  const totalBefore = cumFiles.length - files.length;
+  const summary = document.createElement('div');
+  summary.className = 'file-summary';
+  const totalSizeStr = totalSize > 1048576 ? (totalSize/1048576).toFixed(1) + ' MB' : (totalSize/1024).toFixed(0) + ' KB';
+  const cnpjCount = Object.keys(groups).length;
+  summary.innerHTML = `<span>📁 <strong>${files.length}</strong> arquivo(s) importado(s) · <strong>${cnpjCount}</strong> CNPJ · ${totalSizeStr}${totalBefore > 0 ? ' · +' + totalBefore + ' já carregado(s)' : ''}</span><span>▼ Ver detalhes</span>`;
+  summary.addEventListener('click', () => {
+    const det = els.fileList.querySelector('.file-summary-detail');
+    if (det) { det.remove(); summary.querySelector('span:last-child').textContent = '▼ Ver detalhes'; return; }
+    const det2 = document.createElement('div');
+    det2.className = 'file-summary-detail';
+    for (const g of Object.values(groups)){
+      const periods = Array.from(g.periods).sort();
+      const periodRange = periods.length > 1 ? periods[0] + ' a ' + periods[periods.length-1] : periods[0];
+      const sizeStr = g.size > 1048576 ? (g.size/1048576).toFixed(1) + ' MB' : (g.size/1024).toFixed(0) + ' KB';
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.innerHTML = `<span>${g.cnpj} · ${periodRange}</span><span>${g.count} arq · ${sizeStr}</span>`;
+      det2.appendChild(div);
+    }
+    els.fileList.insertBefore(det2, summary.nextSibling);
+    summary.querySelector('span:last-child').textContent = '▲ Ocultar detalhes';
+  });
+  els.fileList.appendChild(summary);
+}
+
+async function processFiles(files){
+  if (!files.length) return;
+  const existingNames = new Set(Object.values(registeredTexts));
+  const duplicates = files.filter(f => existingNames.has(getFilePath(f)));
+  const toProcess = files.filter(f => !existingNames.has(getFilePath(f)));
+  if (duplicates.length && toProcess.length === 0){
+    showError(`⚠️ Todos os ${duplicates.length} arquivo(s) já foram importados. Use "Limpar dados" para reiniciar.`);
+    return;
+  }
+  hideError();
+  els.results.classList.remove('active');
+  if (duplicates.length){
+    showError(`⚠️ ${duplicates.length} arquivo(s) duplicado(s) ignorado(s): ${duplicates.map(f => getFilePath(f)).join(', ')}`);
+  }
+  files = toProcess;
+  renderFileList(toProcess);
+  const BATCH = 1;
+  const totalBatches = Math.ceil(files.length / BATCH);
+  setProgress(20, `Processando ${files.length} arquivo(s) em ${totalBatches} lote(s)...`);
+  try {
+    let allRawData = [];
+    let cnpjByFilename = {};
+    let isFiscalCount = { fiscal: 0, contrib: 0 };
+    for (let b = 0; b < totalBatches; b++){
+      const batchFiles = files.slice(b * BATCH, (b + 1) * BATCH);
+      const batchNames = [];
+      for (let j = 0; j < batchFiles.length; j++){
+        const f = batchFiles[j];
+        const idx = b * BATCH + j;
+        const buf = await f.arrayBuffer();
+        const safeName = 'sped_' + idx;
+        await db.registerFileBuffer(safeName, new Uint8Array(buf));
+        batchNames.push(safeName);
+        registeredTexts[safeName] = getFilePath(f);
+      }
+      const pct = 20 + ((b + 1) / totalBatches) * 55;
+      setProgress(pct, `Lote ${b+1}/${totalBatches} — ${batchFiles.map(f=>f.name).join(', ')}`);
+      const fileList = '[' + batchNames.map(n => "'" + n + "'").join(',') + ']';
+      const sql = SQL_TEMPLATE.replace("getvariable('caminho_sped')", fileList);
+      const result = await conn.query(sql);
+      for (const row of result.toArray()){
+        const o = {};
+        for (const k of Object.keys(row)){
+          let v = row[k];
+          if (typeof v === 'bigint') v = Number(v);
+          o[k] = v;
+        }
+        allRawData.push(o);
+      }
+      try {
+        const cnpjR = await conn.query("SELECT filename, cnpj, dt_fim FROM _t_0000");
+        for (const row of cnpjR.toArray()){
+          const origName = registeredTexts[row.filename] || row.filename;
+          if (row.cnpj) cnpjByFilename[origName] = { cnpj: row.cnpj, period: row.dt_fim };
+        }
+      } catch(e){}
+      try {
+        const fr = await conn.query("SELECT is_fiscal, COUNT(*) AS n FROM _is_fiscal GROUP BY is_fiscal");
+        for (const row of fr.toArray()){
+          if (Number(row.is_fiscal) === 1) isFiscalCount.fiscal += Number(row.n);
+          else isFiscalCount.contrib += Number(row.n);
+        }
+      } catch(e){}
+      for (const n of batchNames){
+        try { await db.unregisterFile(n); } catch(e){}
+      }
+    }
+    rawData = allRawData;
+    if (rawData.length === 0){
+      hideProgress();
+      showError('Nenhum dado encontrado. Verifique se os arquivos são SPED Contribuições ou Fiscal válidos.');
+      return;
+    }
+    setProgress(80, 'Renderizando tabela...');
+    populateFilters();
+    autoFitColumns();
+    applyFilters();
+    registeredFiles = [];
+    registeredTexts = {};
+    if (Object.keys(cnpjByFilename).length){
+      renderFileList(toProcess, cnpjByFilename);
+    }
+    await updateFileClassification(isFiscalCount);
+    els.results.classList.add('active');
+    setProgress(100, `Concluído: ${rawData.length} linhas geradas.`);
+    setDropzoneCollapsed(true);
+    setTimeout(hideProgress, 1200);
+  } catch (e){
+    hideProgress();
+    showError('Erro ao processar: ' + (e.message || e));
+  }
+}
+
+async function updateFileClassification(counts){
+  try {
+    const regMap = {};
+    for (const r of rawData){
+      const k = (r.sped_origem || '?') + '|' + (r.registro || '?');
+      if (!regMap[k]) regMap[k] = { origem: r.sped_origem, registro: r.registro, n: 0, pis: 0, cof: 0 };
+      regMap[k].n += +r.vl_bc_pis_cofins || 0;
+      regMap[k].pis += +r.vl_pis || 0;
+      regMap[k].cof += +r.vl_cofins || 0;
+    }
+    const regRows = Object.values(regMap).sort((a,b) => (a.origem||'').localeCompare(b.origem||'') || (a.registro||'').localeCompare(b.registro||''));
+    let d101Diag = '', d105Diag = '';
+    try {
+      const d101r = await conn.query("SELECT COUNT(*) AS n, COALESCE(SUM(vl_pis),0) AS s FROM _t_d101 WHERE filename IN (SELECT filename FROM _is_fiscal WHERE is_fiscal=0)");
+      const d101row = d101r.toArray()[0];
+      d101Diag = `D101(CONTRIB): ${Number(d101row.n).toLocaleString('pt-BR')} regs, Σvl_pis=R$${fmtMoney(Number(d101row.s))}`;
+      const d105r = await conn.query("SELECT COUNT(*) AS n, COALESCE(SUM(vl_cofins),0) AS s FROM _t_d105 WHERE filename IN (SELECT filename FROM _is_fiscal WHERE is_fiscal=0)");
+      const d105row = d105r.toArray()[0];
+      d105Diag = `D105(CONTRIB): ${Number(d105row.n).toLocaleString('pt-BR')} regs, Σvl_cofins=R$${fmtMoney(Number(d105row.s))}`;
+    } catch(e){}
+    const summary = els.fileList.querySelector('.file-summary > span:first-child');
+    if (summary && !summary.innerHTML.includes('FISCAL +')){
+      const totais = {};
+      for (const r of regRows){
+        if (!totais[r.origem]) totais[r.origem] = { n: 0, pis: 0, cof: 0 };
+        totais[r.origem].n   += r.n;
+        totais[r.origem].pis += r.pis;
+        totais[r.origem].cof += r.cof;
+      }
+      let html = ` · <strong style="color:var(--accent)">${counts.fiscal} FISCAL + ${counts.contrib} CONTRIB</strong>`;
+      html += `<table class="file-summary-table"><thead><tr><th>Registro</th><th>BC PIS/COFINS</th><th>PIS</th><th>COFINS</th></tr></thead><tbody>`;
+      let curOrigem = '';
+      for (const r of regRows){
+        if (r.origem !== curOrigem){
+          curOrigem = r.origem;
+          html += `<tr class="section"><td colspan="4">${curOrigem}</td></tr>`;
+        }
+        html += `<tr><td>${escHtml(r.registro)}</td><td>${fmtMoney(r.n)}</td><td>${fmtMoney(r.pis)}</td><td>${fmtMoney(r.cof)}</td></tr>`;
+      }
+      for (const orig of ['CONTRIBUIÇÕES','FISCAL']){
+        if (!totais[orig]) continue;
+        const t = totais[orig];
+        html += `<tr class="total"><td>Total ${orig}</td><td>${fmtMoney(t.n)}</td><td>${fmtMoney(t.pis)}</td><td>${fmtMoney(t.cof)}</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      if (d101Diag) html += `<div class="file-summary-diag">🔍 ${escHtml(d101Diag)}<br>🔍 ${escHtml(d105Diag)}</div>`;
+      summary.innerHTML += html;
+    }
+  } catch(e){ console.error('updateFileClassification:', e); }
+}
+
+function populateFilters(){
+  const origens = new Set(), periodos = new Set(), regsAll = new Set(), cfops = new Set(), csts = new Set(), cnpjs = new Set();
+  registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+  for (const r of rawData){
+    if (r.sped_origem){
+      origens.add(r.sped_origem);
+      if (r.registro) registrosPorOrigem[r.sped_origem].add(r.registro);
+    }
+    if (r.periodo) periodos.add(r.periodo);
+    if (r.registro) regsAll.add(r.registro);
+    if (r.cfop) cfops.add(r.cfop);
+    if (r.cst_pis_cofins) csts.add(r.cst_pis_cofins);
+    if (r.chave_unica) cnpjs.add(r.chave_unica);
+  }
+  const fillSel = (sel, vals) => {
+    const cur = sel.value;
+    const firstOpt = sel.options[0].text;
+    sel.innerHTML = '';
+    const def = document.createElement('option');
+    def.value = ''; def.textContent = firstOpt;
+    sel.appendChild(def);
+    for (const v of [...vals].sort()){
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = v;
+      sel.appendChild(opt);
+    }
+    sel.value = cur;
+  };
+  const fillList = (dl, vals) => {
+    dl.innerHTML = '';
+    for (const v of [...vals].sort()){
+      const opt = document.createElement('option');
+      opt.value = v;
+      dl.appendChild(opt);
+    }
+  };
+  const ordemOrigem = ['CONTRIBUIÇÕES', 'FISCAL'];
+  const origensOrdenadas = [...origens].sort((a, b) => {
+    const ia = ordemOrigem.indexOf(a); const ib = ordemOrigem.indexOf(b);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+  fillSel(els.filterOrigem, origensOrdenadas);
+  updateRegistroOptions();
+  fillSel(els.filterPeriodoIni, [...periodos].sort());
+  fillSel(els.filterPeriodoFim, [...periodos].sort());
+  fillList(els.listCfop, cfops);
+  fillList(els.listCst, csts);
+  fillList(els.listCnpj, cnpjs);
+}
+
+function updateRegistroOptions(){
+  const origem = els.filterOrigem.value;
+  const regs = origem && registrosPorOrigem[origem]
+    ? registrosPorOrigem[origem]
+    : new Set([...registrosPorOrigem['CONTRIBUIÇÕES'], ...registrosPorOrigem['FISCAL']]);
+  const cur = els.filterRegistro.value;
+  els.filterRegistro.innerHTML = '';
+  const def = document.createElement('option');
+  def.value = ''; def.textContent = 'Registro (todos)';
+  els.filterRegistro.appendChild(def);
+  for (const v of [...regs].sort()){
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    els.filterRegistro.appendChild(opt);
+  }
+  if ([...regs].includes(cur)) els.filterRegistro.value = cur;
+  else els.filterRegistro.value = '';
+}
+
+function updateNatBcCredOptions(){
+  const fPeriodoIni = els.filterPeriodoIni.value;
+  const fPeriodoFim = els.filterPeriodoFim.value;
+  const fOrigem = els.filterOrigem.value;
+  const fSit = els.filterSituacao.value;
+  const fReg = els.filterRegistro.value;
+  const fCfop = els.filterCfop.value.trim().toLowerCase();
+  const fCst = els.filterCst.value.trim().toLowerCase();
+  const fCnpj = els.filterCnpj.value.trim().toLowerCase();
+  const nats = new Set();
+  for (const r of rawData){
+    const p = r.periodo || '';
+    if (fPeriodoIni && p < fPeriodoIni) continue;
+    if (fPeriodoFim && p > fPeriodoFim) continue;
+    if (fOrigem && r.sped_origem !== fOrigem) continue;
+    if (fReg && r.registro !== fReg) continue;
+    if (fSit && r.sentido !== fSit) continue;
+    if (fCfop && !(r.cfop || '').toLowerCase().includes(fCfop)) continue;
+    if (fCst && !(r.cst_pis_cofins || '').toLowerCase().includes(fCst)) continue;
+    if (fCnpj && !(r.chave_unica || '').toLowerCase().includes(fCnpj)) continue;
+    if (r.sped_origem !== 'CONTRIBUIÇÕES') continue;
+    const nat = String(r.cst_pis_cofins || '').trim();
+    if (!nat) continue;
+    nats.add(nat);
+  }
+  const natsArr = [...nats].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
+  els.listNatBcCred.innerHTML = natsArr.map(n => `<option value="${n}"></option>`).join('');
+}
+
+function applyFilters(){
+  updateNatBcCredOptions();
+  const fPeriodoIni = els.filterPeriodoIni.value;
+  const fPeriodoFim = els.filterPeriodoFim.value;
+  const fOrigem = els.filterOrigem.value;
+  const fSit = els.filterSituacao.value;
+  const fReg = els.filterRegistro.value;
+  const fCfop = els.filterCfop.value.trim().toLowerCase();
+  const fCst = els.filterCst.value.trim().toLowerCase();
+  const fNat = els.filterNatBcCred.value.trim().toLowerCase();
+  const fCnpj = els.filterCnpj.value.trim().toLowerCase();
+  filteredData = rawData.filter(r => {
+    const p = r.periodo || '';
+    if (fPeriodoIni && p < fPeriodoIni) return false;
+    if (fPeriodoFim && p > fPeriodoFim) return false;
+    if (fOrigem && r.sped_origem !== fOrigem) return false;
+    if (fReg && r.registro !== fReg) return false;
+    if (fSit && r.sentido !== fSit) return false;
+    if (fCfop && !(r.cfop || '').toLowerCase().includes(fCfop)) return false;
+    if (fCst && !(r.cst_pis_cofins || '').toLowerCase().includes(fCst)) return false;
+    if (fCnpj && !(r.chave_unica || '').toLowerCase().includes(fCnpj)) return false;
+    if (fNat){
+      const nat = String(r.cst_pis_cofins || '').trim() || 'N/A';
+      if (!nat.toLowerCase().includes(fNat)) return false;
+    }
+    for (const key of Object.keys(columnFilters)){
+      const v = (columnFilters[key] || '').trim();
+      if (!v) continue;
+      if (v && !String(r[key] || '').toLowerCase().includes(v.toLowerCase())) return false;
+    }
+    return true;
+  });
+  if (sortCol) sortData();
+  renderTable();
+  renderStats();
+  els.empty.classList.toggle('hidden', filteredData.length > 0);
+}
+
+function sortData(){
+  const idx = COLUMNS.findIndex(c => c.key === sortCol);
+  if (idx < 0) return;
+  const col = COLUMNS[idx];
+  filteredData.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (col.type === 'num' || col.type === 'money' || col.type === 'pct'){
+      va = +va || 0; vb = +vb || 0;
+    } else {
+      va = (va || '').toString(); vb = (vb || '').toString();
+    }
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function fmtMoney(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n)) return v;
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtNum(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n)) return v;
+  return n.toLocaleString('pt-BR', { maximumFractionDigits: 6 });
+}
+function fmtPct(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n) || n === 0) return '0,00';
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+}
+function escHtml(s){
+  return (s == null ? '' : String(s))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function measureText(text, font){
+  const canvas = measureText._canvas || (measureText._canvas = document.createElement('canvas'));
+  const ctx = canvas.getContext('2d');
+  ctx.font = font || '13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  return ctx.measureText(text || '').width;
+}
+
+function autoFitColumns(){
+  const font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  const chaveRef = measureText('422012', font) + 12;
+  colWidths['chave_unica'] = chaveRef;
+  const longestWord = label => {
+    let m = 0;
+    for (const w of label.split(/\s+/)){
+      const x = measureText(w, font);
+      if (x > m) m = x;
+    }
+    return m;
+  };
+  const sample = rawData.slice(0, 300);
+  const maxNarrow = { chv_doce:85, num_item:55, cod_item:90, descricao:195, nat_bc_cred:85, st_conf:95, cnpj_empresa:55, dt_e_s:85 };
+  for (let i = 0; i < COLUMNS.length; i++){
+    const c = COLUMNS[i];
+    if (c.key === 'chave_unica') continue;
+    if (colWidths[c.key]) continue;
+    let maxW = longestWord(c.label) + 12;
+    for (const r of sample){
+      const v = r[c.key];
+      if (v == null || v === '') continue;
+      let s = String(v);
+      if (c.type === 'money') s = fmtMoney(v);
+      else if (c.type === 'pct') s = fmtPct(v);
+      else if (c.type === 'num') s = fmtNum(v);
+      const w = measureText(s, font);
+      if (w + 12 > maxW) maxW = w + 12;
+    }
+    if (maxW < 40) maxW = 40;
+    if (c.key === 'descricao' && maxW < 195) maxW = 195;
+    if (c.key === 'ncm' && maxW < 60) maxW = 60;
+    // Respeitar largura máxima definida pelo usuário
+    if (maxNarrow[c.key] && maxW > maxNarrow[c.key]) maxW = maxNarrow[c.key];
+    colWidths[c.key] = Math.ceil(maxW);
+  }
+}
+
+function renderTable(){
+  els.theadRow.innerHTML = '';
+  for (let i = 0; i < COLUMNS.length; i++){
+    const c = COLUMNS[i];
+    const th = document.createElement('th');
+    th.textContent = c.label;
+    th.dataset.col = c.key;
+    const narrow = { registro:36, cfop:38, ncm:60, descricao:195, num_doc:100, chv_doce:85, cod_item:90, nat_bc_cred:85, num_item:55, st_conf:95, chave_unica:55, cnpj_empresa:55, dt_e_s:85 };
+    const w = colWidths[c.key] || (i === 0 ? 480 : (c.type === 'money' || c.type === 'pct' || c.type === 'num' ? 100 : (narrow[c.key] || 80)));
+    th.style.width = w + 'px';
+    th.style.minWidth = w + 'px';
+    if (i === 0) th.classList.add('chave');
+    if (sortCol === c.key) th.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    th.addEventListener('click', e => {
+      if (th._resizing) return;
+      if (e.target.classList.contains('resizer')) return;
+      if (sortCol === c.key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      else { sortCol = c.key; sortDir = 'asc'; }
+      sortData(); renderTable();
+    });
+    els.theadRow.appendChild(th);
+  }
+  initColumnResizers();
+  const rows = [];
+  const tSum = {};
+  const noSum = { aliq_pis:1, aliq_cofins:1 };
+  for (const c of COLUMNS) if (!noSum[c.key] && (c.type === 'num' || c.type === 'money' || c.type === 'pct')) tSum[c.key] = 0;
+  let count = 0;
+  for (const r of filteredData){
+    const tds = [];
+    for (let i = 0; i < COLUMNS.length; i++){
+      const c = COLUMNS[i];
+      const v = r[c.key];
+      let cls = i === 0 ? 'chave' : '';
+      let txt = v;
+      if (c.type === 'money'){ cls = (cls ? cls + ' ' : '') + 'money'; txt = fmtMoney(v); }
+      else if (c.type === 'pct'){ cls = 'num'; txt = fmtPct(v); }
+      else if (c.type === 'num'){ cls = 'num'; txt = fmtNum(v); }
+      else if (c.key === 'cfop' || c.key === 'cst_pis_cofins' || c.key === 'registro' || c.key === 'sentido' || c.key === 'ncm'){ cls = 'center'; }
+      tds.push(`<td class="${cls}">${escHtml(txt)}</td>`);
+      if (tSum[c.key] !== undefined && v != null && v !== ''){
+        const n = +v; if (!isNaN(n)) tSum[c.key] += n;
+      }
+    }
+    rows.push('<tr>' + tds.join('') + '</tr>');
+    count++;
+  }
+  els.tbody.innerHTML = rows.join('');
+  const sumTds = COLUMNS.map(c => {
+    if (noSum[c.key] || tSum[c.key] === undefined) return '<td></td>';
+    let txt;
+    if (c.type === 'money'){ txt = fmtMoney(tSum[c.key]); return '<td class="money">' + txt + '</td>'; }
+    else if (c.type === 'pct'){ txt = fmtPct(tSum[c.key]); return '<td class="num">' + txt + '</td>'; }
+    else if (c.type === 'num'){ txt = fmtNum(tSum[c.key]); return '<td class="num">' + txt + '</td>'; }
+    return '<td></td>';
+  }).join('');
+  const thead = els.theadRow.parentNode;
+  const oldSum = thead.querySelector('.summary-row');
+  if (oldSum) oldSum.remove();
+  const sumTr = document.createElement('tr');
+  sumTr.className = 'summary-row';
+  sumTr.innerHTML = sumTds;
+  thead.insertBefore(sumTr, els.theadRow);
+  // Sync summary row cell widths with header (table-layout:fixed uses first row)
+  for (let i = 0; i < els.theadRow.children.length; i++){
+    const w = els.theadRow.children[i].style.width;
+    if (w && sumTr.children[i]){
+      sumTr.children[i].style.width = w;
+      sumTr.children[i].style.minWidth = w;
+    }
+    const filterRow = document.getElementById('col-filter-row');
+    if (w && filterRow && filterRow.children[i]){
+      filterRow.children[i].style.width = w;
+      filterRow.children[i].style.minWidth = w;
+    }
+  }
+  initColumnFilters();
+}
+
+function getUniqueCols(){
+  const map = {};
+  if (!rawData) return map;
+  for (const c of COLUMNS){
+    const vals = new Set();
+    for (const r of rawData){
+      const v = r[c.key];
+      if (v != null && v !== '') vals.add(v);
+    }
+    map[c.key] = Array.from(vals).sort((a, b) => String(a).localeCompare(String(b), 'pt-BR'));
+  }
+  return map;
+}
+
+function initColumnFilters(){
+  const existing = document.getElementById('col-filter-row');
+  if (existing) existing.remove();
+  if (!els.theadRow.parentNode) return;
+  const uniq = getUniqueCols();
+  const row = document.createElement('tr');
+  row.id = 'col-filter-row';
+  for (const c of COLUMNS){
+    const th = document.createElement('th');
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.dataset.col = c.key;
+    inp.placeholder = 'Filtrar...';
+    inp.style.cssText = 'width:100%;box-sizing:border-box;padding:2px 5px;border:1px solid transparent;border-radius:3px;background:var(--bg3);color:var(--fg);font-size:11px;outline:none';
+    if (columnFilters[c.key]) inp.value = columnFilters[c.key];
+    const datalistId = 'dl-' + c.key;
+    const dl = document.createElement('datalist');
+    dl.id = datalistId;
+    const opts = uniq[c.key];
+    if (opts && opts.length > 0){
+      const maxShow = Math.min(opts.length, 500);
+      for (let i = 0; i < maxShow; i++){
+        const o = document.createElement('option');
+        o.value = opts[i];
+        dl.appendChild(o);
+      }
+    }
+    inp.setAttribute('list', datalistId);
+    inp.addEventListener('input', () => {
+      columnFilters[c.key] = inp.value;
+      clearTimeout(colFilterTimer);
+      colFilterTimer = setTimeout(applyFilters, 200);
+    });
+    th.appendChild(inp);
+    th.appendChild(dl);
+    row.appendChild(th);
+  }
+  els.theadRow.parentNode.appendChild(row);
+  requestAnimationFrame(() => {
+    for (let i = 0; i < els.theadRow.children.length; i++){
+      const w = els.theadRow.children[i].style.width;
+      if (w && row.children[i]){
+        row.children[i].style.width = w;
+        row.children[i].style.minWidth = w;
+      }
+    }
+  });
+}
+
+function renderStats(){
+  const src = filteredData;
+  const totPis = src.reduce((a, r) => a + (+r.vl_pis || 0), 0);
+  const totCof = src.reduce((a, r) => a + (+r.vl_cofins || 0), 0);
+  const totItem = src.reduce((a, r) => a + (+r.vl_item || 0), 0);
+  const totBcEscr = src.reduce((a, r) => a + (+r.vl_bc_pis_cofins || 0), 0);
+  const porSentido = (campo) => {
+    const m = { 'Entrada': 0, 'Saída': 0 };
+    for (const r of src){
+      const s = r.sentido || '?';
+      m[s] = (m[s] || 0) + (+r[campo] || 0);
+    }
+    return m;
+  };
+  const itemSent = porSentido('vl_item');
+  const bcSent = porSentido('vl_bc_pis');
+  const pisSent = porSentido('vl_pis');
+  const cofSent = porSentido('vl_cofins');
+  const tooltip = (lines, total) =>
+    `<div class="stat-tooltip"><div class="stat-tooltip-title">Memória de cálculo</div>${lines.map(l =>
+      `<div class="stat-tooltip-line"><span class="lbl">${l.lbl}</span><span class="val">R$ ${fmtMoney(l.val)}</span></div>`
+    ).join('')}<div class="stat-tooltip-result"><span class="lbl">= Total</span><span class="val">R$ ${fmtMoney(total)}</span></div></div>`;
+  const stats = [
+    { label: 'Linhas na tabela', value: src.length.toLocaleString('pt-BR'), cls: '',
+      tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${src.length.toLocaleString('pt-BR')}</span></div></div>` },
+    { label: 'Registros carregados', value: rawData.length.toLocaleString('pt-BR'), cls: '',
+      tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${rawData.length.toLocaleString('pt-BR')}</span></div></div>` },
+    { label: 'Vl. bruto total', value: 'R$ ' + fmtMoney(totItem), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:itemSent['Entrada']},
+        {lbl:'Saída', val:itemSent['Saída']},
+      ], totItem) },
+    { label: 'Vl. BC PIS/COFINS escrit.', value: 'R$ ' + fmtMoney(totBcEscr), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:bcSent['Entrada']},
+        {lbl:'Saída', val:bcSent['Saída']},
+      ], totBcEscr) },
+    { label: 'Vl. PIS', value: 'R$ ' + fmtMoney(totPis), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:pisSent['Entrada']},
+        {lbl:'Saída', val:pisSent['Saída']},
+      ], totPis) },
+    { label: 'Vl. COFINS', value: 'R$ ' + fmtMoney(totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:cofSent['Entrada']},
+        {lbl:'Saída', val:cofSent['Saída']},
+      ], totCof) },
+    { label: 'Vl. PIS + COFINS', value: 'R$ ' + fmtMoney(totPis + totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada PIS', val:pisSent['Entrada']},
+        {lbl:'Entrada COFINS', val:cofSent['Entrada']},
+        {lbl:'Saída PIS', val:pisSent['Saída']},
+        {lbl:'Saída COFINS', val:cofSent['Saída']},
+      ], totPis + totCof) },
+  ];
+  els.stats.innerHTML = stats.map(s =>
+    `<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-value ${s.cls||''}">${s.value}</div>${s.tip || ''}</div>`
+  ).join('');
+  renderPainel();
+}
+
+const PAINEL_REGS_ENTR = ['A170','C170','C190','C500','D100','F100','F120','F130','F150'];
+const PAINEL_REGS_SAID = ['A170','C170','C175','C180','C500','D100','D200','F100','F120','F130','F150'];
+const CST_CREDITOS = new Set(['50','51','52','53','54','55','56','60','61','62','63','64','65','66']);
+
+function passaFiltroCredito(r){
+  if (r.sped_origem !== 'CONTRIBUIÇÕES') return true;
+  if (r.sentido !== 'Entrada') return true;
+  const cst = String(r.cst_pis_cofins || '').replace(/^0+/, '');
+  if (!CST_CREDITOS.has(cst)) return false;
+  return true;
+}
+
+function renderPainel(){
+  const section = document.getElementById('painel-section');
+  if (!section) return;
+  if (!filteredData || filteredData.length === 0){
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  const body = document.getElementById('painel-body');
+  const soCreditos = document.getElementById('painel-credito-toggle')?.checked;
+  const natFiltro = els.filterNatBcCred?.value.trim().toLowerCase() || '';
+  const totBy = (regs, origem, sentido, campo) => {
+    const map = {};
+    for (const r of filteredData){
+      if (r.sped_origem !== origem) continue;
+      if (sentido && r.sentido !== sentido) continue;
+      const reg = r.registro;
+      if (!regs.includes(reg)) continue;
+      if (soCreditos && !passaFiltroCredito(r)) continue;
+      if (natFiltro){
+        const nat = String(r.cst_pis_cofins || '').trim() || 'N/A';
+        if (!nat.toLowerCase().includes(natFiltro)) continue;
+      }
+      map[reg] = (map[reg] || 0) + (+r[campo] || 0);
+    }
+    return map;
+  };
+  const totBy2 = (regs, origem, sentido, campo1, campo2) => {
+    const map = {};
+    for (const r of filteredData){
+      if (r.sped_origem !== origem) continue;
+      if (sentido && r.sentido !== sentido) continue;
+      const reg = r.registro;
+      if (!regs.includes(reg)) continue;
+      if (soCreditos && !passaFiltroCredito(r)) continue;
+      if (natFiltro){
+        const nat = String(r.cst_pis_cofins || '').trim() || 'N/A';
+        if (!nat.toLowerCase().includes(natFiltro)) continue;
+      }
+      map[reg] = (map[reg] || 0) + (+r[campo1] || 0) + (+r[campo2] || 0);
+    }
+    return map;
+  };
+  const fiscalEntr = totBy(PAINEL_REGS_ENTR, 'FISCAL', 'Entrada', 'vl_item');
+  const contribEntrOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_item');
+  const contribEntrBcOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_bc_pis');
+  const contribEntrPisCof = totBy2(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_pis', 'vl_cofins');
+  const fiscalSaid = totBy(PAINEL_REGS_SAID, 'FISCAL', 'Saída', 'vl_item');
+  const contribSaid = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_item');
+  const contribSaidDesc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_desc');
+  const contribSaidBc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_bc_pis');
+  const contribSaidPisCof = totBy2(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_pis', 'vl_cofins');
+
+  const sumVals = (m) => Object.values(m).reduce((a, b) => a + b, 0);
+  const tFiscEntr = sumVals(fiscalEntr);
+  const tContribEntr = sumVals(contribEntrOrig);
+  const tContribEntrBc = sumVals(contribEntrBcOrig);
+  const tFiscSaid = sumVals(fiscalSaid);
+  const tContribSaid = sumVals(contribSaid);
+  const tContribSaidDesc = sumVals(contribSaidDesc);
+  const tContribSaidBc = sumVals(contribSaidBc);
+
+  const diffEntrItem = tFiscEntr - tContribEntr;
+  const diffEntrBc = tFiscEntr - tContribEntr;
+  const ALIQ = 0.0925;
+
+  const renderTabelaEntr = () => {
+    const rows = PAINEL_REGS_ENTR.map(reg => {
+      const f = fiscalEntr[reg] || 0;
+      const co = contribEntrOrig[reg] || 0;
+      const cb = contribEntrBcOrig[reg] || 0;
+      const cp = contribEntrPisCof[reg] || 0;
+      const di = f - co;
+      return `<tr>
+        <td>${reg}</td>
+        <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
+        <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
+        <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
+        <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
+        <td class="col-diff ${di > 0 ? 'opportunity' : di < 0 ? 'negative' : ''}">${di ? fmtMoney(di) : '–'}</td>
+      </tr>`;
+    }).join('');
+    const tContribEntrPisCof = sumVals(contribEntrPisCof);
+    return `<table class="painel-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Registro</th>
+          <th class="col-fiscal">🔵 FISCAL ENTR.</th>
+          <th colspan="3" class="col-contrib">🟢 CONTRIB. ENTR. (Origem)</th>
+          <th class="col-diff">🟡 Diferença (Fiscal − Contrib.)</th>
+        </tr>
+        <tr>
+          <th class="col-fiscal">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Item</th>
+          <th class="col-contrib">BC PIS/COFINS</th>
+          <th class="col-contrib">Vlr. PIS+COFINS</th>
+          <th class="col-diff">Vlr. Item</th>
+        </tr>
+      </thead>
+      <tbody>${rows}
+        <tr class="total-row">
+          <td>TOTAL</td>
+          <td class="col-fiscal">${fmtMoney(tFiscEntr)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntr)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntrBc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntrPisCof)}</td>
+          <td class="col-diff ${diffEntrItem > 0 ? 'opportunity' : diffEntrItem < 0 ? 'negative' : ''}">${fmtMoney(diffEntrItem)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+  };
+
+  const renderTabelaSaid = () => {
+    const rows = PAINEL_REGS_SAID.map(reg => {
+      const f = fiscalSaid[reg] || 0;
+      const cd = contribSaidDesc[reg] || 0;
+      const co = contribSaid[reg] || 0;
+      const cb = contribSaidBc[reg] || 0;
+      const cp = contribSaidPisCof[reg] || 0;
+      return `<tr>
+        <td>${reg}</td>
+        <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
+        <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
+        <td class="col-contrib">${cd ? fmtMoney(cd) : '–'}</td>
+        <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
+        <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
+      </tr>`;
+    }).join('');
+    const tContribSaidPisCof = sumVals(contribSaidPisCof);
+    return `<table class="painel-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Registro</th>
+          <th class="col-fiscal">🔵 FISCAL SAÍD.</th>
+          <th colspan="4" class="col-contrib">🟢 CONTR. SAÍD.</th>
+        </tr>
+        <tr>
+          <th class="col-fiscal">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Desconto</th>
+          <th class="col-contrib">BC PIS/COFINS</th>
+          <th class="col-contrib">Vlr. PIS+COFINS</th>
+        </tr>
+      </thead>
+      <tbody>${rows}
+        <tr class="total-row">
+          <td>TOTAL</td>
+          <td class="col-fiscal">${fmtMoney(tFiscSaid)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaid)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidDesc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidBc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidPisCof)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+  };
+
+  const icmsHtml = (() => {
+    const r = filteredData.filter(x => x.registro === 'C170' && x.sentido === 'Sa\u00edda' && x.cst_pis_cofins === '01');
+    if (!r.length) return '<div class="empty" style="padding:12px">Nenhum registro C170 (Sa\u00edda, CST PIS 01) encontrado.</div>';
+    const tItem = r.reduce((a, x) => a + (+x.vl_item || 0), 0);
+    const tDesc = r.reduce((a, x) => a + (+x.vl_desc || 0), 0);
+    const bc = tItem - tDesc;
+    const pEsc = r.reduce((a, x) => a + (+x.vl_pis || 0) + (+x.vl_cofins || 0), 0);
+    const pAdj = bc * 0.0925;
+    const op = pEsc - pAdj;
+    return '<div style="padding:12px;background:var(--bg3);border-radius:6px;border-left:3px solid var(--warn)">' +
+      '<div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Exclus\u00e3o do ICMS da BC PIS/COFINS (C170 Sa\u00eddas CST 01)</div>' +
+      '<table class="painel-table" style="margin:0;width:auto"><tbody>' +
+      '<tr><td style="text-align:left">Vlr. Item</td><td style="text-align:right">R$ ' + fmtMoney(tItem) + '</td></tr>' +
+      '<tr><td style="text-align:left">(\u2013) Vlr. Desconto</td><td style="text-align:right">R$ ' + fmtMoney(tDesc) + '</td></tr>' +
+      '<tr class="total-row"><td style="text-align:left;font-weight:700">= BC Ajustada</td><td style="text-align:right;font-weight:700">R$ ' + fmtMoney(bc) + '</td></tr>' +
+      '<tr><td style="text-align:left">(\u2013) PIS/COFINS Ajustado (BC Adj. \u00d7 9,25%)</td><td style="text-align:right">R$ ' + fmtMoney(pAdj) + '</td></tr>' +
+      '<tr><td style="text-align:left">(+) PIS/COFINS Escriturado</td><td style="text-align:right">R$ ' + fmtMoney(pEsc) + '</td></tr>' +
+      '<tr class="total-row"><td style="text-align:left;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">= Oportunidade</td><td style="text-align:right;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">R$ ' + fmtMoney(op) + '</td></tr>' +
+      '</tbody></table></div>';
+  })();
+  body.innerHTML = `
+    <div class="painel-row">
+      <div class="painel-block">
+        <div class="painel-block-title entr">① ENTRADAS <span class="badge">Fiscal × Contribuições</span></div>
+        ${renderTabelaEntr()}
+        <div class="painel-summary" style="grid-template-columns:1fr 1fr;max-width:100%;margin-top:12px">
+          <div class="painel-summary-item diff">
+            <span class="painel-summary-label">🟡 Diferença (Fiscal − Contrib.)</span>
+            <span class="painel-summary-value ${diffEntrBc > 0 ? 'ok' : diffEntrBc < 0 ? 'err' : ''}">R$ ${fmtMoney(diffEntrBc)}</span>
+            <div class="painel-tooltip">
+              <div class="painel-tooltip-title">Memória de cálculo</div>
+              <div class="painel-tooltip-line"><span class="lbl">Vlr. Item Entradas (Fiscal)</span><span class="val">R$ ${fmtMoney(tFiscEntr)}</span></div>
+              <div class="painel-tooltip-line"><span class="lbl">Vlr. Item Entradas (Contrib.)</span><span class="val">R$ ${fmtMoney(tContribEntr)}</span></div>
+              <div class="painel-tooltip-result ${diffEntrBc > 0 ? 'ok' : diffEntrBc < 0 ? 'err' : ''}"><span class="lbl">= Diferença</span><span class="val">R$ ${fmtMoney(diffEntrBc)}</span></div>
+            </div>
+          </div>
+          <div class="painel-summary-item diff">
+            <span class="painel-summary-label">🟡 Oportunidade (Diferença × 9,25%)</span>
+            <span class="painel-summary-value ${diffEntrBc > 0 ? 'ok' : 'err'}">${diffEntrBc > 0 ? 'R$ ' + fmtMoney(diffEntrBc * ALIQ) : 'Sem oportunidades'}</span>
+            <div class="painel-tooltip">
+              <div class="painel-tooltip-title">Memória de cálculo</div>
+              <div class="painel-tooltip-line"><span class="lbl">Diferença (Fiscal − Contrib.)</span><span class="val">R$ ${fmtMoney(diffEntrBc)}</span></div>
+              <div class="painel-tooltip-line"><span class="lbl">Alíquota (PIS 1,65% + COFINS 7,60%)</span><span class="val aliq">9,25%</span></div>
+              <div class="painel-tooltip-result ${diffEntrBc > 0 ? 'ok' : 'err'}"><span class="lbl">= Oportunidade</span><span class="val">${diffEntrBc > 0 ? 'R$ ' + fmtMoney(diffEntrBc * ALIQ) : 'R$ 0,00'}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="painel-oport" style="margin-top:8px">
+          <div class="painel-oport-label">📌 Quadro de Observações</div>
+          <div class="painel-oport-value">
+            ${diffEntrBc > 0
+              ? `🟢 Oportunidade: Fiscal tem R$ ${fmtMoney(diffEntrBc)} a mais que Contribuições no Vlr. Item — possível crédito não escriturado.`
+              : diffEntrBc < 0
+              ? `🟡 Contribuições tem R$ ${fmtMoney(Math.abs(diffEntrBc))} a mais que Fiscal no Vlr. Item — pode indicar diferença de classificação entre os SPEDs.`
+              : `Sem diferença no Vlr. Item de entradas.`}
+            <br>${tContribEntr === 0 ? '⚠️ Sem dados de Contribuições (Entradas).' : ''}
+            ${tFiscEntr === 0 ? '⚠️ Sem dados de Fiscal (Entradas).' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="painel-block">
+        <div class="painel-block-title said">② SAÍDAS <span class="badge">Fiscal × Contribuições</span></div>
+        ${renderTabelaSaid()}
+      </div>
+      <div class="painel-block">
+        ${icmsHtml}
+      </div>
+    </div>`;
+}
+
+document.getElementById('toggle-painel')?.addEventListener('click', () => {
+  const body = document.getElementById('painel-body');
+  const btn = document.getElementById('toggle-painel');
+  if (body.style.display === 'none'){
+    body.style.display = '';
+    btn.textContent = 'Ocultar';
+  } else {
+    body.style.display = 'none';
+    btn.textContent = 'Mostrar';
+  }
+});
+
+document.getElementById('painel-credito-toggle')?.addEventListener('change', () => {
+  renderPainel();
+});
+
+document.getElementById('painel-nat-bc-cred-listener-attached')?.remove?.();
+
+function exportCSV(){
+  const headers = COLUMNS.map(c => '"' + c.label.replace(/"/g, '""') + '"');
+  const lines = [headers.join(';')];
+  for (const r of filteredData){
+    const cells = COLUMNS.map(c => {
+      const v = r[c.key];
+      if (v == null) return '';
+      let s;
+      if (c.type === 'pct'){
+        s = (+v).toFixed(4).replace('.', ',');
+      } else if (c.type === 'money' || c.type === 'num'){
+        s = (+v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } else {
+        s = String(v);
+      }
+      return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    });
+    lines.push(cells.join(';'));
+  }
+  const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  a.download = 'Relatorio_CFOP_' + ts + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+els.dropzone.addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON') return;
+  if (els.dropzone.classList.contains('collapsed')){
+    setDropzoneCollapsed(false);
+    return;
+  }
+  els.fileInput.click();
+});
+els.selectBtn.addEventListener('click', e => { e.stopPropagation(); els.fileInput.click(); });
+els.selectFolderBtn.addEventListener('click', async e => {
+  e.stopPropagation();
+  try {
+    const files = await pickFolder();
+    if (files.length) processFiles(files);
+  } catch(err){
+    console.error('pickFolder:', err);
+  }
+});
+els.fileInput.addEventListener('change', e => processFiles(Array.from(e.target.files)));
+els.folderInput.addEventListener('change', e => {
+  const files = Array.from(e.target.files).filter(f => /\.txt$/i.test(f.name));
+  if (files.length) processFiles(files);
+  e.target.value = '';
+});
+['dragenter','dragover'].forEach(ev => els.dropzone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation(); els.dropzone.classList.add('dragover');
+}));
+['dragleave','drop'].forEach(ev => els.dropzone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation(); els.dropzone.classList.remove('dragover');
+}));
+els.dropzone.addEventListener('drop', async e => {
+  const items = e.dataTransfer.items;
+  if (items && items.length && items[0].webkitGetAsEntry){
+    const out = [];
+    const entries = [];
+    for (const item of items){
+      if (item.kind === 'file'){
+        const entry = item.webkitGetAsEntry();
+        if (entry) entries.push(entry);
+      }
+    }
+    await Promise.all(entries.map(en => traverseEntry(en, out)));
+    if (out.length) processFiles(out);
+  } else {
+    const files = Array.from(e.dataTransfer.files).filter(f => /\.txt$/i.test(f.name));
+    if (files.length) processFiles(files);
+  }
+});
+
+function setDropzoneCollapsed(collapsed){
+  els.dropzone.classList.toggle('collapsed', collapsed);
+  els.dropzoneToggle.textContent = collapsed ? '▲' : '▼';
+  els.dropzoneToggle.title = collapsed ? 'Expandir' : 'Recolher';
+  try { localStorage.setItem('dropzone-collapsed', collapsed ? '1' : '0'); } catch(e){}
+}
+els.dropzoneToggle.addEventListener('click', e => {
+  e.stopPropagation();
+  setDropzoneCollapsed(!els.dropzone.classList.contains('collapsed'));
+});
+try { setDropzoneCollapsed(localStorage.getItem('dropzone-collapsed') === '1'); } catch(e){}
+
+els.filterOrigem.addEventListener('change', () => {
+  updateRegistroOptions();
+  applyFilters();
+});
+
+[els.filterRegistro, els.filterSituacao, els.filterPeriodoIni, els.filterPeriodoFim].forEach(s => s.addEventListener('change', applyFilters));
+[els.filterCfop, els.filterCst, els.filterNatBcCred, els.filterCnpj].forEach(i => {
+  let t; i.addEventListener('input', () => { clearTimeout(t); t = setTimeout(applyFilters, 200); });
+});
+els.clearFilters.addEventListener('click', () => {
+  els.filterPeriodoIni.value = ''; els.filterPeriodoFim.value = '';
+  els.filterOrigem.value = '';
+  els.filterSituacao.value = ''; els.filterRegistro.value = '';
+  els.filterCfop.value = ''; els.filterCst.value = '';
+  els.filterNatBcCred.value = ''; els.filterCnpj.value = '';
+  columnFilters = {};
+  const filterRow = document.getElementById('col-filter-row');
+  if (filterRow) filterRow.querySelectorAll('select').forEach(s => { s.value = ''; });
+  updateRegistroOptions();
+  applyFilters();
+});
+
+els.clearData.addEventListener('click', async () => {
+  if (!await showConfirm('Limpar todos os dados importados? Os arquivos registrados serão removidos.')) return;
+  const toUnregister = registeredFiles.slice();
+  rawData = []; filteredData = [];
+  registeredFiles = []; registeredTexts = {};
+  for (const n of toUnregister) { try { await db.unregisterFile(n); } catch(e){} }
+  els.results.classList.remove('active');
+  els.fileList.innerHTML = '';
+  registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+  els.fileInput.value = '';
+  els.folderInput.value = '';
+  applyFilters();
+  showError('');
+});
+function showConfirm(msg){
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box">
+        <div class="modal-icon">⚠️</div>
+        <div class="modal-title">Confirmar</div>
+        <div class="modal-desc">${msg}</div>
+        <div class="modal-actions">
+          <button class="modal-cancel" data-action="cancel">Cancelar</button>
+          <button class="modal-confirm" data-action="confirm">Sim, limpar</button>
+        </div>
+      </div>`;
+    overlay.querySelector('.modal-cancel').addEventListener('click', () => { overlay.remove(); resolve(false); });
+    overlay.querySelector('.modal-confirm').addEventListener('click', () => { overlay.remove(); resolve(true); });
+    overlay.addEventListener('click', e => { if (e.target === overlay){ overlay.remove(); resolve(false); } });
+    document.body.appendChild(overlay);
+  });
+}
+els.exportCsv.addEventListener('click', exportCSV);
+
+function exportXLSX(){
+  if (typeof XLSX === 'undefined'){ showError('Biblioteca XLSX não carregou. Verifique a conexão com a internet.'); return; }
+  const headers = COLUMNS.map(c => c.label);
+  const aoa = [headers];
+  for (const r of filteredData){
+    aoa.push(COLUMNS.map(c => {
+      const v = r[c.key];
+      if (v == null) return '';
+      if (c.type === 'pct') return +(+v).toFixed(6);
+      if (c.type === 'money' || c.type === 'num') return +(+v).toFixed(2);
+      return v;
+    }));
+  }
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = COLUMNS.map(c => ({ wch: c.type === 'text' ? 18 : 16 }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Relatório');
+  const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  XLSX.writeFile(wb, 'Relatorio_CFOP_' + ts + '.xlsx');
+}
+
+els.exportXlsx.addEventListener('click', exportXLSX);
+
+function initColumnResizers(){
+  const ths = els.resultTable.querySelectorAll('thead th');
+  ths.forEach((th, idx) => {
+    if (th.querySelector('.resizer')) return;
+    const r = document.createElement('div');
+    r.className = 'resizer';
+    r.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation();
+      th._resizing = true;
+      const startX = e.pageX;
+      const startW = th.offsetWidth;
+      const colKey = th.dataset.col;
+      const onMove = ev => {
+        const w = Math.max(40, startW + (ev.pageX - startX));
+        th.style.width = w + 'px';
+        th.style.minWidth = w + 'px';
+        colWidths[colKey] = w;
+        const thead = th.closest('thead');
+        const sumRow = thead?.querySelector('.summary-row');
+        if (sumRow && sumRow.children[idx]){
+          sumRow.children[idx].style.width = w + 'px';
+          sumRow.children[idx].style.minWidth = w + 'px';
+        }
+        const filtRow = document.getElementById('col-filter-row');
+        if (filtRow && filtRow.children[idx]){
+          filtRow.children[idx].style.width = w + 'px';
+          filtRow.children[idx].style.minWidth = w + 'px';
+        }
+        els.resultTable.querySelectorAll('tbody tr').forEach(tr => {
+          const td = tr.children[idx];
+          if (td) { td.style.width = w + 'px'; td.style.minWidth = w + 'px'; }
+        });
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp);
+        setTimeout(() => { th._resizing = false; }, 10);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+    r.addEventListener('click', e => e.stopPropagation());
+    th.appendChild(r);
+  });
+}
+
+initDuckDB().catch(e => { hideProgress(); showError('Falha ao carregar DuckDB: ' + (e.message || e)); });
+</script>
+</body>
+</html>
