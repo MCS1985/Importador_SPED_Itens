@@ -1,0 +1,2525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<title>Analisador SPED PISCOFINS</title>
+<style>
+:root{
+  --bg:#f5f7fa;--bg2:#ffffff;--fg:#1a202c;--fg2:#4a5568;--fg3:#718096;
+  --accent:#2b6cb0;--accent2:#3182ce;--accent3:#ebf8ff;
+  --ok:#38a169;--warn:#d69e2e;--err:#e53e3e;
+  --border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08);
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1a202c;--bg2:#2d3748;--fg:#f7fafc;--fg2:#e2e8f0;--fg3:#a0aec0;--accent:#63b3ed;--accent2:#4299e1;--accent3:#2a4365;--border:#4a5568;--shadow:0 1px 3px rgba(0,0,0,.3)}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;min-height:100vh}
+.container{max-width:1900px;margin:0 auto;padding:24px}
+header{text-align:center;margin-bottom:32px}
+header h1{font-size:28px;font-weight:600;color:var(--accent);margin-bottom:8px}
+header .subtitle{color:var(--fg3);font-size:14px}
+.dropzone{border:2px dashed var(--border);border-radius:10px;padding:24px 16px;text-align:center;background:var(--bg2);cursor:pointer;transition:.2s;position:relative}
+.dropzone:hover,.dropzone.dragover{border-color:var(--accent);background:var(--accent3)}
+.dropzone.dragover{transform:scale(1.01)}
+.dropzone.collapsed{padding:8px 16px;cursor:pointer}
+.dropzone.collapsed .dropzone-body{display:none}
+.dropzone.collapsed .file-list{display:none}
+.dropzone-toggle{position:absolute;top:8px;right:8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:12px;color:var(--fg3);line-height:1.4}
+.dropzone-toggle:hover{color:var(--accent);border-color:var(--accent)}
+.dropzone.collapsed .dropzone-toggle{position:static}
+.dropzone-collapsed-label{display:none;color:var(--fg3);font-size:13px;padding:4px 0}
+.dropzone.collapsed .dropzone-collapsed-label{display:inline}
+.dropzone-icon{font-size:32px;margin-bottom:6px}
+.dropzone-text{font-size:15px;font-weight:500;margin-bottom:4px}
+.dropzone-subtext{color:var(--fg3);font-size:12px}
+.dropzone-subtext button{background:none;border:none;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;padding:0}
+.dropzone-subtext button:hover{color:var(--accent2)}
+.dropzone-hint{color:var(--fg3);font-size:11px;margin-top:10px;padding:8px 12px;background:var(--accent3);border-radius:6px;line-height:1.5;text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
+.dropzone-hint code{background:var(--bg);padding:1px 6px;border-radius:3px;font-size:11px;color:var(--accent);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.last-folder{color:var(--fg3);font-size:11px;margin-top:6px;text-align:center}
+.file-list{margin-top:20px;text-align:left;max-width:600px;margin-left:auto;margin-right:auto}
+.file-list .file-item{display:flex;justify-content:space-between;padding:6px 12px;background:var(--accent3);border-radius:6px;margin-bottom:4px;font-size:13px}
+.file-summary{padding:12px 16px;background:var(--accent3);border-radius:8px;margin-bottom:8px;font-size:14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.file-summary:hover{background:var(--accent)}
+.file-summary-detail{margin-top:8px;padding:8px 12px;background:var(--bg2);border-radius:6px;font-size:12px;max-height:240px;overflow-y:auto}
+.file-summary-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:11px;line-height:1.4}
+.file-summary-table th,.file-summary-table td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--border)}
+.file-summary-table th{font-weight:600;color:var(--fg2);background:var(--bg);text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+.file-summary-table td:first-child{text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:500}
+.file-summary-table tr.section td{background:var(--accent3);font-weight:600;color:var(--fg);text-align:left;padding:6px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--accent)}
+.file-summary-table tr.section:first-child td{border-top:0}
+.file-summary-table tr.total td{background:var(--bg);font-weight:600;color:var(--accent);border-top:2px solid var(--accent);border-bottom:1px solid var(--border)}
+.file-summary-diag{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);color:var(--fg3);font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.file-summary-detail .file-item{padding:4px 8px;margin-bottom:2px;font-size:12px}
+.progress{background:var(--bg2);border-radius:8px;padding:20px;margin-top:24px;box-shadow:var(--shadow)}
+.progress-text{font-size:14px;color:var(--fg2);margin-bottom:10px;text-align:center}
+.progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .3s}
+.results{margin-top:32px;display:none}
+.results.active{display:block}
+.sticky-top{position:sticky;top:0;z-index:3;background:var(--bg);padding:8px 0 0 0;margin:0 0 16px 0;box-shadow:0 4px 8px -4px rgba(0,0,0,.06)}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--bg2);padding:16px;border-radius:8px;box-shadow:var(--shadow);margin-bottom:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1}
+.filters select,.filters input{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--fg);font:inherit;font-size:13px;min-width:120px}
+.filters input::placeholder{color:var(--fg);opacity:1}
+.filters input{min-width:100px}
+.filters button{padding:6px 12px;background:transparent;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:13px;color:var(--fg2)}
+.multisel{position:relative;display:inline-block;min-width:120px}
+.ms-trigger{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--fg);font:inherit;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:4px;white-space:nowrap;user-select:none}
+.ms-trigger:hover,.ms-trigger:focus{border-color:var(--accent);outline:none}
+.ms-arrow{font-size:9px;color:var(--fg3);transition:transform .15s;display:inline-block}
+.multisel.open .ms-arrow{transform:rotate(180deg)}
+.ms-drop{position:absolute;top:100%;left:0;z-index:100;min-width:200px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-height:350px;margin-top:2px;display:none}
+.ms-drop.open{display:flex;flex-direction:column}
+.ms-search{width:100%;box-sizing:border-box;padding:6px 8px;border:none;border-bottom:1px solid var(--border);background:var(--bg3);color:var(--fg);font-size:13px;outline:none;flex-shrink:0}
+.ms-list{overflow-y:auto;flex:1;min-height:0}
+.ms-opt{display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;font-size:13px;color:var(--fg);white-space:nowrap}
+.ms-opt:hover{background:var(--accent3)}
+.ms-opt.focused{background:var(--accent2);outline:1px solid var(--accent)}
+.ms-opt input{accent-color:var(--accent);margin:0;width:14px;height:14px;flex-shrink:0}
+.ms-actions{display:flex;gap:4px;padding:4px 6px;border-top:1px solid var(--border);flex-shrink:0}
+.ms-actions button{flex:1;padding:5px 4px;border:1px solid var(--border);border-radius:3px;background:var(--bg3);color:var(--fg);font-size:12px;cursor:pointer}
+.ms-actions button:hover{background:var(--accent3)}
+.filters button:hover{background:var(--accent3);border-color:var(--accent);color:var(--accent)}
+.actions button{padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font:inherit;font-size:14px;font-weight:500;transition:.2s}
+.actions button:hover{background:var(--accent2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat-card{background:var(--bg2);padding:12px 14px;border-radius:8px;box-shadow:var(--shadow);border-left:4px solid var(--accent);position:relative;cursor:help}
+.stat-label{font-size:12px;color:var(--fg3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-value{font-size:14px;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
+.stat-value.money{color:var(--ok)}
+.stat-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a202c;color:#f7fafc;padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.6;min-width:240px;max-width:320px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.35);white-space:normal}
+.stat-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a202c}
+.stat-card:hover .stat-tooltip{opacity:1}
+.stat-tooltip-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#63b3ed;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #4a5568}
+.stat-tooltip-line{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.stat-tooltip-line .lbl{color:#a0aec0}
+.stat-tooltip-line .val{font-variant-numeric:tabular-nums;color:#f7fafc;font-weight:600;white-space:nowrap}
+.stat-tooltip-result{margin-top:6px;padding-top:6px;border-top:1px dashed #4a5568;display:flex;justify-content:space-between;font-weight:700}
+.stat-tooltip-result .val{color:#38a169;white-space:nowrap}
+.painel-section{background:var(--bg2);border-radius:8px;box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
+.painel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.painel-header h3{margin:0;font-size:16px;color:var(--fg)}
+.painel-toggle{background:var(--bg3);color:var(--fg);border:1px solid var(--border);padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.painel-toggle:hover{background:var(--accent);color:#fff}
+.painel-row{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;max-width:100%;margin:0 auto 18px auto}
+.painel-row .painel-block{flex:1;margin:0;min-width:0;overflow-x:auto}
+.painel-row .painel-block:nth-child(2){margin-left:24px}
+.painel-block{max-width:920px;margin:0 auto 18px auto}
+.painel-block-title{font-size:12px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;padding:6px 10px;border-radius:4px;display:flex;align-items:center;gap:8px}
+.painel-block-title.entr{background:rgba(99,179,237,.15);color:var(--accent);border-left:3px solid var(--accent)}
+.painel-block-title.said{background:rgba(56,161,105,.15);color:var(--ok);border-left:3px solid var(--ok)}
+.painel-block-title .badge{font-size:10px;padding:2px 6px;border-radius:3px;background:var(--bg2);font-weight:600}
+.painel-table{border-collapse:collapse;font-size:11px;width:100%;min-width:0}
+.painel-table th,.painel-table td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+.painel-table th:first-child,.painel-table td:first-child{text-align:center;font-weight:700;color:var(--fg3);background:var(--bg3);width:60px}
+.painel-table thead th{color:var(--fg3);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+.painel-table th.col-fiscal{background:rgba(99,179,237,.18);color:var(--accent);border-bottom:2px solid var(--accent)}
+.painel-table th.col-contrib{background:rgba(56,161,105,.18);color:var(--ok);border-bottom:2px solid var(--ok)}
+.painel-table th.col-diff{background:rgba(214,158,46,.15);color:var(--warn);border-bottom:2px solid var(--warn);white-space:nowrap;min-width:220px}
+.painel-table td.col-fiscal{background:rgba(99,179,237,.05);color:var(--fg2)}
+.painel-table td.col-contrib{background:rgba(56,161,105,.05);color:var(--fg)}
+.painel-table td.col-diff{background:rgba(214,158,46,.05)}
+.painel-table tfoot td,.painel-table .total-row{background:var(--bg3);font-weight:700;border-top:2px solid var(--border)}
+.painel-table .negative{color:var(--err);font-weight:700}
+.painel-table .opportunity{color:var(--ok);font-weight:700}
+.painel-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;padding:12px;background:var(--bg3);border-radius:6px;max-width:920px;margin-left:auto;margin-right:auto}
+.painel-summary-item{display:flex;flex-direction:column;gap:2px;padding:8px;background:var(--bg2);border-radius:4px;border-left:3px solid var(--border);position:relative;cursor:help}
+.painel-summary-item.contrib{border-left-color:var(--ok)}
+.painel-summary-item.diff{border-left-color:var(--warn)}
+.painel-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a202c;color:#f7fafc;padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.6;min-width:280px;max-width:340px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.35);white-space:normal}
+.painel-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1a202c}
+.painel-summary-item:hover .painel-tooltip{opacity:1}
+.painel-tooltip-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#63b3ed;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #4a5568}
+.painel-tooltip-line{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.painel-tooltip-line .lbl{color:#a0aec0}
+.painel-tooltip-line .val{font-variant-numeric:tabular-nums;color:#f7fafc;font-weight:600;white-space:nowrap}
+.painel-tooltip-line .val.aliq{color:#d69e2e}
+.painel-tooltip-result{margin-top:6px;padding-top:6px;border-top:1px dashed #4a5568;display:flex;justify-content:space-between;font-weight:700}
+.painel-tooltip-result .val{color:#38a169;white-space:nowrap}
+.painel-tooltip-result.warn .val{color:#d69e2e;white-space:nowrap}
+.painel-tooltip-result.err .val{color:#e53e3e;white-space:nowrap}
+.painel-summary-label{font-size:10px;color:var(--fg3);text-transform:uppercase;letter-spacing:.3px}
+.painel-summary-value{font-size:13px;font-weight:700;color:var(--fg);font-variant-numeric:tabular-nums}
+.painel-summary-value.warn{color:var(--warn)}
+.painel-summary-value.ok{color:var(--ok)}
+.painel-summary-value.err{color:var(--err)}
+.painel-oport{background:var(--bg3);padding:10px 12px;border-radius:6px;margin-top:12px;border-left:3px solid var(--accent);max-width:920px;margin-left:auto;margin-right:auto;font-size:12px}
+.painel-oport-label{font-size:12px;color:var(--fg3);margin-bottom:4px}
+.painel-oport-value{font-size:13px;font-weight:600}
+.table-wrapper{background:var(--bg2);border-radius:8px;box-shadow:var(--shadow);overflow:auto;height:70vh;min-height:400px}
+table{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
+thead{position:sticky;top:0;background:var(--bg2);box-shadow:0 1px 0 var(--border);z-index:1}
+th{padding:8px 6px;text-align:left;font-weight:600;color:var(--fg2);border-bottom:2px solid var(--border);cursor:pointer;user-select:none;white-space:normal;word-break:break-word;line-height:1.2;vertical-align:bottom}
+th:hover{color:var(--accent)}
+th.sorted-asc::after{content:" \25B2";color:var(--accent)}
+th.sorted-desc::after{content:" \25BC";color:var(--accent)}
+td{padding:5px 5px;border-bottom:1px solid var(--border);user-select:text;cursor:text;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#col-filter-row th{padding:5px 4px;vertical-align:middle;cursor:pointer;user-select:none;position:relative}
+#col-filter-row th:hover{background:var(--accent3)}
+#col-filter-row th.cf-active{background:#fff3b0}
+.cf-indicator{font-size:12px;color:var(--fg3);text-align:left;pointer-events:none;line-height:1.4}
+.cf-indicator.active{color:#222;font-weight:600}
+.cf-drop{position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--border);border-radius:4px;box-shadow:0 6px 24px rgba(0,0,0,.25);display:none;max-height:350px;min-width:120px}
+.cf-drop.open{display:flex;flex-direction:column}
+.cf-search{width:100%;box-sizing:border-box;padding:6px 8px;border:none;border-bottom:1px solid var(--border);background:var(--bg3);color:var(--fg);font-size:13px;outline:none;flex-shrink:0}
+.cf-list{overflow-y:auto;flex:1;min-height:0}
+.cf-opt{display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;font-size:13px;color:var(--fg);white-space:nowrap}
+.cf-opt:hover{background:var(--accent3)}
+.cf-opt input{accent-color:var(--accent);margin:0;width:14px;height:14px;flex-shrink:0}
+.cf-actions{display:flex;gap:4px;padding:4px 6px;border-top:1px solid var(--border);flex-shrink:0}
+.cf-actions button{flex:1;padding:5px 4px;border:1px solid var(--border);border-radius:3px;background:var(--bg3);color:var(--fg);font-size:12px;cursor:pointer}
+.cf-actions button:hover{background:var(--accent3)}
+.cf-actions button{flex:1;padding:4px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg3);color:var(--fg);font-size:11px;cursor:pointer;white-space:nowrap}
+.cf-actions button:hover{background:var(--accent3)}
+td.chave{overflow:hidden;text-overflow:ellipsis}
+td select.essencial-sel{width:100%;box-sizing:border-box;padding:2px 4px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--fg);font:inherit;font-size:12px;cursor:pointer}
+th .resizer{position:absolute;right:-4px;top:0;bottom:0;width:14px;cursor:col-resize;user-select:none;z-index:2}
+th .resizer::after{content:'';position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--border);border-radius:2px;transition:background .15s}
+th .resizer:hover::after{background:var(--accent2);width:3px}
+th{position:relative;overflow:visible}
+tbody tr:hover{background:var(--accent3)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.money{text-align:right;font-variant-numeric:tabular-nums;color:var(--ok);font-weight:500}
+td.center{text-align:center}
+.error{background:#fed7d7;color:#742a2a;padding:16px;border-radius:8px;border-left:4px solid var(--err);margin-top:16px}
+.empty{text-align:center;padding:40px;color:var(--fg3)}
+.hidden{display:none}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s}
+.modal-box{background:var(--bg2);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);padding:24px 28px;max-width:420px;width:90%;text-align:center;animation:scaleIn .2s}
+.modal-icon{font-size:32px;margin-bottom:12px}
+.modal-title{font-size:16px;font-weight:700;color:var(--fg);margin-bottom:8px}
+.modal-desc{font-size:13px;color:var(--fg2);line-height:1.5;margin-bottom:20px}
+.modal-actions{display:flex;gap:10px;justify-content:center}
+.modal-actions button{padding:8px 20px;border-radius:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--fg2);transition:.15s}
+.modal-actions button:hover{background:var(--bg3)}
+.modal-actions button.modal-confirm{background:var(--err);color:#fff;border-color:var(--err);font-weight:700}
+.modal-actions button.modal-confirm:hover{opacity:.85}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.summary-row{background:var(--accent3);font-weight:600}
+th.summary-row th, .summary-row td{border-top:2px solid var(--accent)}
+thead .summary-row td{border-top:none;border-bottom:2px solid var(--accent)}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Analisador SPED PISCOFINS</h1>
+    <p class="subtitle">Arraste arquivos ou a pasta-pai do SPED <strong>Contribuições</strong> e/ou <strong>Fiscal</strong> (subpastas são varridas; pode misturar)</p>
+  </header>
+  <div id="dropzone" class="dropzone">
+    <button class="dropzone-toggle" id="dropzone-toggle" type="button" title="Recolher/Expandir">▼</button>
+    <span class="dropzone-collapsed-label">📁 Importar arquivos (clique para expandir)</span>
+    <div class="dropzone-body" id="dropzone-body">
+      <div class="dropzone-icon">📁</div>
+      <div class="dropzone-text">Arraste arquivos ou a pasta inteira aqui</div>
+      <div class="dropzone-subtext">
+        ou
+        <button id="select-btn">selecionar arquivos</button>
+        ·
+        <button id="select-folder-btn">📂 selecionar pasta (varre subpastas)</button>
+      </div>
+      <div class="dropzone-hint">
+        <div class="hint-row"><span class="hint-icon">📂</span><span><strong>Arraste a pasta-pai</strong> (ex: <code>Arquivos_SPED</code>) diretamente aqui — sem diálogos, sem permissões, varre tudo. Alternativamente, clique em <strong>selecionar pasta</strong> (pede permissão uma única vez).</span></div>
+      </div>
+    </div>
+    <div class="last-folder" id="last-folder"></div>
+    <input type="file" id="file-input" multiple accept=".txt" hidden>
+    <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
+    <div class="file-list" id="file-list"></div>
+  </div>
+  <div id="progress" class="progress hidden">
+    <div class="progress-text" id="progress-text">Preparando...</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <div id="error" class="error hidden"></div>
+  <div id="results" class="results">
+    <div class="sticky-top">
+      <div class="toolbar">
+        <div class="filters">
+          <input type="text" id="filter-periodo-ini" placeholder="Período início (todos)" list="list-periodo-ini" style="width:150px" title="Digite MM/AAAA; vazio = todos">
+          <datalist id="list-periodo-ini"></datalist>
+          <input type="text" id="filter-periodo-fim" placeholder="Período fim (todos)" list="list-periodo-fim" style="width:150px" title="Digite MM/AAAA; vazio = todos">
+          <datalist id="list-periodo-fim"></datalist>
+
+          <select id="filter-origem" style="width:170px">
+            <option value="">Sped Origem (todos)</option>
+          </select>
+
+          <select id="filter-situacao" style="width:160px">
+            <option value="">Situação (todas)</option>
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
+          </select>
+
+          <select id="filter-registro" style="width:150px">
+            <option value="">Registro (todos)</option>
+          </select>
+
+          <div style="display:inline-flex;flex-direction:column;gap:3px">
+            <div class="multisel" id="ms-cfop" data-placeholder="CFOP">
+              <div class="ms-trigger" tabindex="0">CFOP (todos) <span class="ms-arrow">▼</span></div>
+              <div class="ms-drop"></div>
+            </div>
+            <select id="filter-cfop-credito" style="width:100%;font-size:11px;padding:3px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--fg)">
+              <option value="">Crédito (todos)</option>
+              <option value="SIM">SIM - Gera crédito</option>
+              <option value="NÃO">NÃO - Não gera</option>
+            </select>
+          </div>
+
+          <div style="display:inline-flex;flex-direction:column;gap:3px">
+            <div class="multisel" id="ms-cst" data-placeholder="CST">
+              <div class="ms-trigger" tabindex="0">CST (todos) <span class="ms-arrow">▼</span></div>
+              <div class="ms-drop"></div>
+            </div>
+            <select id="filter-cst-credito" style="width:100%;font-size:11px;padding:3px 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--fg)">
+              <option value="">Crédito (todos)</option>
+              <option value="SIM">SIM - Gera crédito</option>
+              <option value="NÃO">NÃO - Não gera</option>
+            </select>
+          </div>
+
+          <div class="multisel" id="ms-nat" data-placeholder="Nat. BC Créd">
+            <div class="ms-trigger" tabindex="0">Nat. BC Créd (todos) <span class="ms-arrow">▼</span></div>
+            <div class="ms-drop"></div>
+          </div>
+
+          <input type="text" id="filter-cnpj" placeholder="CNPJ" list="list-cnpj" style="width:150px" title="Filtrar por CNPJ (chave única)">
+          <datalist id="list-cnpj"></datalist>
+
+          <button id="clear-filters">Limpar filtros</button>
+        </div>
+        <div class="actions">
+          <button id="clear-data" title="Remove todos os arquivos importados">🗑️ Limpar dados</button>
+          <button id="export-csv">📥 Baixar CSV</button>
+          <button id="export-xlsx">📊 Baixar XLSX</button>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div id="painel-section" class="painel-section hidden">
+      <div class="painel-header">
+        <h3>📊 Painel Comparativo SPEDs</h3>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label class="painel-toggle" style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--fg)" title="Operações geradoras de créditos:&#10;• CSTs de 50 a 66&#10;• CFOPs cujo nat_bc_cred seja diferente de N/A&#10;• Aplica-se apenas a CONTRIBUIÇÕES de Entrada">
+            <input type="checkbox" id="painel-credito-toggle">
+            <span>Só CFOPs / CSTs geradores de créditos</span>
+          </label>
+          <button id="toggle-painel" class="painel-toggle">Ocultar</button>
+        </div>
+      </div>
+      <div class="painel-body" id="painel-body"></div>
+    </div>
+    <div class="table-wrapper">
+      <table id="result-table">
+        <thead><tr id="thead-row"></tr></thead>
+        <tbody id="tbody"></tbody>
+        <tfoot id="tfoot"></tfoot>
+      </table>
+    </div>
+    <div class="empty hidden" id="empty">Nenhum registro encontrado com os filtros atuais.</div>
+  </div>
+</div><script type="module">
+function num(v) { const n = parseFloat((v || '').trim().replace(/\./g,'').replace(',','.')); return isNaN(n) ? 0 : n; }
+function trim(v) { return (v || '').trim(); }
+function great(v) { return Math.max(num(v), 0); }
+
+const CFOP_NAT_BC_CRED = new Map([
+  ['1101','02'],['1102','01'],['1111','02'],['1113','01'],['1116','02'],
+  ['1117','01'],['1118','01'],['1120','02'],['1121','01'],['1122','02'],
+  ['1124','03'],['1125','03'],['1126','02'],['1128','02'],['1132','02'],
+  ['1135','02'],['1159','01'],['1201','12'],['1202','12'],['1203','12'],
+  ['1204','12'],['1206','12'],['1207','12'],['1215','12'],['1216','12'],
+  ['1251','04'],['1252','04'],['1253','04'],['1254','04'],['1255','04'],
+  ['1256','04'],['1257','04'],['1351','07'],['1352','07'],['1353','07'],
+  ['1354','07'],['1355','07'],['1356','07'],['1360','07'],['1401','02'],
+  ['1403','01'],['1406','10'],['1407','02'],['1410','12'],['1411','12'],
+  ['1456','02'],['1551','10'],['1556','02'],['1651','02'],['1652','01'],
+  ['1653','02'],['1660','12'],['1661','12'],['1662','12'],['1932','07'],
+  ['1933','03'],['2101','02'],['2102','01'],['2111','02'],['2113','01'],
+  ['2116','02'],['2117','01'],['2118','01'],['2120','02'],['2121','01'],
+  ['2122','02'],['2124','03'],['2125','03'],['2126','02'],['2128','02'],
+  ['2132','02'],['2135','02'],['2159','01'],['2201','12'],['2202','12'],
+  ['2206','12'],['2207','12'],['2215','12'],['2216','12'],['2251','04'],
+  ['2252','04'],['2253','04'],['2254','04'],['2255','04'],['2256','04'],
+  ['2257','04'],['2351','07'],['2352','07'],['2353','07'],['2354','07'],
+  ['2355','07'],['2356','07'],['2401','02'],['2403','01'],['2406','10'],
+  ['2407','02'],['2410','12'],['2411','12'],['2456','02'],['2551','10'],
+  ['2556','02'],['2651','02'],['2652','01'],['2653','02'],['2660','12'],
+  ['2661','12'],['2662','12'],['2932','07'],['2933','03'],['3101','02'],
+  ['3102','01'],['3126','02'],['3128','02'],['3251','01'],['3556','02'],
+  ['3651','02'],['3652','01'],['3653','02'],
+]);
+
+    // PROCESSAMENTO EM JS PURO - registros gerados em parseSpedFile
+
+const els = {
+  dropzone: document.getElementById('dropzone'),
+  dropzoneToggle: document.getElementById('dropzone-toggle'),
+  fileInput: document.getElementById('file-input'),
+  folderInput: document.getElementById('folder-input'),
+  selectBtn: document.getElementById('select-btn'),
+  selectFolderBtn: document.getElementById('select-folder-btn'),
+  fileList: document.getElementById('file-list'),
+  progress: document.getElementById('progress'),
+  progressFill: document.getElementById('progress-fill'),
+  progressText: document.getElementById('progress-text'),
+  error: document.getElementById('error'),
+  results: document.getElementById('results'),
+  filterPeriodoIni: document.getElementById('filter-periodo-ini'),
+  filterPeriodoFim: document.getElementById('filter-periodo-fim'),
+  filterOrigem: document.getElementById('filter-origem'),
+  filterSituacao: document.getElementById('filter-situacao'),
+  filterRegistro: document.getElementById('filter-registro'),
+  msCfop: document.getElementById('ms-cfop'),
+  msCst: document.getElementById('ms-cst'),
+  msNat: document.getElementById('ms-nat'),
+  filterCfopCredito: document.getElementById('filter-cfop-credito'),
+  filterCstCredito: document.getElementById('filter-cst-credito'),
+  filterCnpj: document.getElementById('filter-cnpj'),
+  listCnpj: document.getElementById('list-cnpj'),
+  clearFilters: document.getElementById('clear-filters'),
+  clearData: document.getElementById('clear-data'),
+  exportCsv: document.getElementById('export-csv'),
+  exportXlsx: document.getElementById('export-xlsx'),
+  stats: document.getElementById('stats'),
+  theadRow: document.getElementById('thead-row'),
+  tbody: document.getElementById('tbody'),
+  tfoot: document.getElementById('tfoot'),
+  empty: document.getElementById('empty'),
+  resultTable: document.getElementById('result-table'),
+  tableWrapper: document.querySelector('.table-wrapper'),
+};
+els.tableWrapper.addEventListener('wheel', e => {
+  e.preventDefault();
+  els.tableWrapper.scrollTop += e.deltaY;
+}, { passive: false });
+els.tbody.addEventListener('change', e => {
+  const sel = e.target;
+  if (sel.tagName === 'SELECT' && sel.classList.contains('essencial-sel')){
+    const idx = parseInt(sel.dataset.idx);
+    if (!isNaN(idx) && idx < filteredData.length){
+      filteredData[idx].essencial = sel.value;
+    }
+  }
+});
+
+let rawData = []; window.rawData = rawData;
+let registeredTexts = {};
+let filteredData = [];
+let sortCol = null, sortDir = 'asc';
+let colWidths = loadColWidths();
+function loadColWidths(){
+  try {
+    const saved = localStorage.getItem('sped_col_widths');
+    return saved ? JSON.parse(saved) : {};
+  } catch { return {}; }
+}
+function saveColWidths(){
+  try { localStorage.setItem('sped_col_widths', JSON.stringify(colWidths)); } catch {}
+}
+let columnFilters = {};
+let colFilterTimer = null;
+let registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+let dbReady = true;
+
+const RENDER_BATCH = 200;
+let renderLimit = RENDER_BATCH;
+let uniqueColsCache = null;
+
+const COLUMNS = [
+  { key: 'chave_unica',       label: 'Chave unica',              type: 'text' },
+  { key: 'periodo',            label: 'Período',                  type: 'text' },
+  { key: 'dt_e_s',             label: 'Data de Entrada / Sa\u00edda', type: 'text' },
+  { key: 'cnpj_empresa',       label: 'CNPJ Empresa',             type: 'text' },
+  { key: 'chv_doce',           label: 'Chave de acesso',          type: 'text' },
+  { key: 'sped_origem',        label: 'SPED Origem',              type: 'text' },
+  { key: 'sentido',            label: 'Indicador de Operação',    type: 'text' },
+  { key: 'registro',           label: 'Registro',                 type: 'text' },
+  { key: 'num_doc',            label: 'Número do Documento',      type: 'text' },
+  { key: 'num_item',           label: 'Número do Item',           type: 'text' },
+  { key: 'cod_item',           label: 'Código do Produto / Item', type: 'text' },
+  { key: 'descricao',          label: 'Descrição do Produto/Item',type: 'text' },
+  { key: 'cfop',               label: 'CFOP',                     type: 'text' },
+  { key: 'ncm',                label: 'NCM',                      type: 'text' },
+  { key: 'vl_item',            label: 'Valor do Item',            type: 'money' },
+  { key: 'vl_desc',            label: 'Valor do Desconto',        type: 'money' },
+  { key: 'cst_pis_cofins',     label: 'CST PIS/COFINS',           type: 'text' },
+  { key: 'vl_bc_pis_cofins',   label: 'BC PIS/COFINS',            type: 'money' },
+  { key: 'aliq_pis',           label: 'Alíquota do PIS (Percentual)', type: 'pct' },
+  { key: 'vl_pis',             label: 'Valor do PIS',            type: 'money' },
+  { key: 'aliq_cofins',        label: 'Alíquota da COFINS (Percentual)', type: 'pct' },
+  { key: 'vl_cofins',          label: 'Valor da COFINS',          type: 'money' },
+  { key: 'nat_bc_cred',        label: 'Nat. BC Créd',            type: 'text' },
+  { key: 'st_conf',            label: 'Status conferencia',       type: 'text' },
+  { key: 'tem_no_contrib',     label: 'Tem no Contrib?',          type: 'text' },
+  { key: 'cfop_gera_credito',  label: 'CFOP gera cr\u00e9dito?',  type: 'text' },
+  { key: 'cst_gera_credito',   label: 'CST gera cr\u00e9dito?',   type: 'text' },
+  { key: 'essencial',          label: 'Essencial?',               type: 'text' },
+];
+
+const ESSENCIAL_OPTS = [
+  'Não - Já está lançado no Contribuições (SIM / NÃO)',
+  'Não - CFOP que não gera créditos no C170',
+  'Não - CFOP de imobilizado no C170',
+  'Não - Devolução / Anulação',
+  'Não - Gasolina / Etanol',
+  'Não - Consumo que não gera crédito de P/C',
+  'Sim - Reclassificar CST para gerar crédito',
+  'Sim - Insumo relevante / essencial',
+  'Verificar',
+];
+const DECIMAL_SCALES = {
+  aliq_pis: 6,
+  aliq_cofins: 6,
+  descricao: 0,
+  ncm: 0,
+  vl_item: 2,
+  vl_desc: 2,
+  vl_bc_pis_cofins: 2,
+  vl_pis: 2,
+  vl_cofins: 2,
+  nat_bc_cred: 0,
+};
+
+function setProgress(pct, text){
+  els.progress.classList.remove('hidden');
+  els.progressFill.style.width = pct + '%';
+  els.progressText.textContent = `${Math.round(pct)}% — ${text}`;
+}
+function hideProgress(){ els.progress.classList.add('hidden'); }
+function showError(msg){
+  els.error.textContent = msg;
+  els.error.classList.remove('hidden');
+  console.error(msg);
+}
+function hideError(){ els.error.classList.add('hidden'); }
+
+async function initDuckDB(){
+  setProgress(5, 'Pronto. Aguardando arquivos...');
+  dbReady = true;
+}
+
+function extractCnpjAndPeriod(name){
+  let m = name.match(/^(\d{12,14})-\d+-(\d{8})-(\d{8})/);
+  if (m){
+    return { cnpj: m[1], period: m[2].substring(0,4) + '/' + m[2].substring(4,6), size: 0 };
+  }
+  m = name.match(/_(\d{8})_(\d{8})_(\d{12,14})_/);
+  if (m){
+    return { cnpj: m[3], period: m[1].substring(0,4) + '/' + m[1].substring(4,6), size: 0 };
+  }
+  return null;
+}
+
+function fmtCnpj(cnpj){
+  if (!cnpj) return '';
+  const d = cnpj.replace(/\D/g,'');
+  if (d.length === 14){
+    return d.substring(0,2) + '.' + d.substring(2,5) + '.' + d.substring(5,8) + '/' + d.substring(8,12) + '-' + d.substring(12);
+  }
+  return d;
+}
+
+function getFilePath(f){
+  return (f.webkitRelativePath && f.webkitRelativePath.length) ? f.webkitRelativePath : f.name;
+}
+
+async function traverseEntry(entry, out){
+  if (entry.isFile){
+    const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+    if (/\.txt$/i.test(file.name)) out.push(file);
+  } else if (entry.isDirectory){
+    const reader = entry.createReader();
+    const readBatch = () => new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+    let batch;
+    do {
+      batch = await readBatch();
+      for (const e of batch) await traverseEntry(e, out);
+    } while (batch.length > 0);
+  }
+}
+
+async function readDirHandle(handle, prefix, out){
+  for await (const [name, child] of handle.entries()){
+    const childPath = prefix ? prefix + '/' + name : name;
+    if (child.kind === 'file'){
+      if (!/\.txt$/i.test(name)) continue;
+      const file = await child.getFile();
+      try { Object.defineProperty(file, 'webkitRelativePath', { value: childPath, configurable: true }); } catch(e){}
+      out.push(file);
+    } else if (child.kind === 'directory'){
+      await readDirHandle(child, childPath, out);
+    }
+  }
+}
+
+let _storedDirHandle = null;
+function openIDB(){
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('sped_folders', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('dirs');
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+function idbGet(db, store, key){
+  return new Promise((res, rej) => {
+    const t = db.transaction(store, 'readonly');
+    const req = t.objectStore(store).get(key);
+    req.onsuccess = () => res(req.result);
+    req.onerror = () => rej(req.error);
+  });
+}
+function idbPut(db, store, val, key){
+  return new Promise((res, rej) => {
+    const t = db.transaction(store, 'readwrite');
+    const req = t.objectStore(store).put(val, key);
+    req.onsuccess = () => res();
+    req.onerror = () => rej(req.error);
+  });
+}
+async function getStoredDirHandle(){
+  if (_storedDirHandle) return _storedDirHandle;
+  try {
+    const db = await openIDB();
+    const handle = await idbGet(db, 'dirs', 'last');
+    db.close();
+    if (handle && handle.queryPermission) _storedDirHandle = handle;
+  } catch {}
+  return _storedDirHandle;
+}
+async function saveDirHandle(handle){
+  _storedDirHandle = handle;
+  try {
+    const db = await openIDB();
+    await idbPut(db, 'dirs', handle, 'last');
+    db.close();
+  } catch {}
+}
+function initMultiSelect(containerId){
+  const container = document.getElementById(containerId);
+  const trigger = container.querySelector('.ms-trigger');
+  const drop = container.querySelector('.ms-drop');
+  const placeholder = container.dataset.placeholder;
+  const selected = new Set();
+  let focusIdx = -1;
+  let allOpts = [];
+
+  function updateTrigger(){
+    const count = selected.size;
+    trigger.innerHTML = (count ? placeholder + ' (' + count + ')' : placeholder + ' (todos)') + ' <span class="ms-arrow">▼</span>';
+  }
+  function closeDrop(){
+    drop.classList.remove('open');
+    container.classList.remove('open');
+    focusIdx = -1;
+    trigger.focus();
+  }
+  function getOpts(){ return drop.querySelectorAll('.ms-opt'); }
+  function moveFocus(dir){
+    const opts = getOpts();
+    if (opts.length === 0) return;
+    if (focusIdx < 0) focusIdx = dir > 0 ? 0 : opts.length - 1;
+    else focusIdx = (focusIdx + dir + opts.length) % opts.length;
+    opts.forEach((o, i) => o.classList.toggle('focused', i === focusIdx));
+    opts[focusIdx].scrollIntoView({ block: 'nearest' });
+  }
+  function toggleFocused(){
+    const opts = getOpts();
+    if (focusIdx < 0 || focusIdx >= opts.length) return;
+    const cb = opts[focusIdx].querySelector('input');
+    if (cb){ cb.checked = !cb.checked; cb.dispatchEvent(new Event('change', { bubbles: true })); }
+  }
+  function openDrop(){
+    document.querySelectorAll('.multisel').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.ms-drop').forEach(d => d.classList.remove('open'));
+    drop.classList.add('open');
+    container.classList.add('open');
+    focusIdx = -1;
+    if (searchInp) searchInp.value = '';
+    buildList('');
+    trigger.focus();
+  }
+
+  const searchInp = document.createElement('input');
+  searchInp.type = 'text';
+  searchInp.className = 'ms-search';
+  searchInp.placeholder = 'Filtrar valores...';
+  const listWrap = document.createElement('div');
+  listWrap.className = 'ms-list';
+  drop.append(searchInp, listWrap);
+
+  function buildList(filterText){
+    listWrap.innerHTML = '';
+    let items = allOpts;
+    if (filterText){
+      const ft = filterText.toLowerCase();
+      items = allOpts.filter(v => String(v).toLowerCase().includes(ft));
+    }
+    if (items.length === 0){
+      listWrap.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--fg3);text-align:center">Nenhum</div>';
+      focusIdx = -1;
+      return;
+    }
+    if (focusIdx >= items.length) focusIdx = items.length - 1;
+    for (const opt of items){
+      const label = document.createElement('label');
+      label.className = 'ms-opt';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.value = opt; cb.checked = selected.has(opt);
+      label.append(cb);
+      label.append(' ' + opt);
+      cb.addEventListener('change', () => {
+        if (cb.checked) selected.add(opt); else selected.delete(opt);
+        updateTrigger();
+        applyFilters();
+      });
+      listWrap.appendChild(label);
+    }
+    if (focusIdx >= 0 && drop.classList.contains('open'))
+      getOpts()[focusIdx]?.classList.add('focused');
+  }
+
+  const actions = document.createElement('div');
+  actions.className = 'ms-actions';
+  const btnAll = document.createElement('button');
+  btnAll.textContent = 'Sel. todos';
+  btnAll.addEventListener('click', e => { e.stopPropagation();
+    selected.clear();
+    for (const v of allOpts) selected.add(v);
+    listWrap.querySelectorAll('input').forEach(cb => cb.checked = true);
+    updateTrigger();
+    applyFilters();
+  });
+  const btnClear = document.createElement('button');
+  btnClear.textContent = 'Limpar';
+  btnClear.addEventListener('click', e => { e.stopPropagation();
+    selected.clear();
+    listWrap.querySelectorAll('input').forEach(cb => cb.checked = false);
+    updateTrigger();
+    applyFilters();
+  });
+  actions.append(btnAll, btnClear);
+  drop.append(actions);
+
+  trigger.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!drop.classList.contains('open')) openDrop(); else closeDrop();
+  });
+  trigger.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDrop();
+    else if (drop.classList.contains('open')){
+      if (e.key === 'ArrowDown'){ e.preventDefault(); moveFocus(1); }
+      else if (e.key === 'ArrowUp'){ e.preventDefault(); moveFocus(-1); }
+      else if (e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); toggleFocused(); }
+    } else {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trigger.click(); }
+      else if (e.key === 'ArrowDown' && e.altKey) { e.preventDefault(); openDrop(); }
+      else if (e.key === 'ArrowUp' && e.altKey) { e.preventDefault(); }
+    }
+  });
+  searchInp.addEventListener('input', () => { buildList(searchInp.value); });
+  searchInp.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDrop();
+    e.stopPropagation();
+  });
+  document.addEventListener('click', () => { drop.classList.remove('open'); container.classList.remove('open'); focusIdx = -1; });
+  drop.addEventListener('click', e => { e.stopPropagation(); });
+  document.addEventListener('keydown', function escHandler(e){
+    if (e.key === 'Escape') {
+      const openDrops = document.querySelectorAll('.ms-drop.open');
+      openDrops.forEach(d => { d.classList.remove('open'); d.closest('.multisel')?.classList.remove('open'); focusIdx = -1; });
+      if (openDrops.length) e.preventDefault();
+    }
+  });
+  return {
+    getValues(){ return selected; },
+    setOptions(options){
+      const optSet = new Set(options);
+      selected.forEach(v => { if (!optSet.has(v)) selected.delete(v); });
+      allOpts = options;
+      const idxFocus = !drop.classList.contains('open') ? -1 : Math.min(focusIdx, options.length - 1);
+      buildList(searchInp.value);
+      focusIdx = idxFocus;
+      if (focusIdx >= 0 && drop.classList.contains('open')) getOpts()[focusIdx]?.classList.add('focused');
+      updateTrigger();
+    },
+    clear(){
+      selected.clear();
+      listWrap.querySelectorAll('input').forEach(cb => cb.checked = false);
+      focusIdx = -1;
+      updateTrigger();
+    }
+  };
+}
+const msCfop = initMultiSelect('ms-cfop');
+const msCst = initMultiSelect('ms-cst');
+const msNat = initMultiSelect('ms-nat');
+
+async function pickFolder(){
+  try {
+    if (window.showDirectoryPicker){
+      const stored = await getStoredDirHandle();
+      const dirHandle = await window.showDirectoryPicker({
+        mode: 'read', id: 'sped-folder',
+        startIn: stored || undefined
+      });
+      await saveDirHandle(dirHandle);
+      const out = [];
+      await readDirHandle(dirHandle, dirHandle.name, out);
+      try { localStorage.setItem('sped_last_folder', dirHandle.name); } catch {}
+      return out;
+    }
+    const tmp = document.createElement('input');
+    tmp.type = 'file'; tmp.webkitdirectory = true; tmp.directory = true; tmp.multiple = true;
+    tmp.style.display = 'none'; document.body.appendChild(tmp);
+    const files = await new Promise(resolve => {
+      tmp.addEventListener('change', () => resolve(Array.from(tmp.files)));
+      tmp.click();
+    });
+    document.body.removeChild(tmp);
+    const txtFiles = files.filter(f => /\.txt$/i.test(f.name));
+    try {
+      const f = files[0];
+      if (f && f.webkitRelativePath){
+        localStorage.setItem('sped_last_folder', f.webkitRelativePath.split('/')[0]);
+        updateLastFolder();
+      }
+    } catch {}
+    return txtFiles;
+  } catch(e){
+    if (e.name === 'AbortError') return [];
+    console.error('pickFolder:', e);
+    return [];
+  }
+}
+
+function renderFileList(files, cnpjByFilename){
+  els.fileList.innerHTML = '';
+  const groups = {};
+  let totalSize = 0;
+  const allPaths = new Set(files.map(f => getFilePath(f)));
+  const cumFiles = [];
+  for (const f of files) cumFiles.push({ name: getFilePath(f), size: f.size, disp: f.name });
+  for (const origPath of Object.values(registeredTexts)){
+    if (!allPaths.has(origPath)){
+      cumFiles.push({ name: origPath, size: 0, disp: origPath });
+    }
+  }
+  for (const f of cumFiles){
+    totalSize += f.size;
+    let cnpj = null, period = null;
+    if (cnpjByFilename && cnpjByFilename[f.name]){
+      cnpj = cnpjByFilename[f.name].cnpj.replace(/\D/g,'');
+      if (cnpjByFilename[f.name].period && cnpjByFilename[f.name].period.length === 8){
+        period = cnpjByFilename[f.name].period.substring(4) + '/' + cnpjByFilename[f.name].period.substring(0,4);
+      }
+    } else {
+      const info = extractCnpjAndPeriod(f.disp || f.name);
+      if (info){ cnpj = info.cnpj; period = info.period; }
+    }
+    if (cnpj){
+      if (!groups[cnpj]) groups[cnpj] = { cnpj: fmtCnpj(cnpj), periods: new Set(), count: 0, size: 0 };
+      if (period) groups[cnpj].periods.add(period);
+      groups[cnpj].count++;
+      groups[cnpj].size += f.size;
+    } else {
+      if (!groups['__outros__']) groups['__outros__'] = { cnpj: 'Outros', periods: new Set(), count: 0, size: 0 };
+      groups['__outros__'].count++;
+      groups['__outros__'].size += f.size;
+    }
+  }
+  const totalBefore = cumFiles.length - files.length;
+  const summary = document.createElement('div');
+  summary.className = 'file-summary';
+  const totalSizeStr = totalSize > 1048576 ? (totalSize/1048576).toFixed(1) + ' MB' : (totalSize/1024).toFixed(0) + ' KB';
+  const cnpjCount = Object.keys(groups).length;
+  summary.innerHTML = `<span>📁 <strong>${files.length}</strong> arquivo(s) importado(s) · <strong>${cnpjCount}</strong> CNPJ · ${totalSizeStr}${totalBefore > 0 ? ' · +' + totalBefore + ' já carregado(s)' : ''}</span><span>▼ Ver detalhes</span>`;
+  summary.addEventListener('click', () => {
+    const det = els.fileList.querySelector('.file-summary-detail');
+    if (det) { det.remove(); summary.querySelector('span:last-child').textContent = '▼ Ver detalhes'; return; }
+    const det2 = document.createElement('div');
+    det2.className = 'file-summary-detail';
+    for (const g of Object.values(groups)){
+      const periods = Array.from(g.periods).sort();
+      const periodRange = periods.length > 1 ? periods[0] + ' a ' + periods[periods.length-1] : periods[0];
+      const sizeStr = g.size > 1048576 ? (g.size/1048576).toFixed(1) + ' MB' : (g.size/1024).toFixed(0) + ' KB';
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.innerHTML = `<span>${g.cnpj} · ${periodRange}</span><span>${g.count} arq · ${sizeStr}</span>`;
+      det2.appendChild(div);
+    }
+    els.fileList.insertBefore(det2, summary.nextSibling);
+    summary.querySelector('span:last-child').textContent = '▲ Ocultar detalhes';
+  });
+  els.fileList.appendChild(summary);
+}
+
+async function processFiles(files){
+  if (!files.length) return;
+  const existingNames = new Set(Object.values(registeredTexts));
+  const duplicates = files.filter(f => existingNames.has(getFilePath(f)));
+  const toProcess = files.filter(f => !existingNames.has(getFilePath(f)));
+  if (duplicates.length && toProcess.length === 0){
+    showError(`⚠️ Todos os ${duplicates.length} arquivo(s) já foram importados. Use "Limpar dados" para reiniciar.`);
+    return;
+  }
+  hideError();
+  els.results.classList.remove('active');
+  if (duplicates.length){
+    showError(`⚠️ ${duplicates.length} arquivo(s) duplicado(s) ignorado(s): ${duplicates.map(f => getFilePath(f)).join(', ')}`);
+  }
+  files = toProcess;
+  renderFileList(toProcess);
+  setProgress(20, `Lendo e parseando ${files.length} arquivo(s)...`);
+  try {
+    let allRawData = [];
+    let cnpjByFilename = {};
+    let fiscalCount = 0, contribCount = 0;
+    const existingKeys = new Set(rawData.map(r => r.sped_origem + '|' + r.chave_unica));
+    const FILE_CHUNK = 2;
+    for (let start = 0; start < files.length; start += FILE_CHUNK) {
+      const chunk = files.slice(start, start + FILE_CHUNK);
+      for (let j = 0; j < chunk.length; j++) {
+        const idx = start + j;
+        const f = chunk[j];
+        const text = await f.text();
+        const parsedRows = parseSpedText(text, f.name);
+        const fileRows = parsedRows.filter(r => { const k = r.sped_origem + '|' + r.chave_unica; if (existingKeys.has(k)) return false; existingKeys.add(k); return true; });
+        allRawData.push(...fileRows);
+        const fPath = getFilePath(f);
+        registeredTexts[fPath] = fPath;
+        const info = extractCnpjAndPeriod(f.name);
+        if (info) cnpjByFilename[fPath] = info;
+        const check = detectSpedType(text);
+        if (check === 'fiscal') fiscalCount++; else contribCount++;
+        const pct = 20 + ((idx + 1) / files.length) * 55;
+        setProgress(pct, `Processado ${idx+1}/${files.length} — ${f.name} (${parsedRows.length} linhas${fileRows.length !== parsedRows.length ? ', ' + (parsedRows.length - fileRows.length) + ' duplicatas ignoradas' : ''})`);
+      }
+      if (start + FILE_CHUNK < files.length) await new Promise(r => setTimeout(r, 0));
+    }
+    const oldLen = rawData.length;
+    rawData.push(...allRawData);
+    uniqueColsCache = null;
+    for (let i = oldLen; i < rawData.length; i++){
+      const r = rawData[i];
+      r.cfop_gera_credito = CFOP_NAT_BC_CRED.has(r.cfop || '') ? 'SIM' : 'NÃO';
+      r.cst_gera_credito = CST_CREDITOS.has(r.cst_pis) || CST_CREDITOS.has(r.cst_cofins) ? 'SIM' : 'NÃO';
+    }
+    const contribSet = new Set();
+    for (const r of rawData){
+      if (r.sped_origem === 'CONTRIBUIÇÕES') contribSet.add((r.chv_doce || '') + '|' + (r.num_item || ''));
+    }
+    for (let i = oldLen; i < rawData.length; i++){
+      const r = rawData[i];
+      if (r.sped_origem === 'FISCAL'){
+        const key = (r.chv_doce || '') + '|' + (r.num_item || '');
+        r.tem_no_contrib = key === '|' ? 'N/A' : contribSet.has(key) ? 'SIM' : 'NÃO';
+      } else {
+        r.tem_no_contrib = 'N/A';
+      }
+    }
+    for (let i = oldLen; i < rawData.length; i++){
+      const r = rawData[i];
+      const nat = r.nat_bc_cred || '';
+      if (nat === '12') r.essencial = 'Não - Devolução / Anulação';
+      else if (nat === '10') r.essencial = 'Não - CFOP de imobilizado no C170';
+      else if (r.cfop_gera_credito === 'NÃO') r.essencial = 'Não - CFOP que não gera créditos no C170';
+      else if (r.tem_no_contrib === 'SIM') r.essencial = 'Não - Já está lançado no Contribuições (SIM / NÃO)';
+      else r.essencial = 'Verificar';
+    }
+    if (rawData.length === 0){
+      hideProgress();
+      showError('Nenhum dado encontrado. Verifique se os arquivos são SPED Contribuições ou Fiscal válidos.');
+      return;
+    }
+    setProgress(80, 'Renderizando tabela...');
+    populateFilters();
+    autoFitColumns();
+    applyFilters();
+    renderFileList(toProcess, cnpjByFilename);
+    await updateFileClassification({ fiscal: fiscalCount, contrib: contribCount });
+    els.results.classList.add('active');
+    setProgress(100, `Concluído: ${rawData.length} linhas geradas.`);
+    setDropzoneCollapsed(true);
+    setTimeout(hideProgress, 1200);
+  } catch (e){
+    hideProgress();
+    showError('Erro ao processar: ' + (e.message || e));
+  }
+}
+
+function detectSpedType(text){
+  for (const line of text.split('\n')){
+    const c = line.split('|');
+    const reg = trim(c[1]);
+    if (reg === '0000'){
+      const c07 = (c[7] || '').replace(/[^0-9]/g, '');
+      return c07.length === 14 ? 'fiscal' : 'contrib';
+    }
+  }
+  return 'contrib';
+}
+
+function parseSpedText(text, filename){
+  const lines = text.split('\n');
+  const rows = [];
+  let dt_fim = '', cnpj_empresa = '', isFiscal = false;
+  let g_a100 = 0, g_c100 = 0, g_c180 = 0, g_c190 = 0, g_c500 = 0;
+  let g_d100 = 0, g_d200 = 0, g_d500 = 0, g_d700 = 0;
+  const parents = { a100: new Map(), c100: new Map(), c180: new Map(), c190: new Map(),
+    c500: new Map(), d100: new Map(), d200: new Map(), d500: new Map(), d700: new Map() };
+  const items = new Map();
+
+  const f = (c, i) => trim(c[i] || '');
+
+  for (const raw of lines){
+    const c = raw.split('|');
+    const reg = f(c, 1);
+    if (!reg || reg.length !== 4) continue;
+
+    switch(reg){
+      case '0000': {
+        const c05d = (c[5] || '').replace(/[^0-9]/g, '');
+        dt_fim = c05d.length === 8 ? f(c,5) : f(c,7);
+        const c07d = (c[7] || '').replace(/[^0-9]/g, '');
+        const c09d = (c[9] || '').replace(/[^0-9]/g, '');
+        const rawCnpj = c07d.length === 14 ? f(c,7) : c09d.length === 14 ? f(c,9) : f(c,3);
+        cnpj_empresa = fmtCnpj(rawCnpj);
+        isFiscal = c07d.length === 14;
+
+        break;
+      }
+      case '0200': items.set(f(c,2), { descr: f(c,3), ncm: f(c,8) }); break;
+
+      case 'A100': {
+        g_a100++;
+        parents.a100.set(g_a100, {
+          sentido: (f(c,2) || '1') === '0' ? 'Entrada' : 'Saída',
+          num_doc: f(c,8), chv_doce: f(c,9), dt_e_s: f(c,11),
+          vl_doc: num(c[12]), vl_desc: num(c[13])
+        });
+        break;
+      }
+      case 'C100': {
+        g_c100++;
+        parents.c100.set(g_c100, {
+          sentido: (f(c,2) || '1') === '0' ? 'Entrada' : 'Saída',
+          num_doc: f(c,8), chv_doce: f(c,9), dt_e_s: f(c,11),
+          vl_doc: num(c[12]), vl_desc: num(c[13])
+        });
+        break;
+      }
+      case 'C180': { g_c180++; parents.c180.set(g_c180, 'Saída'); break; }
+      case 'C190': {
+        g_c190++;
+        parents.c190.set(g_c190, 'Entrada');
+        if (isFiscal){
+          const pC100 = parents.c100.get(g_c100);
+          const cfop = f(c,3) || 'N/A';
+          const vl_oper = num(c[5]);
+          const cst = f(c,2) || '000';
+          rows.push(makeRow('FISCAL', dt_fim, cnpj_empresa, true, 'C190', filename, items, pC100,
+            '', '', '', cfop, cst, 0, 0, 0, cst, 0, 0, 0, vl_oper, 0, ''));
+        }
+        break;
+      }
+      case 'C500': { g_c500++; parents.c500.set(g_c500, { sentido: 'Entrada', vl_doc_contrib: num(c[10]), vl_doc_fiscal: num(c[13]) }); break; }
+      case 'D100': {
+        g_d100++;
+        parents.d100.set(g_d100, { sentido: (f(c,2) || '0') === '0' ? 'Entrada' : 'Saída', vl_serv: num(c[15]), vl_desc: num(c[13]) });
+        break;
+      }
+      case 'D200': {
+        g_d200++;
+        parents.d200.set(g_d200, { sentido: 'Saída', cfop: f(c,8), vl_doc: num(c[10]), vl_desc: num(c[11]) });
+        break;
+      }
+      case 'D500': {
+        g_d500++;
+        parents.d500.set(g_d500, { sentido: (f(c,2) || '1') === '0' ? 'Entrada' : 'Saída', vl_serv: num(c[14]), vl_desc: num(c[13]) });
+        break;
+      }
+      case 'D700': {
+        g_d700++;
+        parents.d700.set(g_d700, { sentido: (f(c,2) || '1') === '0' ? 'Entrada' : 'Saída', vl_doc: num(c[10]), vl_desc: num(c[11]) });
+        break;
+      }
+
+      case 'A170': {
+        if (isFiscal) break;
+        const p = parents.a100.get(g_a100);
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'A170', filename, items, p,
+          f(c,2), f(c,3), f(c,4), '1933', f(c,9), great(c[10]), num(c[11]), great(c[12]),
+          f(c,13), great(c[14]), num(c[15]), great(c[16]), num(c[5]), num(c[6])));
+        break;
+      }
+      case 'C170': {
+        const p = parents.c100.get(g_c100);
+        const cfop = f(c,11) || 'N/A';
+        const origem170 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
+        rows.push(makeRow(origem170, dt_fim, cnpj_empresa, isFiscal, 'C170', filename, items, p,
+          f(c,2), f(c,3), f(c,4), cfop, f(c,25), great(c[26]), num(c[27]), great(c[30]),
+          f(c,31), great(c[32]), num(c[33]), great(c[36]), num(c[7]), num(c[8])));
+        break;
+      }
+      case 'C175': {
+        if (isFiscal) break;
+        const p = parents.c100.get(g_c100);
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C175', filename, items, p,
+          '', '', '', f(c,2)||'N/A', f(c,5), great(c[6]), num(c[7]), great(c[8]),
+          f(c,5), great(c[10]), num(c[11]), great(c[12]), num(c[3]), num(c[4]), f(c,9)));
+        break;
+      }
+      case 'C181': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C180', filename, items, null,
+          '', '', '', f(c,3)||'N/A', f(c,2), great(c[6]), num(c[7]), great(c[10]),
+          f(c,2), 0, 0, 0, num(c[4]), num(c[5])));
+        break;
+      }
+      case 'C191': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C190', filename, items, null,
+          '', '', '', f(c,4)||'N/A', f(c,3), great(c[7]), num(c[8]), great(c[11]),
+          f(c,3), 0, 0, 0, num(c[5]), num(c[6])));
+        break;
+      }
+      case 'C501': {
+        const p = parents.c500.get(g_c500);
+        const vlDoc500 = p ? (isFiscal ? p.vl_doc_fiscal : p.vl_doc_contrib) : 0;
+        const origem500 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
+        const row501 = makeRow(origem500, dt_fim, cnpj_empresa, isFiscal, 'C500', filename, items, p,
+          '', '', '', '1253', f(c,2), great(c[5]), num(c[6]), great(c[7]),
+          f(c,2), 0, 0, 0, vlDoc500, 0);
+        row501._g_c500 = g_c500;
+        rows.push(row501);
+        break;
+      }
+      case 'C505': {
+        for (let i = rows.length - 1; i >= 0; i--){
+          if (rows[i]._g_c500 === g_c500){
+            rows[i].vl_bc_cofins = Math.max(rows[i].vl_bc_cofins, great(c[5]));
+            rows[i].aliq_cofins = Math.max(rows[i].aliq_cofins, num(c[6]));
+            rows[i].vl_cofins = Math.max(rows[i].vl_cofins, great(c[7]));
+            rows[i].vl_bc_pis_cofins = Math.max(rows[i].vl_bc_pis_cofins, great(c[5]));
+            break;
+          }
+        }
+        break;
+      }
+      case 'C870': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C870', filename, items, null,
+          '', '', '', f(c,2)||'N/A', f(c,5), great(c[6]), num(c[7]), great(c[8]),
+          f(c,9), great(c[10]), num(c[11]), great(c[12]), num(c[3]), num(c[4])));
+        break;
+      }
+      case 'D101': {
+        if (isFiscal) break;
+        const p = parents.d100.get(g_d100);
+        const rowD101 = makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'D100', filename, items, p,
+          '', '', '', '1353', f(c,4), great(c[6]), num(c[7]), great(c[8]),
+          f(c,4), 0, 0, 0, p ? p.vl_serv : 0, 0);
+        rowD101._g_d100 = g_d100;
+        rows.push(rowD101);
+        break;
+      }
+      case 'D105': {
+        if (isFiscal) break;
+        for (let i = rows.length - 1; i >= 0; i--){
+          if (rows[i]._g_d100 === g_d100){
+            rows[i].vl_bc_cofins = Math.max(rows[i].vl_bc_cofins, great(c[6]));
+            rows[i].aliq_cofins = Math.max(rows[i].aliq_cofins, num(c[7]));
+            rows[i].vl_cofins = Math.max(rows[i].vl_cofins, great(c[8]));
+            rows[i].vl_bc_pis_cofins = Math.max(rows[i].vl_bc_pis_cofins, great(c[6]));
+            break;
+          }
+        }
+        break;
+      }
+      case 'D201': {
+        if (isFiscal) break;
+        const p = parents.d200.get(g_d200);
+        const rowD201 = makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'D200', filename, items, p,
+          '', '', '', (p?p.cfop:'')||'N/A', f(c,2), great(c[4]), num(c[5]), great(c[6]),
+          f(c,2), 0, 0, 0, num(c[3]), 0);
+        rowD201._g_d200 = g_d200;
+        rows.push(rowD201);
+        break;
+      }
+      case 'D205': {
+        if (isFiscal) break;
+        for (let i = rows.length - 1; i >= 0; i--){
+          if (rows[i]._g_d200 === g_d200){
+            rows[i].vl_bc_cofins = Math.max(rows[i].vl_bc_cofins, great(c[4]));
+            rows[i].aliq_cofins = Math.max(rows[i].aliq_cofins, num(c[5]));
+            rows[i].vl_cofins = Math.max(rows[i].vl_cofins, great(c[6]));
+            rows[i].vl_bc_pis_cofins = Math.max(rows[i].vl_bc_pis_cofins, great(c[4]));
+            break;
+          }
+        }
+        break;
+      }
+      case 'D501': {
+        const p = parents.d500.get(g_d500);
+        const origemD501 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
+        const rowD501 = makeRow(origemD501, dt_fim, cnpj_empresa, isFiscal, 'D500', filename, items, p,
+          '', '', '', '1352', f(c,4), great(c[6]), num(c[7]), great(c[8]),
+          f(c,4), 0, 0, 0, p ? p.vl_serv : 0, p ? p.vl_desc : 0);
+        rowD501._g_d500 = g_d500;
+        rows.push(rowD501);
+        break;
+      }
+      case 'D505': {
+        const p505 = parents.d500.get(g_d500);
+        const origemD505 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
+        for (let i = rows.length - 1; i >= 0; i--){
+          if (rows[i]._g_d500 === g_d500){
+            rows[i].vl_bc_cofins = Math.max(rows[i].vl_bc_cofins, great(c[6]));
+            rows[i].aliq_cofins = Math.max(rows[i].aliq_cofins, num(c[7]));
+            rows[i].vl_cofins = Math.max(rows[i].vl_cofins, great(c[8]));
+            rows[i].vl_bc_pis_cofins = Math.max(rows[i].vl_bc_pis_cofins, great(c[6]));
+            break;
+          }
+        }
+        break;
+      }
+      case 'F100': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F100', filename, items, null,
+          '', '', '', 'F100', f(c,7), great(c[8]), num(c[9]), great(c[10]),
+          f(c,11), great(c[12]), num(c[13]), great(c[14]), num(c[6]), 0));
+        break;
+      }
+      case 'F120': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F120', filename, items, null,
+          '', '', '', 'F120', f(c,8), great(c[9]), num(c[10]), great(c[11]),
+          f(c,12), great(c[13]), num(c[14]), great(c[15]), num(c[6]), 0));
+        break;
+      }
+      case 'F130': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F130', filename, items, null,
+          '', '', '', 'F130', f(c,11), great(c[12]), num(c[13]), great(c[14]),
+          f(c,15), great(c[16]), num(c[17]), great(c[18]), num(c[7]), 0));
+        break;
+      }
+      case 'F150': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F150', filename, items, null,
+          '', '', '', 'F150', f(c,7), great(c[5]), num(c[8]), great(c[9]),
+          f(c,10), great(c[5]), num(c[11]), great(c[12]), num(c[5]), 0));
+        break;
+      }
+      case 'F500': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F500', filename, items, null,
+          '', '', '', f(c,14)||'N/A', f(c,3), great(c[5]), num(c[6]), great(c[7]),
+          f(c,8), great(c[10]), num(c[11]), great(c[12]), num(c[2]), 0));
+        break;
+      }
+      case 'F550': {
+        if (isFiscal) break;
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'F550', filename, items, null,
+          '', '', '', f(c,14)||'N/A', f(c,3), great(c[5]), num(c[6]), great(c[7]),
+          f(c,8), great(c[10]), num(c[11]), great(c[12]), num(c[2]), 0));
+        break;
+      }
+
+      // FISCAL registers
+      case 'D190': {
+        if (!isFiscal) break;
+        const p = parents.d100.get(g_d100);
+        const cfopD = f(c,3) || (p && p.ind_oper === '0' ? '1352' : '5352');
+        rows.push(makeRow('FISCAL', dt_fim, cnpj_empresa, isFiscal, 'D100', filename, items, p,
+          '', '', '', cfopD, '', 0, 0, 0, '', 0, 0, 0, p ? p.vl_serv : 0, p ? p.vl_desc : 0));
+        break;
+      }
+      case 'D701': {
+        if (!isFiscal) break;
+        const p = parents.d700.get(g_d700);
+        rows.push(makeRow('FISCAL', dt_fim, cnpj_empresa, isFiscal, 'D700', filename, items, p,
+          '', '', '', '1352', f(c,2), great(c[4]), num(c[5]), great(c[6]),
+          f(c,2), 0, 0, 0, p ? p.vl_doc : 0, p ? p.vl_desc : 0));
+        break;
+      }
+    }
+  }
+
+  return rows;
+}
+
+let _chaveSeq = 0;
+function makeRow(origem, dt_fim, cnpj, isFiscal, registro, filename, items, parent,
+  num_item, cod_item, descr, cfop, cst_pis, vl_bc_pis, aliq_pis, vl_pis,
+  cst_cofins, vl_bc_cofins, aliq_cofins, vl_cofins, vl_item, vl_desc, cst_cofins_alt){
+
+  _chaveSeq++;
+  const chave = String(_chaveSeq);
+  const periodo = formatPeriodo(dt_fim);
+  const dt_e_s = parent ? formatDate(parent.dt_e_s || '') : '';
+  const chv_doce = parent ? (parent.chv_doce || '') : '';
+  const num_doc = parent ? (parent.num_doc || '') : '';
+  const fixedSentido = { C175:'Saída', C180:'Saída', C500:'Entrada',
+    C870:'Saída', D200:'Saída', F120:'Entrada', F130:'Entrada', F150:'Entrada',
+    F500:'Saída', F550:'Saída' }[registro];
+  const sentido = fixedSentido || (parent ? parent.sentido : 'Entrada');
+  const item = items.get(cod_item) || {};
+  const descricao = (item.descr || descr || '').trim();
+  const ncm = (item.ncm || '').trim();
+  const cst = (cst_pis || cst_cofins || cst_cofins_alt || '00').trim();
+  const cstPisFinal = (cst_pis || '00').trim();
+  const cstCofinsFinal = (cst_cofins_alt || cst_cofins || '00').trim();
+  const natBcCred = CFOP_NAT_BC_CRED.get(cfop) || '';
+  const isContrib = origem === 'CONTRIBUIÇÕES' || !isFiscal;
+
+  return {
+    chave_unica: chave,
+    periodo: periodo,
+    dt_e_s: dt_e_s,
+    cnpj_empresa: cnpj,
+    chv_doce: chv_doce,
+    sentido: sentido,
+    registro: registro,
+    num_doc: num_doc,
+    num_item: num_item || '',
+    cod_item: cod_item || '',
+    descricao: descricao,
+    cfop: cfop || 'N/A',
+    ncm: ncm,
+    vl_item: Math.max(vl_item, 0),
+    vl_desc: Math.max(vl_desc, 0),
+    cst_pis_cofins: cst,
+    cst_pis: (cst_pis || '00').trim(),
+    cst_cofins: (cst_cofins || '00').trim(),
+    vl_bc_pis_cofins: Math.max(vl_bc_pis, vl_bc_cofins, 0),
+    aliq_pis: Math.max(aliq_pis, 0),
+    vl_pis: Math.max(vl_pis, 0),
+    aliq_cofins: Math.max(aliq_cofins, 0),
+    vl_cofins: Math.max(vl_cofins, 0),
+    nat_bc_cred: natBcCred || 'N/A',
+    sped_origem: origem,
+    st_conf: 'Não conferido'
+  };
+}
+
+function formatPeriodo(dt){
+  const d = (dt || '').replace(/[^0-9]/g, '');
+  if (d.length >= 8){
+    const p1 = parseInt(d.substring(0, 4), 10);
+    const p2 = parseInt(d.substring(4, 8), 10);
+    if (p1 >= 1900 && p1 <= 2099){
+      return d.substring(4, 6) + '/' + d.substring(0, 4);
+    }
+    return d.substring(2, 4) + '/' + d.substring(4, 8);
+  }
+  return '';
+}
+function periodoNum(p){
+  if (!p) return 0;
+  const m = parseInt(p.substring(0, 2), 10);
+  const y = parseInt(p.substring(3, 7), 10);
+  return isNaN(m) || isNaN(y) ? 0 : y * 100 + m;
+}
+
+function formatDate(dt){
+  if (!dt || dt.length !== 8) return dt || '';
+  return dt.substring(0,2) + '/' + dt.substring(2,4) + '/' + dt.substring(4,8);
+}
+
+async function updateFileClassification(counts){
+  try {
+    const regMap = {};
+    for (const r of rawData){
+      const k = (r.sped_origem || '?') + '|' + (r.registro || '?');
+      if (!regMap[k]) regMap[k] = { origem: r.sped_origem, registro: r.registro, n: 0, pis: 0, cof: 0 };
+      regMap[k].n += +r.vl_bc_pis_cofins || 0;
+      regMap[k].pis += +r.vl_pis || 0;
+      regMap[k].cof += +r.vl_cofins || 0;
+    }
+    const regRows = Object.values(regMap).sort((a,b) => (a.origem||'').localeCompare(b.origem||'') || (a.registro||'').localeCompare(b.registro||''));
+    const summary = els.fileList.querySelector('.file-summary > span:first-child');
+    if (summary && !summary.innerHTML.includes('FISCAL +')){
+      const totais = {};
+      for (const r of regRows){
+        if (!totais[r.origem]) totais[r.origem] = { n: 0, pis: 0, cof: 0 };
+        totais[r.origem].n   += r.n;
+        totais[r.origem].pis += r.pis;
+        totais[r.origem].cof += r.cof;
+      }
+      let html = ` · <strong style="color:var(--accent)">${counts.fiscal} FISCAL + ${counts.contrib} CONTRIB</strong>`;
+      html += `<table class="file-summary-table"><thead><tr><th>Registro</th><th>BC PIS/COFINS</th><th>PIS</th><th>COFINS</th></tr></thead><tbody>`;
+      let curOrigem = '';
+      for (const r of regRows){
+        if (r.origem !== curOrigem){
+          curOrigem = r.origem;
+          html += `<tr class="section"><td colspan="4">${curOrigem}</td></tr>`;
+        }
+        html += `<tr><td>${escHtml(r.registro)}</td><td>${fmtMoney(r.n)}</td><td>${fmtMoney(r.pis)}</td><td>${fmtMoney(r.cof)}</td></tr>`;
+      }
+      for (const orig of ['CONTRIBUIÇÕES','FISCAL']){
+        if (!totais[orig]) continue;
+        const t = totais[orig];
+        html += `<tr class="total"><td>Total ${orig}</td><td>${fmtMoney(t.n)}</td><td>${fmtMoney(t.pis)}</td><td>${fmtMoney(t.cof)}</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      summary.innerHTML += html;
+    }
+  } catch(e){ console.error('updateFileClassification:', e); }
+}
+
+function populateFilters(){
+  const origens = new Set(), periodos = new Set(), regsAll = new Set(), cfops = new Set(), csts = new Set(), cnpjs = new Set();
+  registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+  for (const r of rawData){
+    if (r.sped_origem){
+      origens.add(r.sped_origem);
+      if (r.registro) registrosPorOrigem[r.sped_origem].add(r.registro);
+    }
+    if (r.periodo) periodos.add(r.periodo);
+    if (r.registro) regsAll.add(r.registro);
+    if (r.cfop) cfops.add(r.cfop);
+    if (r.cst_pis_cofins) csts.add(r.cst_pis_cofins);
+    if (r.cnpj_empresa) cnpjs.add(r.cnpj_empresa);
+  }
+  const fillSel = (sel, vals) => {
+    const cur = sel.value;
+    const firstOpt = sel.options[0].text;
+    sel.innerHTML = '';
+    const def = document.createElement('option');
+    def.value = ''; def.textContent = firstOpt;
+    sel.appendChild(def);
+    for (const v of vals){
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = v;
+      sel.appendChild(opt);
+    }
+    sel.value = cur;
+  };
+  const fillList = (dl, vals, presorted) => {
+    dl.innerHTML = '';
+    const src = presorted ? vals : [...vals].sort();
+    for (const v of src){
+      const opt = document.createElement('option');
+      opt.value = v;
+      dl.appendChild(opt);
+    }
+  };
+  const ordemOrigem = ['CONTRIBUIÇÕES', 'FISCAL'];
+  const origensOrdenadas = [...origens].sort((a, b) => {
+    const ia = ordemOrigem.indexOf(a); const ib = ordemOrigem.indexOf(b);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+  fillSel(els.filterOrigem, origensOrdenadas);
+  updateRegistroOptions();
+  const sortPeriodo = (a, b) => {
+    const [mA, yA] = a.split('/'); const [mB, yB] = b.split('/');
+    return yA !== yB ? yA - yB : mA - mB;
+  };
+  fillList(document.getElementById('list-periodo-ini'), [...periodos].sort(sortPeriodo), true);
+  fillList(document.getElementById('list-periodo-fim'), [...periodos].sort(sortPeriodo), true);
+  msCfop.setOptions([...cfops].sort((a,b) => a.localeCompare(b, 'pt-BR', { numeric: true })));
+  fillList(els.listCnpj, cnpjs);
+}
+
+function updateRegistroOptions(){
+  const origem = els.filterOrigem.value;
+  const regs = origem && registrosPorOrigem[origem]
+    ? registrosPorOrigem[origem]
+    : new Set([...registrosPorOrigem['CONTRIBUIÇÕES'], ...registrosPorOrigem['FISCAL']]);
+  const cur = els.filterRegistro.value;
+  els.filterRegistro.innerHTML = '';
+  const def = document.createElement('option');
+  def.value = ''; def.textContent = 'Registro (todos)';
+  els.filterRegistro.appendChild(def);
+  for (const v of [...regs].sort()){
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    els.filterRegistro.appendChild(opt);
+  }
+  if ([...regs].includes(cur)) els.filterRegistro.value = cur;
+  else els.filterRegistro.value = '';
+}
+
+function updateNatBcCredOptions(){
+  const fPeriodoIni = els.filterPeriodoIni.value;
+  const fPeriodoFim = els.filterPeriodoFim.value;
+  const fOrigem = els.filterOrigem.value;
+  const fSit = els.filterSituacao.value;
+  const fReg = els.filterRegistro.value;
+  const fCfop = [...msCfop.getValues()];
+  const fCnpj = els.filterCnpj.value.trim().toLowerCase();
+  const fCfopCred = els.filterCfopCredito.value;
+  const fCstCred = els.filterCstCredito.value;
+  const natVals = new Set();
+  const cstVals = new Set();
+  for (const r of rawData){
+    const pn = periodoNum(r.periodo);
+    const pIni = periodoNum(fPeriodoIni);
+    const pFim = periodoNum(fPeriodoFim);
+    if (fPeriodoIni && pn < pIni) continue;
+    if (fPeriodoFim && pn > pFim) continue;
+    if (fOrigem && r.sped_origem !== fOrigem) continue;
+    if (fReg && r.registro !== fReg) continue;
+    if (fSit && r.sentido !== fSit) continue;
+    if (fCfop.length && !fCfop.includes(r.cfop)) continue;
+    if (fCfopCred && r.cfop_gera_credito !== fCfopCred) continue;
+    if (fCstCred && r.cst_gera_credito !== fCstCred) continue;
+    if (fCnpj && !(r.cnpj_empresa || '').toLowerCase().includes(fCnpj)) continue;
+    let pass = true;
+    for (const key of Object.keys(columnFilters)){
+      const v = (columnFilters[key] || '').trim();
+      if (!v) continue;
+      const rv = String(r[key] || '');
+      if (v.includes('|')){
+        const parts = v.split('|').map(s => s.trim()).filter(Boolean);
+        if (parts.length && !parts.includes(rv)){ pass = false; break; }
+      } else if (v.startsWith('>=')){
+        const num = parseFloat(v.slice(2).trim());
+        if (!isNaN(num) && parseFloat(rv) < num){ pass = false; break; }
+      } else if (v.startsWith('<=')){
+        const num = parseFloat(v.slice(2).trim());
+        if (!isNaN(num) && parseFloat(rv) > num){ pass = false; break; }
+      } else if (v.startsWith('!=') || v.startsWith('<>')){
+        if (rv === v.slice(2).trim()){ pass = false; break; }
+      } else if (v.startsWith('>')){
+        const num = parseFloat(v.slice(1).trim());
+        if (!isNaN(num) && parseFloat(rv) <= num){ pass = false; break; }
+      } else if (v.startsWith('<')){
+        const num = parseFloat(v.slice(1).trim());
+        if (!isNaN(num) && parseFloat(rv) >= num){ pass = false; break; }
+      } else if (v.startsWith('=')){
+        if (rv !== v.slice(1).trim()){ pass = false; break; }
+      } else if (v.startsWith('!')){
+        if (rv.toLowerCase().includes(v.slice(1).trim().toLowerCase())){ pass = false; break; }
+      } else {
+        if (!rv.toLowerCase().includes(v.toLowerCase())){ pass = false; break; }
+      }
+    }
+    if (!pass) continue;
+    const nv = String(r.nat_bc_cred || '').trim();
+    if (nv) natVals.add(nv);
+    const cv = String(r.cst_pis_cofins || '').trim();
+    if (cv) cstVals.add(cv);
+  }
+  msCst.setOptions([...cstVals].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true })));
+  msNat.setOptions([...natVals].sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true })));
+}
+
+function applyFilters(){
+  renderLimit = RENDER_BATCH;
+  uniqueColsCache = null;
+  updateNatBcCredOptions();
+  const fPeriodoIni = els.filterPeriodoIni.value;
+  const fPeriodoFim = els.filterPeriodoFim.value;
+  const fOrigem = els.filterOrigem.value;
+  const fSit = els.filterSituacao.value;
+  const fReg = els.filterRegistro.value;
+  const fCfopSel = msCfop.getValues();
+  const fCstSel = msCst.getValues();
+  const fNatSel = msNat.getValues();
+  const fCfopCred = els.filterCfopCredito.value;
+  const fCstCred = els.filterCstCredito.value;
+  const fCnpj = els.filterCnpj.value.trim().toLowerCase();
+  filteredData = rawData.filter(r => {
+    const pn = periodoNum(r.periodo);
+    const pIni = periodoNum(fPeriodoIni);
+    const pFim = periodoNum(fPeriodoFim);
+    if (fPeriodoIni && pn < pIni) return false;
+    if (fPeriodoFim && pn > pFim) return false;
+    if (fOrigem && r.sped_origem !== fOrigem) return false;
+    if (fReg && r.registro !== fReg) return false;
+    if (fSit && r.sentido !== fSit) return false;
+    if (fCfopSel.size && !fCfopSel.has(r.cfop)) return false;
+    if (fCstSel.size && !fCstSel.has(r.cst_pis_cofins)) return false;
+    if (fCfopCred && r.cfop_gera_credito !== fCfopCred) return false;
+    if (fCstCred && r.cst_gera_credito !== fCstCred) return false;
+    if (fCnpj && !(r.cnpj_empresa || '').toLowerCase().includes(fCnpj)) return false;
+    if (fNatSel.size){
+      const nat = String(r.nat_bc_cred || '').trim() || 'N/A';
+      if (!fNatSel.has(nat)) return false;
+    }
+    for (const key of Object.keys(columnFilters)){
+      const v = (columnFilters[key] || '').trim();
+      if (!v) continue;
+      const rv = String(r[key] || '');
+      if (v.includes('|')){
+        const parts = v.split('|').map(s => s.trim()).filter(Boolean);
+        if (parts.length && !parts.includes(rv)) return false;
+      } else if (v.startsWith('>=')){
+        const num = parseFloat(v.slice(2).trim());
+        if (!isNaN(num) && parseFloat(rv) < num) return false;
+      } else if (v.startsWith('<=')){
+        const num = parseFloat(v.slice(2).trim());
+        if (!isNaN(num) && parseFloat(rv) > num) return false;
+      } else if (v.startsWith('!=') || v.startsWith('<>')){
+        const val = v.slice(2).trim();
+        if (rv === val) return false;
+      } else if (v.startsWith('>')){
+        const num = parseFloat(v.slice(1).trim());
+        if (!isNaN(num) && parseFloat(rv) <= num) return false;
+      } else if (v.startsWith('<')){
+        const num = parseFloat(v.slice(1).trim());
+        if (!isNaN(num) && parseFloat(rv) >= num) return false;
+      } else if (v.startsWith('=')){
+        if (rv !== v.slice(1).trim()) return false;
+      } else if (v.startsWith('!')){
+        if (rv.toLowerCase().includes(v.slice(1).trim().toLowerCase())) return false;
+      } else {
+        if (!rv.toLowerCase().includes(v.toLowerCase())) return false;
+      }
+    }
+    return true;
+  });
+  if (sortCol) sortData();
+  renderTable();
+  renderStats();
+  els.empty.classList.toggle('hidden', filteredData.length > 0);
+}
+
+function sortData(){
+  const idx = COLUMNS.findIndex(c => c.key === sortCol);
+  if (idx < 0) return;
+  const col = COLUMNS[idx];
+  filteredData.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (col.type === 'num' || col.type === 'money' || col.type === 'pct'){
+      va = +va || 0; vb = +vb || 0;
+    } else {
+      va = (va || '').toString(); vb = (vb || '').toString();
+    }
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function fmtMoney(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n)) return v;
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtNum(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n)) return v;
+  return n.toLocaleString('pt-BR', { maximumFractionDigits: 6 });
+}
+function fmtPct(v){
+  if (v == null || v === '') return '';
+  const n = +v;
+  if (isNaN(n) || n === 0) return '0,00';
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+}
+function escHtml(s){
+  return (s == null ? '' : String(s))
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function measureText(text, font){
+  const canvas = measureText._canvas || (measureText._canvas = document.createElement('canvas'));
+  const ctx = canvas.getContext('2d');
+  ctx.font = font || '13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  return ctx.measureText(text || '').width;
+}
+
+function autoFitColumns(){
+  const font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  const chaveRef = measureText('422012', font) + 12;
+  colWidths['chave_unica'] = chaveRef;
+  const longestWord = label => {
+    let m = 0;
+    for (const w of label.split(/\s+/)){
+      const x = measureText(w, font);
+      if (x > m) m = x;
+    }
+    return m;
+  };
+  const sample = rawData.slice(0, 50);
+  const maxNarrow = { chv_doce:85, num_item:55, cod_item:90, descricao:195, nat_bc_cred:85, st_conf:95, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, tem_no_contrib:80, essencial:100 };
+  for (let i = 0; i < COLUMNS.length; i++){
+    const c = COLUMNS[i];
+    if (c.key === 'chave_unica') continue;
+    if (colWidths[c.key]) continue;
+    let maxW = longestWord(c.label) + 12;
+    for (const r of sample){
+      const v = r[c.key];
+      if (v == null || v === '') continue;
+      let s = String(v);
+      if (c.type === 'money') s = fmtMoney(v);
+      else if (c.type === 'pct') s = fmtPct(v);
+      else if (c.type === 'num') s = fmtNum(v);
+      const w = measureText(s, font);
+      if (w + 12 > maxW) maxW = w + 12;
+    }
+    if (maxW < 40) maxW = 40;
+    if (c.key === 'descricao' && maxW < 195) maxW = 195;
+    if (c.key === 'ncm' && maxW < 60) maxW = 60;
+    // Respeitar largura máxima definida pelo usuário
+    if (maxNarrow[c.key] && maxW > maxNarrow[c.key]) maxW = maxNarrow[c.key];
+    colWidths[c.key] = Math.ceil(maxW);
+  }
+}
+
+function renderTable(){
+  els.theadRow.innerHTML = '';
+  for (let i = 0; i < COLUMNS.length; i++){
+    const c = COLUMNS[i];
+    const th = document.createElement('th');
+    th.textContent = c.label;
+    th.dataset.col = c.key;
+    const narrow = { registro:36, cfop:38, ncm:60, descricao:195, num_doc:100, chv_doce:85, cod_item:90, nat_bc_cred:85, num_item:55, st_conf:95, chave_unica:55, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, cst_gera_credito:80, tem_no_contrib:80, essencial:260 };
+    const w = colWidths[c.key] || (i === 0 ? 480 : (c.type === 'money' || c.type === 'pct' || c.type === 'num' ? 100 : (narrow[c.key] || 80)));
+    th.style.width = w + 'px';
+    th.style.minWidth = w + 'px';
+    if (i === 0) th.classList.add('chave');
+    if (sortCol === c.key) th.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    th.addEventListener('click', e => {
+      if (th._resizing) return;
+      if (e.target.classList.contains('resizer')) return;
+      if (sortCol === c.key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      else { sortCol = c.key; sortDir = 'asc'; }
+      renderLimit = RENDER_BATCH;
+      sortData(); renderTable();
+    });
+    els.theadRow.appendChild(th);
+  }
+  initColumnResizers();
+  const limit = Math.min(filteredData.length, renderLimit);
+  const tSum = {};
+  const noSum = { aliq_pis:1, aliq_cofins:1 };
+  const sumCols = COLUMNS.filter(c => !noSum[c.key] && (c.type === 'num' || c.type === 'money' || c.type === 'pct'));
+  for (const c of sumCols) tSum[c.key] = 0;
+  for (const r of filteredData){
+    for (const c of sumCols){
+      const v = r[c.key];
+      if (v != null && v !== ''){ const n = +v; if (!isNaN(n)) tSum[c.key] += n; }
+    }
+  }
+  const rows = [];
+  for (let idx = 0; idx < limit; idx++){
+    const r = filteredData[idx];
+    const tds = [];
+    for (let i = 0; i < COLUMNS.length; i++){
+      const c = COLUMNS[i];
+      const v = r[c.key];
+      let cls = i === 0 ? 'chave' : '';
+      let txt = v;
+      if (c.type === 'money'){ cls = (cls ? cls + ' ' : '') + 'money'; txt = fmtMoney(v); }
+      else if (c.type === 'pct'){ cls = 'num'; txt = fmtPct(v); }
+      else if (c.type === 'num'){ cls = 'num'; txt = fmtNum(v); }
+      else if (c.key === 'cfop' || c.key === 'cst_pis_cofins' || c.key === 'registro' || c.key === 'sentido' || c.key === 'ncm'){ cls = 'center'; }
+      if (c.key === 'essencial'){
+        const opts = ESSENCIAL_OPTS.map(o => `<option value="${escHtml(o)}"${o === v ? ' selected' : ''}>${escHtml(o)}</option>`).join('');
+        tds.push(`<td><select data-idx="${idx}" class="essencial-sel">${opts}</select></td>`);
+      } else {
+        tds.push(`<td class="${cls}">${escHtml(txt)}</td>`);
+      }
+    }
+    rows.push('<tr>' + tds.join('') + '</tr>');
+  }
+  if (filteredData.length > renderLimit){
+    const remaining = filteredData.length - renderLimit;
+    const nextBatch = Math.min(RENDER_BATCH, remaining);
+    rows.push(`<tr class="load-more-row" style="cursor:pointer;user-select:none"><td colspan="${COLUMNS.length}" style="text-align:center;padding:10px;background:var(--accent3);color:var(--accent);font-weight:600;font-size:13px">📄 Mostrar mais ${nextBatch} (mais ${remaining - nextBatch > 0 ? (remaining - nextBatch) + ' restantes' : 'últimas'})</td></tr>`);
+  }
+  els.tbody.innerHTML = rows.join('');
+  const loadMore = els.tbody.querySelector('.load-more-row');
+  if (loadMore) loadMore.addEventListener('click', () => { renderLimit += RENDER_BATCH; renderTable(); renderStats(); });
+  const sumTds = COLUMNS.map(c => {
+    if (noSum[c.key] || tSum[c.key] === undefined) return '<td></td>';
+    let txt;
+    if (c.type === 'money'){ txt = fmtMoney(tSum[c.key]); return '<td class="money">' + txt + '</td>'; }
+    else if (c.type === 'pct'){ txt = fmtPct(tSum[c.key]); return '<td class="num">' + txt + '</td>'; }
+    else if (c.type === 'num'){ txt = fmtNum(tSum[c.key]); return '<td class="num">' + txt + '</td>'; }
+    return '<td></td>';
+  }).join('');
+  const thead = els.theadRow.parentNode;
+  const oldSum = thead.querySelector('.summary-row');
+  if (oldSum) oldSum.remove();
+  const sumTr = document.createElement('tr');
+  sumTr.className = 'summary-row';
+  sumTr.innerHTML = sumTds;
+  thead.insertBefore(sumTr, els.theadRow);
+  for (let i = 0; i < els.theadRow.children.length; i++){
+    const w = els.theadRow.children[i].style.width;
+    if (w && sumTr.children[i]){
+      sumTr.children[i].style.width = w;
+      sumTr.children[i].style.minWidth = w;
+    }
+    const filterRow = document.getElementById('col-filter-row');
+    if (w && filterRow && filterRow.children[i]){
+      filterRow.children[i].style.width = w;
+      filterRow.children[i].style.minWidth = w;
+    }
+  }
+  initColumnFilters();
+}
+
+function getUniqueCols(){
+  if (uniqueColsCache) return uniqueColsCache;
+  const map = {};
+  const src = filteredData && filteredData.length ? filteredData : rawData;
+  if (!src) return map;
+  for (const c of COLUMNS){
+    const vals = new Set();
+    for (const r of src){
+      const v = r[c.key];
+      if (v != null && v !== '') vals.add(v);
+    }
+    map[c.key] = Array.from(vals).sort((a, b) => String(a).localeCompare(String(b), 'pt-BR'));
+  }
+  uniqueColsCache = map;
+  return map;
+}
+
+function initColumnFilters(){
+  const existing = document.getElementById('col-filter-row');
+  if (existing) existing.remove();
+  if (!els.theadRow.parentNode) return;
+  const uniq = getUniqueCols();
+  const row = document.createElement('tr');
+  row.id = 'col-filter-row';
+  for (const c of COLUMNS){
+    const th = document.createElement('th');
+    const opts = uniq[c.key] || [];
+    const selected = new Set();
+    const restore = columnFilters[c.key];
+    if (restore){
+      for (const v of restore.split('|')){
+        const t = v.trim();
+        if (t) selected.add(t);
+      }
+    }
+    const ind = document.createElement('div');
+    ind.className = 'cf-indicator';
+    function updateInd(){
+      const count = selected.size;
+      ind.textContent = count ? '▼ ' + count : '▼';
+      ind.classList.toggle('active', !!count);
+      columnFilters[c.key] = count ? [...selected].join('|') : '';
+      th.classList.toggle('cf-active', !!count);
+    }
+    updateInd();
+    th.appendChild(ind);
+    const drop = document.createElement('div');
+    drop.className = 'cf-drop';
+    const searchInp = document.createElement('input');
+    searchInp.type = 'text';
+    searchInp.className = 'cf-search';
+    searchInp.placeholder = 'Filtrar valores...';
+    const list = document.createElement('div');
+    list.className = 'cf-list';
+    function buildList(filterText){
+      list.innerHTML = '';
+      let items = opts;
+      if (filterText){
+        const ft = filterText.toLowerCase();
+        items = opts.filter(v => String(v).toLowerCase().includes(ft));
+      }
+      if (items.length === 0){
+        list.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--fg3);text-align:center">Nenhum</div>';
+        return;
+      }
+      for (const v of items){
+        const label = document.createElement('label');
+        label.className = 'cf-opt';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox'; cb.value = v; cb.checked = selected.has(v);
+        label.append(cb);
+        label.append(' ' + String(v));
+        cb.addEventListener('change', () => {
+          if (cb.checked) selected.add(v); else selected.delete(v);
+          updateInd();
+          clearTimeout(colFilterTimer);
+          colFilterTimer = setTimeout(applyFilters, 200);
+        });
+        list.appendChild(label);
+      }
+    }
+    buildList('');
+    const actions = document.createElement('div');
+    actions.className = 'cf-actions';
+    const btnAll = document.createElement('button');
+    btnAll.textContent = 'Sel. todos';
+    btnAll.addEventListener('click', e => { e.stopPropagation();
+      selected.clear();
+      for (const v of opts) selected.add(v);
+      list.querySelectorAll('input').forEach(cb => cb.checked = true);
+      updateInd();
+      clearTimeout(colFilterTimer);
+      colFilterTimer = setTimeout(applyFilters, 200);
+    });
+    const btnClear = document.createElement('button');
+    btnClear.textContent = 'Limpar';
+    btnClear.addEventListener('click', e => { e.stopPropagation();
+      selected.clear();
+      list.querySelectorAll('input').forEach(cb => cb.checked = false);
+      updateInd();
+      clearTimeout(colFilterTimer);
+      colFilterTimer = setTimeout(applyFilters, 200);
+    });
+    actions.append(btnAll, btnClear);
+    drop.append(searchInp, list, actions);
+    th.appendChild(drop);
+    function positionDrop(){
+      if (!drop.classList.contains('open')) return;
+      const rect = th.getBoundingClientRect();
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const minW = Math.max(rect.width, 140);
+      let left = rect.left;
+      let top = rect.bottom;
+      drop.style.minWidth = minW + 'px';
+      drop.style.maxWidth = Math.min(400, vw - 8) + 'px';
+      drop.style.width = '';
+      drop.style.left = left + 'px';
+      drop.style.top = top + 'px';
+      setTimeout(() => {
+        const dr = drop.getBoundingClientRect();
+        if (dr.right > vw - 4){
+          left = Math.max(4, vw - dr.width - 4);
+          drop.style.left = left + 'px';
+        }
+        if (dr.bottom > vh - 4)
+          drop.style.top = Math.max(4, rect.top - dr.height) + 'px';
+      }, 0);
+    }
+    th.addEventListener('click', e => {
+      if (e.target.closest('.cf-drop')) return;
+      e.stopPropagation();
+      document.querySelectorAll('.cf-drop').forEach(d => d.classList.remove('open'));
+      drop.classList.toggle('open');
+      if (drop.classList.contains('open')){
+        searchInp.value = ''; buildList('');
+        positionDrop();
+        searchInp.focus();
+      }
+    });
+    ['scroll','resize'].forEach(evt => window.addEventListener(evt, positionDrop, { passive: true }));
+    th.addEventListener('keydown', e => {
+      if (e.key === 'Escape'){ drop.classList.remove('open'); }
+      else if (e.key === 'Enter' || (e.key === 'ArrowDown' && e.altKey)){ e.preventDefault(); th.click(); }
+    });
+    searchInp.addEventListener('keydown', e => {
+      if (e.key === 'Escape'){ drop.classList.remove('open'); }
+      e.stopPropagation();
+    });
+    row.appendChild(th);
+  }
+  if (!window._cfDocHandler){
+    window._cfDocHandler = true;
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.cf-drop').forEach(d => d.classList.remove('open'));
+    });
+  }
+  els.theadRow.parentNode.appendChild(row);
+  requestAnimationFrame(() => {
+    for (let i = 0; i < els.theadRow.children.length; i++){
+      const w = els.theadRow.children[i].style.width;
+      if (w && row.children[i]){
+        row.children[i].style.width = w;
+        row.children[i].style.minWidth = w;
+      }
+    }
+  });
+}
+
+function renderStats(){
+  const src = filteredData;
+  const totPis = src.reduce((a, r) => a + (+r.vl_pis || 0), 0);
+  const totCof = src.reduce((a, r) => a + (+r.vl_cofins || 0), 0);
+  const totItem = src.reduce((a, r) => a + (+r.vl_item || 0), 0);
+  const totBcEscr = src.reduce((a, r) => a + (+r.vl_bc_pis_cofins || 0), 0);
+  const porSentido = (campo) => {
+    const m = { 'Entrada': 0, 'Saída': 0 };
+    for (const r of src){
+      const s = r.sentido || '?';
+      m[s] = (m[s] || 0) + (+r[campo] || 0);
+    }
+    return m;
+  };
+  const itemSent = porSentido('vl_item');
+  const bcSent = porSentido('vl_bc_pis_cofins');
+  const pisSent = porSentido('vl_pis');
+  const cofSent = porSentido('vl_cofins');
+  const tooltip = (lines, total) =>
+    `<div class="stat-tooltip"><div class="stat-tooltip-title">Memória de cálculo</div>${lines.map(l =>
+      `<div class="stat-tooltip-line"><span class="lbl">${l.lbl}</span><span class="val">R$ ${fmtMoney(l.val)}</span></div>`
+    ).join('')}<div class="stat-tooltip-result"><span class="lbl">= Total</span><span class="val">R$ ${fmtMoney(total)}</span></div></div>`;
+  const stats = [
+    { label: 'Linhas na tabela', value: src.length.toLocaleString('pt-BR'), cls: '',
+      tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${src.length.toLocaleString('pt-BR')}</span></div></div>` },
+    { label: 'Registros carregados', value: rawData.length.toLocaleString('pt-BR'), cls: '',
+      tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${rawData.length.toLocaleString('pt-BR')}</span></div></div>` },
+    { label: 'Vl. bruto total', value: 'R$ ' + fmtMoney(totItem), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:itemSent['Entrada']},
+        {lbl:'Saída', val:itemSent['Saída']},
+      ], totItem) },
+    { label: 'Vl. BC PIS/COFINS escrit.', value: 'R$ ' + fmtMoney(totBcEscr), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:bcSent['Entrada']},
+        {lbl:'Saída', val:bcSent['Saída']},
+      ], totBcEscr) },
+    { label: 'Vl. PIS', value: 'R$ ' + fmtMoney(totPis), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:pisSent['Entrada']},
+        {lbl:'Saída', val:pisSent['Saída']},
+      ], totPis) },
+    { label: 'Vl. COFINS', value: 'R$ ' + fmtMoney(totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:cofSent['Entrada']},
+        {lbl:'Saída', val:cofSent['Saída']},
+      ], totCof) },
+    { label: 'Vl. PIS + COFINS', value: 'R$ ' + fmtMoney(totPis + totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada PIS', val:pisSent['Entrada']},
+        {lbl:'Entrada COFINS', val:cofSent['Entrada']},
+        {lbl:'Saída PIS', val:pisSent['Saída']},
+        {lbl:'Saída COFINS', val:cofSent['Saída']},
+      ], totPis + totCof) },
+  ];
+  els.stats.innerHTML = stats.map(s =>
+    `<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-value ${s.cls||''}">${s.value}</div>${s.tip || ''}</div>`
+  ).join('');
+  renderPainel();
+}
+
+const PAINEL_REGS_ENTR = ['A170','C170','C190','C500','D100','F100','F120','F130','F150'];
+const PAINEL_REGS_SAID = ['A170','C170','C175','C180','C190','C500','D100','D200','F100','F120','F130','F150'];
+const CST_CREDITOS = new Set(['50','51','52','53','54','55','56','60','61','62','63','64','65','66']);
+
+function passaFiltroCredito(r){
+  if (r.sped_origem !== 'CONTRIBUIÇÕES') return true;
+  if (r.sentido !== 'Entrada') return true;
+  const cst = String(r.cst_pis_cofins || '').replace(/^0+/, '');
+  if (!CST_CREDITOS.has(cst)) return false;
+  return true;
+}
+
+function renderPainel(){
+  const section = document.getElementById('painel-section');
+  if (!section) return;
+  if (!filteredData || filteredData.length === 0){
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  const body = document.getElementById('painel-body');
+  const soCreditos = document.getElementById('painel-credito-toggle')?.checked;
+  const painelCstSel = msCst.getValues();
+  const painelNatSel = msNat.getValues();
+  const temPainelFiltro = painelCstSel.size || painelNatSel.size;
+  const totBy = (regs, origem, sentido, campo) => {
+    const map = {};
+    for (const r of filteredData){
+      if (r.sped_origem !== origem) continue;
+      if (sentido && r.sentido !== sentido) continue;
+      const reg = r.registro;
+      if (!regs.includes(reg)) continue;
+      if (soCreditos && !passaFiltroCredito(r)) continue;
+      if (painelCstSel.size && !painelCstSel.has(r.cst_pis_cofins)) continue;
+      if (painelNatSel.size && !painelNatSel.has(String(r.nat_bc_cred || '').trim() || 'N/A')) continue;
+      map[reg] = (map[reg] || 0) + (+r[campo] || 0);
+    }
+    return map;
+  };
+  const totBy2 = (regs, origem, sentido, campo1, campo2) => {
+    const map = {};
+    for (const r of filteredData){
+      if (r.sped_origem !== origem) continue;
+      if (sentido && r.sentido !== sentido) continue;
+      const reg = r.registro;
+      if (!regs.includes(reg)) continue;
+      if (soCreditos && !passaFiltroCredito(r)) continue;
+      if (painelCstSel.size && !painelCstSel.has(r.cst_pis_cofins)) continue;
+      if (painelNatSel.size && !painelNatSel.has(String(r.nat_bc_cred || '').trim() || 'N/A')) continue;
+      map[reg] = (map[reg] || 0) + (+r[campo1] || 0) + (+r[campo2] || 0);
+    }
+    return map;
+  };
+  const fiscalEntr = totBy(PAINEL_REGS_ENTR, 'FISCAL', 'Entrada', 'vl_item');
+  const contribEntrOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_item');
+  const contribEntrBcOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_bc_pis_cofins');
+  const contribEntrPisCof = totBy2(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_pis', 'vl_cofins');
+  const fiscalSaid = totBy(PAINEL_REGS_SAID, 'FISCAL', 'Saída', 'vl_item');
+  const contribSaid = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_item');
+  const contribSaidDesc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_desc');
+  const contribSaidBc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_bc_pis_cofins');
+  const contribSaidPisCof = totBy2(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_pis', 'vl_cofins');
+
+  const sumVals = (m) => Object.values(m).reduce((a, b) => a + b, 0);
+  const tFiscEntr = sumVals(fiscalEntr);
+  const tContribEntr = sumVals(contribEntrOrig);
+  const tContribEntrBc = sumVals(contribEntrBcOrig);
+  const tFiscSaid = sumVals(fiscalSaid);
+  const tContribSaid = sumVals(contribSaid);
+  const tContribSaidDesc = sumVals(contribSaidDesc);
+  const tContribSaidBc = sumVals(contribSaidBc);
+
+  const diffEntrItem = tFiscEntr - tContribEntr;
+  const diffEntrBc = tFiscEntr - tContribEntr;
+  const ALIQ = 0.0925;
+
+  const renderTabelaEntr = () => {
+    const rows = PAINEL_REGS_ENTR.map(reg => {
+      const f = fiscalEntr[reg] || 0;
+      const co = contribEntrOrig[reg] || 0;
+      const cb = contribEntrBcOrig[reg] || 0;
+      const cp = contribEntrPisCof[reg] || 0;
+      const di = f - co;
+      return `<tr>
+        <td>${reg}</td>
+        <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
+        <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
+        <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
+        <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
+        <td class="col-diff ${di > 0 ? 'opportunity' : di < 0 ? 'negative' : ''}">${di ? fmtMoney(di) : '–'}</td>
+      </tr>`;
+    }).join('');
+    const tContribEntrPisCof = sumVals(contribEntrPisCof);
+    return `<table class="painel-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Registro</th>
+          <th class="col-fiscal">🔵 FISCAL ENTR.</th>
+          <th colspan="3" class="col-contrib">🟢 CONTRIB. ENTR. (Origem)</th>
+          <th class="col-diff">🟡 Diferença (Fiscal − Contrib.)</th>
+        </tr>
+        <tr>
+          <th class="col-fiscal">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Item</th>
+          <th class="col-contrib">BC PIS/COFINS</th>
+          <th class="col-contrib">Vlr. PIS+COFINS</th>
+          <th class="col-diff">Vlr. Item</th>
+        </tr>
+      </thead>
+      <tbody>${rows}
+        <tr class="total-row">
+          <td>TOTAL</td>
+          <td class="col-fiscal">${fmtMoney(tFiscEntr)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntr)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntrBc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribEntrPisCof)}</td>
+          <td class="col-diff ${diffEntrItem > 0 ? 'opportunity' : diffEntrItem < 0 ? 'negative' : ''}">${fmtMoney(diffEntrItem)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+  };
+
+  const renderTabelaSaid = () => {
+    const rows = PAINEL_REGS_SAID.map(reg => {
+      const f = fiscalSaid[reg] || 0;
+      const cd = contribSaidDesc[reg] || 0;
+      const co = contribSaid[reg] || 0;
+      const cb = contribSaidBc[reg] || 0;
+      const cp = contribSaidPisCof[reg] || 0;
+      return `<tr>
+        <td>${reg}</td>
+        <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
+        <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
+        <td class="col-contrib">${cd ? fmtMoney(cd) : '–'}</td>
+        <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
+        <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
+      </tr>`;
+    }).join('');
+    const tContribSaidPisCof = sumVals(contribSaidPisCof);
+    return `<table class="painel-table">
+      <thead>
+        <tr>
+          <th rowspan="2">Registro</th>
+          <th class="col-fiscal">🔵 FISCAL SAÍD.</th>
+          <th colspan="4" class="col-contrib">🟢 CONTR. SAÍD.</th>
+        </tr>
+        <tr>
+          <th class="col-fiscal">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Item</th>
+          <th class="col-contrib">Vlr. Desconto</th>
+          <th class="col-contrib">BC PIS/COFINS</th>
+          <th class="col-contrib">Vlr. PIS+COFINS</th>
+        </tr>
+      </thead>
+      <tbody>${rows}
+        <tr class="total-row">
+          <td>TOTAL</td>
+          <td class="col-fiscal">${fmtMoney(tFiscSaid)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaid)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidDesc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidBc)}</td>
+          <td class="col-contrib">${fmtMoney(tContribSaidPisCof)}</td>
+        </tr>
+      </tbody>
+    </table>`;
+  };
+
+  const icmsHtml = (() => {
+    const r = filteredData.filter(x => x.registro === 'C170' && x.sentido === 'Sa\u00edda' && x.cst_pis_cofins === '01');
+    if (!r.length) return '<div class="empty" style="padding:12px">Nenhum registro C170 (Sa\u00edda, CST PIS 01) encontrado.</div>';
+    const tItem = r.reduce((a, x) => a + (+x.vl_item || 0), 0);
+    const tDesc = r.reduce((a, x) => a + (+x.vl_desc || 0), 0);
+    const bc = tItem - tDesc;
+    const pEsc = r.reduce((a, x) => a + (+x.vl_pis || 0) + (+x.vl_cofins || 0), 0);
+    const pAdj = bc * 0.0925;
+    const op = pEsc - pAdj;
+    return '<div style="padding:12px;background:var(--bg3);border-radius:6px;border-left:3px solid var(--warn)">' +
+      '<div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Exclus\u00e3o do ICMS da BC PIS/COFINS (C170 Sa\u00eddas CST 01)</div>' +
+      '<table class="painel-table" style="margin:0;width:auto"><tbody>' +
+      '<tr><td style="text-align:left">Vlr. Item</td><td style="text-align:right">R$ ' + fmtMoney(tItem) + '</td></tr>' +
+      '<tr><td style="text-align:left">(\u2013) Vlr. Desconto</td><td style="text-align:right">R$ ' + fmtMoney(tDesc) + '</td></tr>' +
+      '<tr class="total-row"><td style="text-align:left;font-weight:700">= BC Ajustada</td><td style="text-align:right;font-weight:700">R$ ' + fmtMoney(bc) + '</td></tr>' +
+      '<tr><td style="text-align:left">(\u2013) PIS/COFINS Ajustado (BC Adj. \u00d7 9,25%)</td><td style="text-align:right">R$ ' + fmtMoney(pAdj) + '</td></tr>' +
+      '<tr><td style="text-align:left">(+) PIS/COFINS Escriturado</td><td style="text-align:right">R$ ' + fmtMoney(pEsc) + '</td></tr>' +
+      '<tr class="total-row"><td style="text-align:left;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">= Oportunidade</td><td style="text-align:right;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">R$ ' + fmtMoney(op) + '</td></tr>' +
+      '</tbody></table></div>';
+  })();
+  body.innerHTML = `
+    <div class="painel-row">
+      <div class="painel-block">
+        <div class="painel-block-title entr">① ENTRADAS <span class="badge">Fiscal × Contribuições</span></div>
+        ${renderTabelaEntr()}
+        <div class="painel-summary" style="grid-template-columns:1fr 1fr;max-width:100%;margin-top:12px">
+          <div class="painel-summary-item diff">
+            <span class="painel-summary-label">🟡 Diferença (Fiscal − Contrib.)</span>
+            <span class="painel-summary-value ${diffEntrBc > 0 ? 'ok' : diffEntrBc < 0 ? 'err' : ''}">R$ ${fmtMoney(diffEntrBc)}</span>
+            <div class="painel-tooltip">
+              <div class="painel-tooltip-title">Memória de cálculo</div>
+              <div class="painel-tooltip-line"><span class="lbl">Vlr. Item Entradas (Fiscal)</span><span class="val">R$ ${fmtMoney(tFiscEntr)}</span></div>
+              <div class="painel-tooltip-line"><span class="lbl">Vlr. Item Entradas (Contrib.)</span><span class="val">R$ ${fmtMoney(tContribEntr)}</span></div>
+              <div class="painel-tooltip-result ${diffEntrBc > 0 ? 'ok' : diffEntrBc < 0 ? 'err' : ''}"><span class="lbl">= Diferença</span><span class="val">R$ ${fmtMoney(diffEntrBc)}</span></div>
+            </div>
+          </div>
+          <div class="painel-summary-item diff">
+            <span class="painel-summary-label">🟡 Oportunidade (Diferença × 9,25%)</span>
+            <span class="painel-summary-value ${diffEntrBc > 0 ? 'ok' : 'err'}">${diffEntrBc > 0 ? 'R$ ' + fmtMoney(diffEntrBc * ALIQ) : 'Sem oportunidades'}</span>
+            <div class="painel-tooltip">
+              <div class="painel-tooltip-title">Memória de cálculo</div>
+              <div class="painel-tooltip-line"><span class="lbl">Diferença (Fiscal − Contrib.)</span><span class="val">R$ ${fmtMoney(diffEntrBc)}</span></div>
+              <div class="painel-tooltip-line"><span class="lbl">Alíquota (PIS 1,65% + COFINS 7,60%)</span><span class="val aliq">9,25%</span></div>
+              <div class="painel-tooltip-result ${diffEntrBc > 0 ? 'ok' : 'err'}"><span class="lbl">= Oportunidade</span><span class="val">${diffEntrBc > 0 ? 'R$ ' + fmtMoney(diffEntrBc * ALIQ) : 'R$ 0,00'}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="painel-oport" style="margin-top:8px">
+          <div class="painel-oport-label">📌 Quadro de Observações</div>
+          <div class="painel-oport-value">
+            ${diffEntrBc > 0
+              ? `🟢 Oportunidade: Fiscal tem R$ ${fmtMoney(diffEntrBc)} a mais que Contribuições no Vlr. Item — possível crédito não escriturado.`
+              : diffEntrBc < 0
+              ? `🟡 Contribuições tem R$ ${fmtMoney(Math.abs(diffEntrBc))} a mais que Fiscal no Vlr. Item — pode indicar diferença de classificação entre os SPEDs.`
+              : `Sem diferença no Vlr. Item de entradas.`}
+            <br>${tContribEntr === 0 ? '⚠️ Sem dados de Contribuições (Entradas).' : ''}
+            ${tFiscEntr === 0 ? '⚠️ Sem dados de Fiscal (Entradas).' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="painel-block">
+        <div class="painel-block-title said">② SAÍDAS <span class="badge">Fiscal × Contribuições</span></div>
+        ${renderTabelaSaid()}
+      </div>
+      <div class="painel-block">
+        ${icmsHtml}
+      </div>
+    </div>`;
+}
+
+document.getElementById('toggle-painel')?.addEventListener('click', () => {
+  const body = document.getElementById('painel-body');
+  const btn = document.getElementById('toggle-painel');
+  if (body.style.display === 'none'){
+    body.style.display = '';
+    btn.textContent = 'Ocultar';
+  } else {
+    body.style.display = 'none';
+    btn.textContent = 'Mostrar';
+  }
+});
+
+document.getElementById('painel-credito-toggle')?.addEventListener('change', () => {
+  renderPainel();
+});
+
+document.getElementById('painel-nat-bc-cred-listener-attached')?.remove?.();
+
+function exportCSV(){
+  const headers = COLUMNS.map(c => '"' + c.label.replace(/"/g, '""') + '"');
+  const lines = [headers.join(';')];
+  for (const r of filteredData){
+    const cells = COLUMNS.map(c => {
+      const v = r[c.key];
+      if (v == null) return '';
+      let s;
+      if (c.type === 'pct'){
+        s = (+v).toFixed(4).replace('.', ',');
+      } else if (c.type === 'money' || c.type === 'num'){
+        s = (+v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } else {
+        s = String(v);
+      }
+      return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    });
+    lines.push(cells.join(';'));
+  }
+  const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  a.download = 'Relatorio_CFOP_' + ts + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+els.dropzone.addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON' || e.target.closest('#last-folder')) return;
+  if (els.dropzone.classList.contains('collapsed')){
+    setDropzoneCollapsed(false);
+    return;
+  }
+  els.fileInput.click();
+});
+els.selectBtn.addEventListener('click', e => { e.stopPropagation(); els.fileInput.click(); });
+function updateLastFolder(){
+  const el = document.getElementById('last-folder');
+  try {
+    const path = localStorage.getItem('sped_last_folder');
+    if (path){
+      el.innerHTML = '<a href="#" id="reopen-last-folder" style="color:var(--accent2);text-decoration:none">📂 Última pasta: ' + path + '</a>';
+      const lnk = document.getElementById('reopen-last-folder');
+      if (lnk){
+        lnk.removeEventListener('click', reopenLastFolder);
+        lnk.addEventListener('click', reopenLastFolder);
+      }
+    } else el.textContent = '';
+  } catch { el.textContent = ''; }
+}
+async function reopenLastFolder(e){
+  e.preventDefault();
+  e.stopPropagation();
+  const files = await pickFolder();
+  if (files.length) processFiles(files);
+  updateLastFolder();
+}
+updateLastFolder();
+els.selectFolderBtn.addEventListener('click', async e => {
+  e.stopPropagation();
+  try {
+    const files = await pickFolder();
+    if (files.length) processFiles(files);
+    updateLastFolder();
+  } catch(err){
+    console.error('pickFolder:', err);
+  }
+});
+els.fileInput.addEventListener('change', e => {
+  processFiles(Array.from(e.target.files));
+  try {
+    const f = e.target.files[0];
+    if (f && f.webkitRelativePath){
+      const parts = f.webkitRelativePath.split('/');
+      localStorage.setItem('sped_last_folder', parts[0]);
+      updateLastFolder();
+    }
+  } catch {}
+});
+els.folderInput.addEventListener('change', e => {
+  const files = Array.from(e.target.files).filter(f => /\.txt$/i.test(f.name));
+  if (files.length) processFiles(files);
+  try {
+    const f = e.target.files[0];
+    if (f && f.webkitRelativePath){
+      const parts = f.webkitRelativePath.split('/');
+      localStorage.setItem('sped_last_folder', parts[0]);
+      updateLastFolder();
+    }
+  } catch {}
+  e.target.value = '';
+});
+['dragenter','dragover'].forEach(ev => els.dropzone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation(); els.dropzone.classList.add('dragover');
+}));
+['dragleave','drop'].forEach(ev => els.dropzone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation(); els.dropzone.classList.remove('dragover');
+}));
+els.dropzone.addEventListener('drop', async e => {
+  const items = e.dataTransfer.items;
+  if (items && items.length && items[0].webkitGetAsEntry){
+    const out = [];
+    const entries = [];
+    for (const item of items){
+      if (item.kind === 'file'){
+        const entry = item.webkitGetAsEntry();
+        if (entry) entries.push(entry);
+      }
+    }
+    await Promise.all(entries.map(en => traverseEntry(en, out)));
+    if (out.length) {
+      processFiles(out);
+      try {
+        const first = out[0];
+        if (first && first.webkitRelativePath){
+          const parts = first.webkitRelativePath.split('/');
+          localStorage.setItem('sped_last_folder', parts[0]);
+          updateLastFolder();
+        }
+      } catch {}
+    }
+  } else {
+    const files = Array.from(e.dataTransfer.files).filter(f => /\.txt$/i.test(f.name));
+    if (files.length) processFiles(files);
+  }
+});
+
+function setDropzoneCollapsed(collapsed){
+  els.dropzone.classList.toggle('collapsed', collapsed);
+  els.dropzoneToggle.textContent = collapsed ? '▲' : '▼';
+  els.dropzoneToggle.title = collapsed ? 'Expandir' : 'Recolher';
+  try { localStorage.setItem('dropzone-collapsed', collapsed ? '1' : '0'); } catch(e){}
+}
+els.dropzoneToggle.addEventListener('click', e => {
+  e.stopPropagation();
+  setDropzoneCollapsed(!els.dropzone.classList.contains('collapsed'));
+});
+try { setDropzoneCollapsed(localStorage.getItem('dropzone-collapsed') === '1'); } catch(e){}
+
+els.filterOrigem.addEventListener('change', () => {
+  updateRegistroOptions();
+  applyFilters();
+});
+
+[els.filterRegistro, els.filterSituacao, els.filterCfopCredito, els.filterCstCredito].forEach(s => s.addEventListener('change', applyFilters));
+[els.filterPeriodoIni, els.filterPeriodoFim, els.filterCnpj].forEach(i => {
+  let t; i.addEventListener('input', () => { clearTimeout(t); t = setTimeout(applyFilters, 200); });
+  i.addEventListener('keydown', e => { if (e.key === 'Escape') i.blur(); });
+});
+els.clearFilters.addEventListener('click', () => {
+  els.filterPeriodoIni.value = ''; els.filterPeriodoFim.value = '';
+  els.filterOrigem.value = '';
+  els.filterSituacao.value = ''; els.filterRegistro.value = '';
+  msCfop.clear(); msCst.clear(); msNat.clear();
+  els.filterCfopCredito.value = '';
+  els.filterCstCredito.value = '';
+  els.filterCnpj.value = '';
+  columnFilters = {};
+  initColumnFilters();
+  updateRegistroOptions();
+  applyFilters();
+});
+
+els.clearData.addEventListener('click', async () => {
+  if (!await showConfirm('Limpar todos os dados importados? Os arquivos registrados serão removidos.')) return;
+  rawData = []; filteredData = [];
+  _chaveSeq = 0;
+  registeredTexts = {};
+  els.results.classList.remove('active');
+  els.fileList.innerHTML = '';
+  registrosPorOrigem = { 'CONTRIBUIÇÕES': new Set(), 'FISCAL': new Set() };
+  els.fileInput.value = '';
+  els.folderInput.value = '';
+  applyFilters();
+  showError('');
+});
+function showConfirm(msg){
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box">
+        <div class="modal-icon">⚠️</div>
+        <div class="modal-title">Confirmar</div>
+        <div class="modal-desc">${msg}</div>
+        <div class="modal-actions">
+          <button class="modal-cancel" data-action="cancel">Cancelar</button>
+          <button class="modal-confirm" data-action="confirm">Sim, limpar</button>
+        </div>
+      </div>`;
+    overlay.querySelector('.modal-cancel').addEventListener('click', () => { overlay.remove(); resolve(false); });
+    overlay.querySelector('.modal-confirm').addEventListener('click', () => { overlay.remove(); resolve(true); });
+    overlay.addEventListener('click', e => { if (e.target === overlay){ overlay.remove(); resolve(false); } });
+    document.body.appendChild(overlay);
+  });
+}
+els.exportCsv.addEventListener('click', exportCSV);
+
+function exportXLSX(){
+  if (typeof XLSX === 'undefined'){ showError('Biblioteca XLSX não carregou. Verifique a conexão com a internet.'); return; }
+  const headers = COLUMNS.map(c => c.label);
+  const aoa = [headers];
+  for (const r of filteredData){
+    aoa.push(COLUMNS.map(c => {
+      const v = r[c.key];
+      if (v == null) return '';
+      if (c.type === 'pct') return +(+v).toFixed(6);
+      if (c.type === 'money' || c.type === 'num') return +(+v).toFixed(2);
+      return v;
+    }));
+  }
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = COLUMNS.map(c => ({ wch: c.type === 'text' ? 18 : 16 }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Relatório');
+  const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  XLSX.writeFile(wb, 'Relatorio_CFOP_' + ts + '.xlsx');
+}
+
+els.exportXlsx.addEventListener('click', exportXLSX);
+
+function initColumnResizers(){
+  const ths = els.resultTable.querySelectorAll('thead th');
+  ths.forEach((th, idx) => {
+    if (th.querySelector('.resizer')) return;
+    const r = document.createElement('div');
+    r.className = 'resizer';
+    r.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation();
+      th._resizing = true;
+      const startX = e.pageX;
+      const startW = th.offsetWidth;
+      const colKey = th.dataset.col;
+      const onMove = ev => {
+        const w = Math.max(40, startW + (ev.pageX - startX));
+        th.style.width = w + 'px';
+        th.style.minWidth = w + 'px';
+        colWidths[colKey] = w;
+        const thead = th.closest('thead');
+        const sumRow = thead?.querySelector('.summary-row');
+        if (sumRow && sumRow.children[idx]){
+          sumRow.children[idx].style.width = w + 'px';
+          sumRow.children[idx].style.minWidth = w + 'px';
+        }
+        const filtRow = document.getElementById('col-filter-row');
+        if (filtRow && filtRow.children[idx]){
+          filtRow.children[idx].style.width = w + 'px';
+          filtRow.children[idx].style.minWidth = w + 'px';
+        }
+        els.resultTable.querySelectorAll('tbody tr').forEach(tr => {
+          const td = tr.children[idx];
+          if (td) { td.style.width = w + 'px'; td.style.minWidth = w + 'px'; }
+        });
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp);
+        setTimeout(() => { th._resizing = false; }, 10);
+        saveColWidths();
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+    r.addEventListener('click', e => e.stopPropagation());
+    th.appendChild(r);
+  });
+}
+
+initDuckDB();
+</script>
+</body>
+</html>
