@@ -17,37 +17,34 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;min-height:100vh}
-.container{max-width:1900px;margin:0 auto;padding:12px 24px}
-header{text-align:center;margin-bottom:16px}
-header h1{font-size:22px;font-weight:600;color:var(--accent);margin-bottom:4px}
-header .subtitle{color:var(--fg3);font-size:12px}
-.dropzone{border:2px dashed var(--border);border-radius:10px;padding:12px 16px;background:var(--bg2);cursor:pointer;transition:.2s;position:relative;display:flex;gap:16px;align-items:flex-start}
+.container{max-width:1900px;margin:0 auto;padding:24px}
+header{text-align:center;margin-bottom:32px}
+header h1{font-size:28px;font-weight:600;color:var(--accent);margin-bottom:8px}
+header .subtitle{color:var(--fg3);font-size:14px}
+.dropzone{border:2px dashed var(--border);border-radius:10px;padding:24px 16px;text-align:center;background:var(--bg2);cursor:pointer;transition:.2s;position:relative}
 .dropzone:hover,.dropzone.dragover{border-color:var(--accent);background:var(--accent3)}
 .dropzone.dragover{transform:scale(1.01)}
-.dropzone.collapsed{padding:8px 16px;cursor:pointer;border-style:solid;border-color:var(--accent)}
-.dropzone.collapsed .dropzone-left{display:none}
-.dropzone.collapsed .dropzone-right{flex:1;max-width:100%}
-.dropzone.collapsed .dropzone-collapsed-label{display:none}
-.dropzone.collapsed .last-folder{display:none}
+.dropzone.collapsed{padding:8px 16px;cursor:pointer}
+.dropzone.collapsed .dropzone-body{display:none}
+.dropzone.collapsed .file-list{display:none}
 .dropzone-toggle{position:absolute;top:8px;right:8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:12px;color:var(--fg3);line-height:1.4}
 .dropzone-toggle:hover{color:var(--accent);border-color:var(--accent)}
 .dropzone.collapsed .dropzone-toggle{position:static}
 .dropzone-collapsed-label{display:none;color:var(--fg3);font-size:13px;padding:4px 0}
-.dropzone-left{flex:1;min-width:0;text-align:center}
-.dropzone-icon{font-size:24px;margin-bottom:4px}
-.dropzone-text{font-size:13px;font-weight:500;margin-bottom:4px}
-.dropzone-subtext{color:var(--fg3);font-size:11px}
+.dropzone.collapsed .dropzone-collapsed-label{display:inline}
+.dropzone-icon{font-size:32px;margin-bottom:6px}
+.dropzone-text{font-size:15px;font-weight:500;margin-bottom:4px}
+.dropzone-subtext{color:var(--fg3);font-size:12px}
 .dropzone-subtext button{background:none;border:none;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;padding:0}
 .dropzone-subtext button:hover{color:var(--accent2)}
-.dropzone-hint{color:var(--fg3);font-size:10px;margin-top:6px;padding:4px 8px;background:var(--accent3);border-radius:4px;line-height:1.4;text-align:left}
-.dropzone-hint code{background:var(--bg);padding:1px 4px;border-radius:2px;font-size:10px;color:var(--accent);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.last-folder{color:var(--fg3);font-size:10px;margin-top:4px}
-.dropzone-right{flex:1;min-width:0;max-width:500px}
-.file-list{margin-top:0;text-align:left}
-.file-list .file-item{display:flex;justify-content:space-between;padding:4px 8px;background:var(--accent3);border-radius:4px;margin-bottom:2px;font-size:11px}
-.file-summary{padding:8px 12px;background:var(--accent3);border-radius:6px;margin-bottom:4px;font-size:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.dropzone-hint{color:var(--fg3);font-size:11px;margin-top:10px;padding:8px 12px;background:var(--accent3);border-radius:6px;line-height:1.5;text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
+.dropzone-hint code{background:var(--bg);padding:1px 6px;border-radius:3px;font-size:11px;color:var(--accent);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.last-folder{color:var(--fg3);font-size:11px;margin-top:6px;text-align:center}
+.file-list{margin-top:20px;text-align:left;max-width:600px;margin-left:auto;margin-right:auto}
+.file-list .file-item{display:flex;justify-content:space-between;padding:6px 12px;background:var(--accent3);border-radius:6px;margin-bottom:4px;font-size:13px}
+.file-summary{padding:12px 16px;background:var(--accent3);border-radius:8px;margin-bottom:8px;font-size:14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
 .file-summary:hover{background:var(--accent)}
-.file-summary-detail{margin-top:4px;padding:6px 10px;background:var(--bg2);border-radius:4px;font-size:11px;max-height:180px;overflow-y:auto}
+.file-summary-detail{margin-top:8px;padding:8px 12px;background:var(--bg2);border-radius:6px;font-size:12px;max-height:240px;overflow-y:auto}
 .file-summary-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:11px;line-height:1.4}
 .file-summary-table th,.file-summary-table td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--border)}
 .file-summary-table th{font-weight:600;color:var(--fg2);background:var(--bg);text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
@@ -56,7 +53,7 @@ header .subtitle{color:var(--fg3);font-size:12px}
 .file-summary-table tr.section:first-child td{border-top:0}
 .file-summary-table tr.total td{background:var(--bg);font-weight:600;color:var(--accent);border-top:2px solid var(--accent);border-bottom:1px solid var(--border)}
 .file-summary-diag{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);color:var(--fg3);font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.file-summary-detail .file-item{padding:3px 6px;margin-bottom:1px;font-size:10px}
+.file-summary-detail .file-item{padding:4px 8px;margin-bottom:2px;font-size:12px}
 .progress{background:var(--bg2);border-radius:8px;padding:20px;margin-top:24px;box-shadow:var(--shadow)}
 .progress-text{font-size:14px;color:var(--fg2);margin-bottom:10px;text-align:center}
 .progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
@@ -116,13 +113,8 @@ header .subtitle{color:var(--fg3);font-size:12px}
 .painel-block-title.entr{background:rgba(99,179,237,.15);color:var(--accent);border-left:3px solid var(--accent)}
 .painel-block-title.said{background:rgba(56,161,105,.15);color:var(--ok);border-left:3px solid var(--ok)}
 .painel-block-title .badge{font-size:10px;padding:2px 6px;border-radius:3px;background:var(--bg2);font-weight:600}
-.painel-table{border-collapse:collapse;font-size:11px;width:100%;min-width:0;table-layout:fixed}
-.painel-table th,.painel-table td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap;overflow:visible;text-overflow:clip}
-.painel-table th{position:relative;min-width:100px}
-.painel-table .col-diff{min-width:120px}
-.painel-table .resizer{position:absolute;right:-4px;top:0;bottom:0;width:14px;cursor:col-resize;user-select:none;z-index:2}
-.painel-table .resizer::after{content:'';position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--border);border-radius:2px;transition:background .15s}
-.painel-table .resizer:hover::after{background:var(--accent2);width:3px}
+.painel-table{border-collapse:collapse;font-size:11px;width:100%;min-width:0}
+.painel-table th,.painel-table td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
 .painel-table th:first-child,.painel-table td:first-child{text-align:center;font-weight:700;color:var(--fg3);background:var(--bg3);width:60px}
 .painel-table thead th{color:var(--fg3);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.3px}
 .painel-table th.col-fiscal{background:rgba(99,179,237,.18);color:var(--accent);border-bottom:2px solid var(--accent)}
@@ -225,25 +217,23 @@ thead .summary-row td{border-top:none;border-bottom:2px solid var(--accent)}
   <div id="dropzone" class="dropzone">
     <button class="dropzone-toggle" id="dropzone-toggle" type="button" title="Recolher/Expandir">▼</button>
     <span class="dropzone-collapsed-label">📁 Importar arquivos (clique para expandir)</span>
-    <div class="dropzone-left" id="dropzone-body">
+    <div class="dropzone-body" id="dropzone-body">
       <div class="dropzone-icon">📁</div>
       <div class="dropzone-text">Arraste arquivos ou a pasta inteira aqui</div>
       <div class="dropzone-subtext">
         ou
         <button id="select-btn">selecionar arquivos</button>
         ·
-        <button id="select-folder-btn">📂 selecionar pasta</button>
+        <button id="select-folder-btn">📂 selecionar pasta (varre subpastas)</button>
       </div>
       <div class="dropzone-hint">
-        <div class="hint-row"><span class="hint-icon">📂</span><span><strong>Arraste a pasta-pai</strong> (ex: <code>Arquivos_SPED</code>) ou clique em <strong>selecionar pasta</strong>.</span></div>
+        <div class="hint-row"><span class="hint-icon">📂</span><span><strong>Arraste a pasta-pai</strong> (ex: <code>Arquivos_SPED</code>) diretamente aqui — sem diálogos, sem permissões, varre tudo. Alternativamente, clique em <strong>selecionar pasta</strong> (pede permissão uma única vez).</span></div>
       </div>
     </div>
-    <div class="dropzone-right">
-      <div class="last-folder" id="last-folder"></div>
-      <input type="file" id="file-input" multiple accept=".txt" hidden>
-      <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
-      <div class="file-list" id="file-list"></div>
-    </div>
+    <div class="last-folder" id="last-folder"></div>
+    <input type="file" id="file-input" multiple accept=".txt" hidden>
+    <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
+    <div class="file-list" id="file-list"></div>
   </div>
   <div id="progress" class="progress hidden">
     <div class="progress-text" id="progress-text">Preparando...</div>
@@ -462,7 +452,6 @@ const COLUMNS = [
   { key: 'ncm',                label: 'NCM',                      type: 'text' },
   { key: 'vl_item',            label: 'Valor do Item',            type: 'money' },
   { key: 'vl_desc',            label: 'Valor do Desconto',        type: 'money' },
-  { key: 'vl_icms',            label: 'Vlr. ICMS',                type: 'money' },
   { key: 'cst_pis_cofins',     label: 'CST PIS/COFINS',           type: 'text' },
   { key: 'vl_bc_pis_cofins',   label: 'BC PIS/COFINS',            type: 'money' },
   { key: 'aliq_pis',           label: 'Alíquota do PIS (Percentual)', type: 'pct' },
@@ -495,7 +484,6 @@ const DECIMAL_SCALES = {
   ncm: 0,
   vl_item: 2,
   vl_desc: 2,
-  vl_icms: 2,
   vl_bc_pis_cofins: 2,
   vl_pis: 2,
   vl_cofins: 2,
@@ -1030,31 +1018,24 @@ function parseSpedText(text, filename){
         });
         break;
       }
-      case 'C180': { g_c180++; parents.c180.set(g_c180, { sentido: 'Saída', cod_item: f(c,5), ncm: f(c,6) }); break; }
+      case 'C180': { g_c180++; parents.c180.set(g_c180, 'Saída'); break; }
       case 'C190': {
         g_c190++;
         parents.c190.set(g_c190, 'Entrada');
+        if (isFiscal){
+          const pC100 = parents.c100.get(g_c100);
+          const cfop = f(c,3) || 'N/A';
+          const vl_oper = num(c[5]);
+          const cst = f(c,2) || '000';
+          rows.push(makeRow('FISCAL', dt_fim, cnpj_empresa, true, 'C190', filename, items, pC100,
+            '', '', '', cfop, cst, 0, 0, 0, cst, 0, 0, 0, vl_oper, 0, ''));
+        }
         break;
       }
-      case 'C500': {
-        g_c500++;
-        parents.c500.set(g_c500, {
-          sentido: 'Entrada',
-          vl_doc_contrib: num(c[10]),
-          vl_doc_fiscal: num(c[13]),
-          vl_icms: isFiscal ? great(c[20]) : 0
-        });
-        break;
-      }
+      case 'C500': { g_c500++; parents.c500.set(g_c500, { sentido: 'Entrada', vl_doc_contrib: num(c[10]), vl_doc_fiscal: num(c[13]) }); break; }
       case 'D100': {
         g_d100++;
-        parents.d100.set(g_d100, {
-          sentido: (f(c,1) || '0') === '0' ? 'Entrada' : 'Saída',
-          vl_serv: num(c[15]),
-          vl_desc: num(c[13]),
-          vl_icms: isFiscal ? great(c[17]) : 0,
-          vl_bc_pis: isFiscal ? great(c[19]) : 0
-        });
+        parents.d100.set(g_d100, { sentido: (f(c,2) || '0') === '0' ? 'Entrada' : 'Saída', vl_serv: num(c[15]), vl_desc: num(c[13]) });
         break;
       }
       case 'D200': {
@@ -1085,10 +1066,9 @@ function parseSpedText(text, filename){
         const p = parents.c100.get(g_c100);
         const cfop = f(c,11) || 'N/A';
         const origem170 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
-        const vl_icms170 = isFiscal ? great(c[14]) : 0;
         rows.push(makeRow(origem170, dt_fim, cnpj_empresa, isFiscal, 'C170', filename, items, p,
           f(c,2), f(c,3), f(c,4), cfop, f(c,25), great(c[26]), num(c[27]), great(c[30]),
-          f(c,31), great(c[32]), num(c[33]), great(c[36]), num(c[7]), num(c[8]), '', vl_icms170));
+          f(c,31), great(c[32]), num(c[33]), great(c[36]), num(c[7]), num(c[8])));
         break;
       }
       case 'C175': {
@@ -1101,12 +1081,9 @@ function parseSpedText(text, filename){
       }
       case 'C181': {
         if (isFiscal) break;
-        const p = parents.c180.get(g_c180);
-        const row = makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C180', filename, items, p,
-          '', (p ? p.cod_item : ''), '', f(c,3)||'N/A', f(c,2), great(c[6]), num(c[7]), great(c[10]),
-          f(c,2), 0, 0, 0, num(c[4]), num(c[5]));
-        if (p && p.ncm) row.ncm = p.ncm;
-        rows.push(row);
+        rows.push(makeRow('CONTRIBUIÇÕES', dt_fim, cnpj_empresa, isFiscal, 'C180', filename, items, null,
+          '', '', '', f(c,3)||'N/A', f(c,2), great(c[6]), num(c[7]), great(c[10]),
+          f(c,2), 0, 0, 0, num(c[4]), num(c[5])));
         break;
       }
       case 'C191': {
@@ -1119,11 +1096,10 @@ function parseSpedText(text, filename){
       case 'C501': {
         const p = parents.c500.get(g_c500);
         const vlDoc500 = p ? (isFiscal ? p.vl_doc_fiscal : p.vl_doc_contrib) : 0;
-        const vlIcms500 = p ? (p.vl_icms || 0) : 0;
         const origem500 = isFiscal ? 'FISCAL' : 'CONTRIBUIÇÕES';
         const row501 = makeRow(origem500, dt_fim, cnpj_empresa, isFiscal, 'C500', filename, items, p,
           '', '', '', '1253', f(c,2), great(c[5]), num(c[6]), great(c[7]),
-          f(c,2), 0, 0, 0, vlDoc500, 0, '', vlIcms500);
+          f(c,2), 0, 0, 0, vlDoc500, 0);
         row501._g_c500 = g_c500;
         rows.push(row501);
         break;
@@ -1265,10 +1241,8 @@ function parseSpedText(text, filename){
         if (!isFiscal) break;
         const p = parents.d100.get(g_d100);
         const cfopD = f(c,3) || (p && p.ind_oper === '0' ? '1352' : '5352');
-        const vlIcmsD100 = p ? (p.vl_icms || 0) : 0;
-        const vlBcPisD100 = p ? (p.vl_bc_pis || 0) : 0;
         rows.push(makeRow('FISCAL', dt_fim, cnpj_empresa, isFiscal, 'D100', filename, items, p,
-          '', '', '', cfopD, '', vlBcPisD100, 0, 0, '', 0, 0, 0, p ? p.vl_serv : 0, p ? p.vl_desc : 0, '', vlIcmsD100));
+          '', '', '', cfopD, '', 0, 0, 0, '', 0, 0, 0, p ? p.vl_serv : 0, p ? p.vl_desc : 0));
         break;
       }
       case 'D701': {
@@ -1288,7 +1262,7 @@ function parseSpedText(text, filename){
 let _chaveSeq = 0;
 function makeRow(origem, dt_fim, cnpj, isFiscal, registro, filename, items, parent,
   num_item, cod_item, descr, cfop, cst_pis, vl_bc_pis, aliq_pis, vl_pis,
-  cst_cofins, vl_bc_cofins, aliq_cofins, vl_cofins, vl_item, vl_desc, cst_cofins_alt, vl_icms){
+  cst_cofins, vl_bc_cofins, aliq_cofins, vl_cofins, vl_item, vl_desc, cst_cofins_alt){
 
   _chaveSeq++;
   const chave = String(_chaveSeq);
@@ -1333,7 +1307,6 @@ function makeRow(origem, dt_fim, cnpj, isFiscal, registro, filename, items, pare
     vl_pis: Math.max(vl_pis, 0),
     aliq_cofins: Math.max(aliq_cofins, 0),
     vl_cofins: Math.max(vl_cofins, 0),
-    vl_icms: Math.max(vl_icms || 0, 0),
     nat_bc_cred: natBcCred || 'N/A',
     sped_origem: origem,
     st_conf: 'Não conferido'
@@ -1366,9 +1339,41 @@ function formatDate(dt){
 
 async function updateFileClassification(counts){
   try {
+    const regMap = {};
+    for (const r of rawData){
+      const k = (r.sped_origem || '?') + '|' + (r.registro || '?');
+      if (!regMap[k]) regMap[k] = { origem: r.sped_origem, registro: r.registro, n: 0, pis: 0, cof: 0 };
+      regMap[k].n += +r.vl_bc_pis_cofins || 0;
+      regMap[k].pis += +r.vl_pis || 0;
+      regMap[k].cof += +r.vl_cofins || 0;
+    }
+    const regRows = Object.values(regMap).sort((a,b) => (a.origem||'').localeCompare(b.origem||'') || (a.registro||'').localeCompare(b.registro||''));
     const summary = els.fileList.querySelector('.file-summary > span:first-child');
     if (summary && !summary.innerHTML.includes('FISCAL +')){
-      summary.innerHTML += ` · <strong style="color:var(--accent)">${counts.fiscal} FISCAL + ${counts.contrib} CONTRIB</strong>`;
+      const totais = {};
+      for (const r of regRows){
+        if (!totais[r.origem]) totais[r.origem] = { n: 0, pis: 0, cof: 0 };
+        totais[r.origem].n   += r.n;
+        totais[r.origem].pis += r.pis;
+        totais[r.origem].cof += r.cof;
+      }
+      let html = ` · <strong style="color:var(--accent)">${counts.fiscal} FISCAL + ${counts.contrib} CONTRIB</strong>`;
+      html += `<table class="file-summary-table"><thead><tr><th>Registro</th><th>BC PIS/COFINS</th><th>PIS</th><th>COFINS</th></tr></thead><tbody>`;
+      let curOrigem = '';
+      for (const r of regRows){
+        if (r.origem !== curOrigem){
+          curOrigem = r.origem;
+          html += `<tr class="section"><td colspan="4">${curOrigem}</td></tr>`;
+        }
+        html += `<tr><td>${escHtml(r.registro)}</td><td>${fmtMoney(r.n)}</td><td>${fmtMoney(r.pis)}</td><td>${fmtMoney(r.cof)}</td></tr>`;
+      }
+      for (const orig of ['CONTRIBUIÇÕES','FISCAL']){
+        if (!totais[orig]) continue;
+        const t = totais[orig];
+        html += `<tr class="total"><td>Total ${orig}</td><td>${fmtMoney(t.n)}</td><td>${fmtMoney(t.pis)}</td><td>${fmtMoney(t.cof)}</td></tr>`;
+      }
+      html += `</tbody></table>`;
+      summary.innerHTML += html;
     }
   } catch(e){ console.error('updateFileClassification:', e); }
 }
@@ -1643,7 +1648,7 @@ function autoFitColumns(){
     return m;
   };
   const sample = rawData.slice(0, 50);
-  const maxNarrow = { chv_doce:85, num_item:55, cod_item:90, descricao:195, nat_bc_cred:85, st_conf:95, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, tem_no_contrib:80, essencial:100, vl_icms:85 };
+  const maxNarrow = { chv_doce:85, num_item:55, cod_item:90, descricao:195, nat_bc_cred:85, st_conf:95, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, tem_no_contrib:80, essencial:100 };
   for (let i = 0; i < COLUMNS.length; i++){
     const c = COLUMNS[i];
     if (c.key === 'chave_unica') continue;
@@ -1675,7 +1680,7 @@ function renderTable(){
     const th = document.createElement('th');
     th.textContent = c.label;
     th.dataset.col = c.key;
-    const narrow = { registro:36, cfop:38, ncm:60, descricao:195, num_doc:100, chv_doce:85, cod_item:90, nat_bc_cred:85, num_item:55, st_conf:95, chave_unica:55, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, cst_gera_credito:80, tem_no_contrib:80, essencial:260, vl_icms:85 };
+    const narrow = { registro:36, cfop:38, ncm:60, descricao:195, num_doc:100, chv_doce:85, cod_item:90, nat_bc_cred:85, num_item:55, st_conf:95, chave_unica:55, cnpj_empresa:55, dt_e_s:85, sped_origem:100, cfop_gera_credito:80, cst_gera_credito:80, tem_no_contrib:80, essencial:260 };
     const w = colWidths[c.key] || (i === 0 ? 480 : (c.type === 'money' || c.type === 'pct' || c.type === 'num' ? 100 : (narrow[c.key] || 80)));
     th.style.width = w + 'px';
     th.style.minWidth = w + 'px';
@@ -1907,7 +1912,6 @@ function initColumnFilters(){
       if (e.key === 'Escape'){ drop.classList.remove('open'); }
       else if (e.key === 'Enter' || (e.key === 'ArrowDown' && e.altKey)){ e.preventDefault(); th.click(); }
     });
-    searchInp.addEventListener('input', () => { buildList(searchInp.value); });
     searchInp.addEventListener('keydown', e => {
       if (e.key === 'Escape'){ drop.classList.remove('open'); }
       e.stopPropagation();
@@ -1934,6 +1938,10 @@ function initColumnFilters(){
 
 function renderStats(){
   const src = filteredData;
+  const totPis = src.reduce((a, r) => a + (+r.vl_pis || 0), 0);
+  const totCof = src.reduce((a, r) => a + (+r.vl_cofins || 0), 0);
+  const totItem = src.reduce((a, r) => a + (+r.vl_item || 0), 0);
+  const totBcEscr = src.reduce((a, r) => a + (+r.vl_bc_pis_cofins || 0), 0);
   const porSentido = (campo) => {
     const m = { 'Entrada': 0, 'Saída': 0 };
     for (const r of src){
@@ -1946,41 +1954,45 @@ function renderStats(){
   const bcSent = porSentido('vl_bc_pis_cofins');
   const pisSent = porSentido('vl_pis');
   const cofSent = porSentido('vl_cofins');
-  const icmsSent = porSentido('vl_icms');
-  const totPis = pisSent['Entrada'] + pisSent['Saída'];
-  const totCof = cofSent['Entrada'] + cofSent['Saída'];
-  const card = (label, entVal, saidVal, totVal) =>
-    `<div class="stat-card">
-      <div class="stat-label">${label}</div>
-      <div class="stat-value money" style="font-size:12px">Entrada: R$ ${fmtMoney(entVal)}</div>
-      <div class="stat-value money" style="font-size:12px">Saída: R$ ${fmtMoney(saidVal)}</div>
-      <div class="stat-tooltip">
-        <div class="stat-tooltip-title">Memória de cálculo</div>
-        <div class="stat-tooltip-line"><span class="lbl">Entrada</span><span class="val">R$ ${fmtMoney(entVal)}</span></div>
-        <div class="stat-tooltip-line"><span class="lbl">Saída</span><span class="val">R$ ${fmtMoney(saidVal)}</span></div>
-        <div class="stat-tooltip-result"><span class="lbl">= Total</span><span class="val">R$ ${fmtMoney(totVal)}</span></div>
-      </div>
-    </div>`;
+  const tooltip = (lines, total) =>
+    `<div class="stat-tooltip"><div class="stat-tooltip-title">Memória de cálculo</div>${lines.map(l =>
+      `<div class="stat-tooltip-line"><span class="lbl">${l.lbl}</span><span class="val">R$ ${fmtMoney(l.val)}</span></div>`
+    ).join('')}<div class="stat-tooltip-result"><span class="lbl">= Total</span><span class="val">R$ ${fmtMoney(total)}</span></div></div>`;
   const stats = [
     { label: 'Linhas na tabela', value: src.length.toLocaleString('pt-BR'), cls: '',
       tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${src.length.toLocaleString('pt-BR')}</span></div></div>` },
     { label: 'Registros carregados', value: rawData.length.toLocaleString('pt-BR'), cls: '',
       tip: `<div class="stat-tooltip"><div class="stat-tooltip-title">Detalhes</div><div class="stat-tooltip-line"><span class="lbl">Total</span><span class="val">${rawData.length.toLocaleString('pt-BR')}</span></div></div>` },
-    { label: 'Vl. bruto total', value: 'R$ ' + fmtMoney(itemSent['Entrada'] + itemSent['Saída']), cls: 'money', custom: true,
-      html: card('Vl. bruto total', itemSent['Entrada'], itemSent['Saída'], itemSent['Entrada'] + itemSent['Saída']) },
-    { label: 'Vl. BC PIS/COFINS escrit.', value: 'R$ ' + fmtMoney(bcSent['Entrada'] + bcSent['Saída']), cls: 'money', custom: true,
-      html: card('Vl. BC PIS/COFINS escrit.', bcSent['Entrada'], bcSent['Saída'], bcSent['Entrada'] + bcSent['Saída']) },
-    { label: 'Vl. PIS', value: 'R$ ' + fmtMoney(totPis), cls: 'money', custom: true,
-      html: card('Vl. PIS', pisSent['Entrada'], pisSent['Saída'], totPis) },
-    { label: 'Vl. COFINS', value: 'R$ ' + fmtMoney(totCof), cls: 'money', custom: true,
-      html: card('Vl. COFINS', cofSent['Entrada'], cofSent['Saída'], totCof) },
-    { label: 'Vl. PIS + COFINS', value: 'R$ ' + fmtMoney(totPis + totCof), cls: 'money', custom: true,
-      html: card('Vl. PIS + COFINS', pisSent['Entrada'] + cofSent['Entrada'], pisSent['Saída'] + cofSent['Saída'], totPis + totCof) },
-    { label: 'Vl. ICMS', value: 'R$ ' + fmtMoney(icmsSent['Entrada'] + icmsSent['Saída']), cls: 'money', custom: true,
-      html: card('Vl. ICMS', icmsSent['Entrada'], icmsSent['Saída'], icmsSent['Entrada'] + icmsSent['Saída']) },
+    { label: 'Vl. bruto total', value: 'R$ ' + fmtMoney(totItem), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:itemSent['Entrada']},
+        {lbl:'Saída', val:itemSent['Saída']},
+      ], totItem) },
+    { label: 'Vl. BC PIS/COFINS escrit.', value: 'R$ ' + fmtMoney(totBcEscr), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:bcSent['Entrada']},
+        {lbl:'Saída', val:bcSent['Saída']},
+      ], totBcEscr) },
+    { label: 'Vl. PIS', value: 'R$ ' + fmtMoney(totPis), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:pisSent['Entrada']},
+        {lbl:'Saída', val:pisSent['Saída']},
+      ], totPis) },
+    { label: 'Vl. COFINS', value: 'R$ ' + fmtMoney(totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada', val:cofSent['Entrada']},
+        {lbl:'Saída', val:cofSent['Saída']},
+      ], totCof) },
+    { label: 'Vl. PIS + COFINS', value: 'R$ ' + fmtMoney(totPis + totCof), cls: 'money',
+      tip: tooltip([
+        {lbl:'Entrada PIS', val:pisSent['Entrada']},
+        {lbl:'Entrada COFINS', val:cofSent['Entrada']},
+        {lbl:'Saída PIS', val:pisSent['Saída']},
+        {lbl:'Saída COFINS', val:cofSent['Saída']},
+      ], totPis + totCof) },
   ];
   els.stats.innerHTML = stats.map(s =>
-    s.custom ? s.html : `<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-value ${s.cls||''}">${s.value}</div>${s.tip || ''}</div>`
+    `<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-value ${s.cls||''}">${s.value}</div>${s.tip || ''}</div>`
   ).join('');
   renderPainel();
 }
@@ -2039,29 +2051,21 @@ function renderPainel(){
     return map;
   };
   const fiscalEntr = totBy(PAINEL_REGS_ENTR, 'FISCAL', 'Entrada', 'vl_item');
-  const fiscalEntrIcms = totBy(PAINEL_REGS_ENTR, 'FISCAL', 'Entrada', 'vl_icms');
   const contribEntrOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_item');
-  const contribEntrIcms = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_icms');
   const contribEntrBcOrig = totBy(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_bc_pis_cofins');
   const contribEntrPisCof = totBy2(PAINEL_REGS_ENTR, 'CONTRIBUIÇÕES', 'Entrada', 'vl_pis', 'vl_cofins');
   const fiscalSaid = totBy(PAINEL_REGS_SAID, 'FISCAL', 'Saída', 'vl_item');
-  const fiscalSaidIcms = totBy(PAINEL_REGS_SAID, 'FISCAL', 'Saída', 'vl_icms');
   const contribSaid = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_item');
-  const contribSaidIcms = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_icms');
   const contribSaidDesc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_desc');
   const contribSaidBc = totBy(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_bc_pis_cofins');
   const contribSaidPisCof = totBy2(PAINEL_REGS_SAID, 'CONTRIBUIÇÕES', 'Saída', 'vl_pis', 'vl_cofins');
 
   const sumVals = (m) => Object.values(m).reduce((a, b) => a + b, 0);
   const tFiscEntr = sumVals(fiscalEntr);
-  const tFiscEntrIcms = sumVals(fiscalEntrIcms);
   const tContribEntr = sumVals(contribEntrOrig);
-  const tContribEntrIcms = sumVals(contribEntrIcms);
   const tContribEntrBc = sumVals(contribEntrBcOrig);
   const tFiscSaid = sumVals(fiscalSaid);
-  const tFiscSaidIcms = sumVals(fiscalSaidIcms);
   const tContribSaid = sumVals(contribSaid);
-  const tContribSaidIcms = sumVals(contribSaidIcms);
   const tContribSaidDesc = sumVals(contribSaidDesc);
   const tContribSaidBc = sumVals(contribSaidBc);
 
@@ -2072,18 +2076,14 @@ function renderPainel(){
   const renderTabelaEntr = () => {
     const rows = PAINEL_REGS_ENTR.map(reg => {
       const f = fiscalEntr[reg] || 0;
-      const fi = fiscalEntrIcms[reg] || 0;
       const co = contribEntrOrig[reg] || 0;
-      const ci = contribEntrIcms[reg] || 0;
       const cb = contribEntrBcOrig[reg] || 0;
       const cp = contribEntrPisCof[reg] || 0;
       const di = f - co;
       return `<tr>
         <td>${reg}</td>
         <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
-        <td class="col-fiscal">${fi ? fmtMoney(fi) : '–'}</td>
         <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
-        <td class="col-contrib">${ci ? fmtMoney(ci) : '–'}</td>
         <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
         <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
         <td class="col-diff ${di > 0 ? 'opportunity' : di < 0 ? 'negative' : ''}">${di ? fmtMoney(di) : '–'}</td>
@@ -2094,15 +2094,13 @@ function renderPainel(){
       <thead>
         <tr>
           <th rowspan="2">Registro</th>
-          <th colspan="2" class="col-fiscal">🔵 FISCAL ENTR.</th>
-          <th colspan="4" class="col-contrib">🟢 CONTRIB. ENTR. (Origem)</th>
+          <th class="col-fiscal">🔵 FISCAL ENTR.</th>
+          <th colspan="3" class="col-contrib">🟢 CONTRIB. ENTR. (Origem)</th>
           <th class="col-diff">🟡 Diferença (Fiscal − Contrib.)</th>
         </tr>
         <tr>
           <th class="col-fiscal">Vlr. Item</th>
-          <th class="col-fiscal">Vlr. ICMS</th>
           <th class="col-contrib">Vlr. Item</th>
-          <th class="col-contrib">Vlr. ICMS</th>
           <th class="col-contrib">BC PIS/COFINS</th>
           <th class="col-contrib">Vlr. PIS+COFINS</th>
           <th class="col-diff">Vlr. Item</th>
@@ -2112,9 +2110,7 @@ function renderPainel(){
         <tr class="total-row">
           <td>TOTAL</td>
           <td class="col-fiscal">${fmtMoney(tFiscEntr)}</td>
-          <td class="col-fiscal">${fmtMoney(tFiscEntrIcms)}</td>
           <td class="col-contrib">${fmtMoney(tContribEntr)}</td>
-          <td class="col-contrib">${fmtMoney(tContribEntrIcms)}</td>
           <td class="col-contrib">${fmtMoney(tContribEntrBc)}</td>
           <td class="col-contrib">${fmtMoney(tContribEntrPisCof)}</td>
           <td class="col-diff ${diffEntrItem > 0 ? 'opportunity' : diffEntrItem < 0 ? 'negative' : ''}">${fmtMoney(diffEntrItem)}</td>
@@ -2126,18 +2122,14 @@ function renderPainel(){
   const renderTabelaSaid = () => {
     const rows = PAINEL_REGS_SAID.map(reg => {
       const f = fiscalSaid[reg] || 0;
-      const fi = fiscalSaidIcms[reg] || 0;
-      const co = contribSaid[reg] || 0;
-      const ci = contribSaidIcms[reg] || 0;
       const cd = contribSaidDesc[reg] || 0;
+      const co = contribSaid[reg] || 0;
       const cb = contribSaidBc[reg] || 0;
       const cp = contribSaidPisCof[reg] || 0;
       return `<tr>
         <td>${reg}</td>
         <td class="col-fiscal">${f ? fmtMoney(f) : '–'}</td>
-        <td class="col-fiscal">${fi ? fmtMoney(fi) : '–'}</td>
         <td class="col-contrib">${co ? fmtMoney(co) : '–'}</td>
-        <td class="col-contrib">${ci ? fmtMoney(ci) : '–'}</td>
         <td class="col-contrib">${cd ? fmtMoney(cd) : '–'}</td>
         <td class="col-contrib">${cb ? fmtMoney(cb) : '–'}</td>
         <td class="col-contrib">${cp ? fmtMoney(cp) : '–'}</td>
@@ -2148,14 +2140,12 @@ function renderPainel(){
       <thead>
         <tr>
           <th rowspan="2">Registro</th>
-          <th colspan="2" class="col-fiscal">🔵 FISCAL SAÍD.</th>
-          <th colspan="5" class="col-contrib">🟢 CONTR. SAÍD.</th>
+          <th class="col-fiscal">🔵 FISCAL SAÍD.</th>
+          <th colspan="4" class="col-contrib">🟢 CONTR. SAÍD.</th>
         </tr>
         <tr>
           <th class="col-fiscal">Vlr. Item</th>
-          <th class="col-fiscal">Vlr. ICMS</th>
           <th class="col-contrib">Vlr. Item</th>
-          <th class="col-contrib">Vlr. ICMS</th>
           <th class="col-contrib">Vlr. Desconto</th>
           <th class="col-contrib">BC PIS/COFINS</th>
           <th class="col-contrib">Vlr. PIS+COFINS</th>
@@ -2165,9 +2155,7 @@ function renderPainel(){
         <tr class="total-row">
           <td>TOTAL</td>
           <td class="col-fiscal">${fmtMoney(tFiscSaid)}</td>
-          <td class="col-fiscal">${fmtMoney(tFiscSaidIcms)}</td>
           <td class="col-contrib">${fmtMoney(tContribSaid)}</td>
-          <td class="col-contrib">${fmtMoney(tContribSaidIcms)}</td>
           <td class="col-contrib">${fmtMoney(tContribSaidDesc)}</td>
           <td class="col-contrib">${fmtMoney(tContribSaidBc)}</td>
           <td class="col-contrib">${fmtMoney(tContribSaidPisCof)}</td>
@@ -2177,30 +2165,23 @@ function renderPainel(){
   };
 
   const icmsHtml = (() => {
-    const rC170 = filteredData.filter(x => x.registro === 'C170' && x.sentido === 'Sa\u00edda' && x.cst_pis_cofins === '01');
-    const rD100 = filteredData.filter(x => x.registro === 'D100' && x.sentido === 'Sa\u00edda');
-    const r = [...rC170, ...rD100];
-    if (!r.length) return '<div class="empty" style="padding:12px">Nenhum registro C170 (CST 01) ou D100 (Contribuições) de saída encontrado.</div>';
+    const r = filteredData.filter(x => x.registro === 'C170' && x.sentido === 'Sa\u00edda' && x.cst_pis_cofins === '01');
+    if (!r.length) return '<div class="empty" style="padding:12px">Nenhum registro C170 (Sa\u00edda, CST PIS 01) encontrado.</div>';
     const tItem = r.reduce((a, x) => a + (+x.vl_item || 0), 0);
     const tDesc = r.reduce((a, x) => a + (+x.vl_desc || 0), 0);
-    const tIcms = r.reduce((a, x) => a + (+x.vl_icms || 0), 0);
     const bc = tItem - tDesc;
-    const bcEscr = r.reduce((a, x) => a + (+x.vl_bc_pis_cofins || 0), 0);
-    const bcSemIcms = bc - tIcms;
-    const bcDiff = bc - bcEscr;
-    const oport = bcDiff * 0.0925;
+    const pEsc = r.reduce((a, x) => a + (+x.vl_pis || 0) + (+x.vl_cofins || 0), 0);
+    const pAdj = bc * 0.0925;
+    const op = pEsc - pAdj;
     return '<div style="padding:12px;background:var(--bg3);border-radius:6px;border-left:3px solid var(--warn)">' +
-      '<div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Exclus\u00e3o do ICMS da BC PIS/COFINS (C170/D100 Sa\u00eddas)</div>' +
+      '<div style="font-size:11px;font-weight:700;color:var(--warn);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px">Exclus\u00e3o do ICMS da BC PIS/COFINS (C170 Sa\u00eddas CST 01)</div>' +
       '<table class="painel-table" style="margin:0;width:auto"><tbody>' +
       '<tr><td style="text-align:left">Vlr. Item</td><td style="text-align:right">R$ ' + fmtMoney(tItem) + '</td></tr>' +
       '<tr><td style="text-align:left">(\u2013) Vlr. Desconto</td><td style="text-align:right">R$ ' + fmtMoney(tDesc) + '</td></tr>' +
       '<tr class="total-row"><td style="text-align:left;font-weight:700">= BC Ajustada</td><td style="text-align:right;font-weight:700">R$ ' + fmtMoney(bc) + '</td></tr>' +
-      '<tr><td style="text-align:left">(\u2013) Vlr. ICMS</td><td style="text-align:right">R$ ' + fmtMoney(tIcms) + '</td></tr>' +
-      '<tr class="total-row"><td style="text-align:left;font-weight:700">= BC sem ICMS</td><td style="text-align:right;font-weight:700">R$ ' + fmtMoney(bcSemIcms) + '</td></tr>' +
-      '<tr><td style="text-align:left">(\u2013) BC Escriturada</td><td style="text-align:right">R$ ' + fmtMoney(bcEscr) + '</td></tr>' +
-      '<tr class="total-row"><td style="text-align:left;font-weight:700;color:var(--warn)">= Diferen\u00e7a de BC</td><td style="text-align:right;font-weight:700;color:var(--warn)">R$ ' + fmtMoney(bcDiff) + '</td></tr>' +
-      '<tr><td style="text-align:left;font-size:12px;padding-top:8px;border-top:1px dashed var(--border)">\u00d7 Al\u00edquota PIS/COFINS (1,65% + 7,60%)</td><td style="text-align:right;font-size:12px;padding-top:8px;border-top:1px dashed var(--border)">9,25%</td></tr>' +
-      '<tr class="total-row"><td style="text-align:left;font-weight:700;color:' + (oport > 0 ? 'var(--ok)' : oport < 0 ? 'var(--err)' : '') + '">= Oportunidade (Diferen\u00e7a de BC \u00d7 9,25%)</td><td style="text-align:right;font-weight:700;color:' + (oport > 0 ? 'var(--ok)' : oport < 0 ? 'var(--err)' : '') + '">R$ ' + fmtMoney(oport) + '</td></tr>' +
+      '<tr><td style="text-align:left">(\u2013) PIS/COFINS Ajustado (BC Adj. \u00d7 9,25%)</td><td style="text-align:right">R$ ' + fmtMoney(pAdj) + '</td></tr>' +
+      '<tr><td style="text-align:left">(+) PIS/COFINS Escriturado</td><td style="text-align:right">R$ ' + fmtMoney(pEsc) + '</td></tr>' +
+      '<tr class="total-row"><td style="text-align:left;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">= Oportunidade</td><td style="text-align:right;font-weight:700;color:' + (op > 0 ? 'var(--ok)' : op < 0 ? 'var(--err)' : '') + '">R$ ' + fmtMoney(op) + '</td></tr>' +
       '</tbody></table></div>';
   })();
   body.innerHTML = `
@@ -2251,39 +2232,6 @@ function renderPainel(){
         ${icmsHtml}
       </div>
     </div>`;
-  initPainelResizers();
-}
-
-function initPainelResizers(){
-  document.querySelectorAll('.painel-table').forEach(tbl => {
-    tbl.querySelectorAll('thead th').forEach(th => {
-      if (th.querySelector('.resizer')) return;
-      const r = document.createElement('div');
-      r.className = 'resizer';
-      r.addEventListener('mousedown', e => {
-        e.preventDefault(); e.stopPropagation();
-        const startX = e.pageX;
-        const startW = th.offsetWidth;
-        const idx = Array.from(th.parentNode.children).indexOf(th);
-        const onMove = ev => {
-          const w = Math.max(40, startW + (ev.pageX - startX));
-          th.style.width = w + 'px';
-          th.style.minWidth = w + 'px';
-          tbl.querySelectorAll('tbody tr, tfoot tr').forEach(tr => {
-            const td = tr.children[idx];
-            if (td) { td.style.width = w + 'px'; td.style.minWidth = w + 'px'; }
-          });
-        };
-        const onUp = () => {
-          document.removeEventListener('mousemove', onMove);
-          document.removeEventListener('mouseup', onUp);
-        };
-        document.addEventListener('mousemove', onMove);
-        document.addEventListener('mouseup', onUp);
-      });
-      th.appendChild(r);
-    });
-  });
 }
 
 document.getElementById('toggle-painel')?.addEventListener('click', () => {

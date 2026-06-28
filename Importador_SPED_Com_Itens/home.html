@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Analisador SPED PIS/COFINS - Redução de ICMS/ICMS-ST/IPI</title>
+<style>
+:root{
+  --primary:#1e40af;
+  --primary-light:#3b82f6;
+  --primary-dark:#1e3a8a;
+  --accent:#059669;
+  --accent-light:#10b981;
+  --bg:#f8fafc;
+  --bg2:#ffffff;
+  --fg:#0f172a;
+  --fg2:#334155;
+  --fg3:#64748b;
+  --border:#e2e8f0;
+  --shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.hero{background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 50%,var(--primary-light) 100%);color:#fff;padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;margin-bottom:16px;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+.hero p{font-size:1.25rem;opacity:.95;max-width:700px;margin:0 auto 32px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.2);padding:8px 20px;border-radius:50px;font-size:.9rem;font-weight:600;margin-bottom:24px;backdrop-filter:blur(10px)}
+.cta-btn{display:inline-block;background:#fff;color:var(--primary);padding:16px 40px;border-radius:8px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:var(--shadow-lg)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 20px 25px -5px rgba(0,0,0,.2)}
+.container{max-width:1200px;margin:0 auto;padding:60px 24px}
+.section-title{text-align:center;margin-bottom:48px}
+.section-title h2{font-size:2rem;font-weight:700;color:var(--fg);margin-bottom:12px}
+.section-title p{color:var(--fg2);font-size:1.1rem;max-width:600px;margin:0 auto}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-bottom:60px}
+.feature-card{background:var(--bg2);border-radius:16px;padding:32px;box-shadow:var(--shadow);transition:.3s;border:1px solid var(--border);text-decoration:none;color:inherit;display:block}
+.feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--primary-light)}
+.feature-icon{width:64px;height:64px;background:linear-gradient(135deg,var(--primary-light),var(--primary));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;color:#fff}
+.feature-card h3{font-size:1.25rem;font-weight:700;margin-bottom:12px;color:var(--fg)}
+.feature-card p{color:var(--fg2);font-size:.95rem;line-height:1.7}
+.how-it-works{background:var(--bg2);border-radius:20px;padding:48px;margin-bottom:60px;box-shadow:var(--shadow)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px;counter-reset:step}
+.step{position:relative;padding:24px;text-align:center;text-decoration:none;color:inherit;display:block}
+.step:hover{transform:translateY(-2px)}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:48px;height:48px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;box-shadow:var(--shadow)}
+.step h3{margin-top:36px;margin-bottom:12px;font-size:1.1rem;color:var(--fg)}
+.step p{color:var(--fg2);font-size:.9rem}
+.benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:60px}
+.benefit{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--bg2);border-radius:12px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:.2s}
+.benefit:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.benefit-icon{flex-shrink:0;width:48px;height:48px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.benefit h4{font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--fg)}
+.benefit p{color:var(--fg2);font-size:.9rem;margin:0}
+.tech-specs{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;border-radius:20px;padding:48px;margin-bottom:60px}
+.tech-specs .section-title h2{color:#fff}
+.tech-specs .section-title p{color:rgba(255,255,255,.8)}
+.specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.spec-item{text-align:center;padding:24px;background:rgba(255,255,255,.1);border-radius:12px;backdrop-filter:blur(10px);text-decoration:none;color:inherit;display:block;transition:.2s}
+.spec-item:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.spec-item .icon{font-size:32px;margin-bottom:12px}
+.spec-item h4{font-size:1rem;font-weight:600;margin-bottom:8px}
+.spec-item p{font-size:.85rem;opacity:.9}
+.cta-section{text-align:center;padding:60px 24px;background:var(--bg2);border-radius:20px;box-shadow:var(--shadow)}
+.cta-section h2{font-size:2rem;font-weight:700;margin-bottom:16px;color:var(--fg)}
+.cta-section p{color:var(--fg2);margin-bottom:32px;font-size:1.1rem}
+.cta-section .cta-btn{background:var(--accent);color:#fff}
+.cta-section .cta-btn:hover{background:var(--accent-light)}
+footer{text-align:center;padding:32px;color:var(--fg3);font-size:.9rem;border-top:1px solid var(--border);margin-top:40px}
+@media(max-width:768px){
+  .hero{padding:60px 20px}
+  .hero h1{font-size:2rem}
+  .container{padding:40px 20px}
+  .features{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('home_scroll_pos');
+  if (saved) {
+    window.scrollTo(0, parseInt(saved));
+    localStorage.removeItem('home_scroll_pos');
+  }
+  document.querySelectorAll('a[href="index.html"]').forEach(a => {
+    a.addEventListener('click', () => {
+      localStorage.setItem('home_scroll_pos', window.scrollY);
+    });
+  });
+});
+</script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Ferramenta Profissional para SPED</div>
+    <h1>Analisador SPED PIS/COFINS</h1>
+    <p>Reduza o ICMS, ICMS-ST e IPI da Base de Calculo do PIS e COFINS de forma inteligente e automatizada. Analise completa dos seus arquivos SPED Fiscal e Contribuicoes.</p>
+    <a href="index.html" class="cta-btn">Comecar Agora</a>
+  </div>
+</section>
+
+<div class="container">
+  <div class="section-title">
+    <h2>Por que usar nosso Analisador?</h2>
+    <p>De acordo com o entendimento do STF, o ICMS nao se incorpora ao patrimonio do contribuinte e nao constituui receita bruta ou faturamento. Por isso, o ICMS nao pode integrar a base de calculo do PIS e COFINS.</p>
+  </div>
+
+  <div class="features">
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">1</div>
+      <h3>Analise Completa do SPED</h3>
+      <p>Importe e analise arquivos SPED Fiscal e Contribuicoes com visualizacao detalhada de todos os registros, CSTs, CFOPs e valores de impostos.</p>
+    </a>
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">2</div>
+      <h3>Cruzamento de Dados</h3>
+      <p>Compare automaticamente os registros do SPED Fiscal com o Contribuicoes, identificando divergencias e oportunidades de credito.</p>
+    </a>
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">3</div>
+      <h3>Reducao de Base de Calculo</h3>
+      <p>Identifique e aplique a reducao do ICMS, ICMS-ST e IPI na base de calculo do PIS/COFINS conforme legislacao vigente.</p>
+    </a>
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">4</div>
+      <h3>Filtros Avancados</h3>
+      <p>Filtre por periodo, CNPJ, CFOP, CST, situacao da operacao e natureza da base de credito para analises precisas.</p>
+    </a>
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">5</div>
+      <h3>Painel Comparativo</h3>
+      <p>Visualize em um painel comparativo os valores entre os SPEDs, com destaque para creditos e diferencas encontradas.</p>
+    </a>
+    <a href="index.html" class="feature-card">
+      <div class="feature-icon">6</div>
+      <h3>Exportacao de Relatorios</h3>
+      <p>Exporte os dados analisados em formato CSV ou XLSX para uso em planilhas, auditorias e demonstracoes contabeis.</p>
+    </a>
+  </div>
+
+  <div class="how-it-works">
+    <div class="section-title">
+      <h2>Como Funciona</h2>
+      <p>Simples, rapido e seguro. Analise seus arquivos SPED em poucos passos.</p>
+    </div>
+    <div class="steps">
+      <a href="index.html" class="step">
+        <h3>1. Importe os Arquivos</h3>
+        <p>Arraste a pasta-pai do SPED ou selecione os arquivos .txt individualmente. O sistema varre subpastas automaticamente.</p>
+      </a>
+      <a href="index.html" class="step">
+        <h3>2. Analise Automatica</h3>
+        <p>O sistema processa e cruza os dados do SPED Fiscal e Contribuicoes, identificando CSTs, CFOPs e valores de impostos.</p>
+      </a>
+      <a href="index.html" class="step">
+        <h3>3. Aplique Filtros</h3>
+        <p>Filtre por periodo, CNPJ, CFOP, CST e outros criterios para refinar sua analise e focar nos itens relevantes.</p>
+      </a>
+      <a href="index.html" class="step">
+        <h3>4. Identifique Creditos</h3>
+        <p>Visualize quais operacoes geram creditos de PIS/COFINS e identifique oportunidades de reducao da base de calculo.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2>Funcionalidades Principais</h2>
+  </div>
+
+  <div class="benefits">
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Suporte a Multiplos CNPJs</h4>
+        <p>Analise varios estabelecimentos simultaneamente com agrupamento automatico por CNPJ.</p>
+      </div>
+    </a>
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Identificacao Automatica de Creditos</h4>
+        <p>CFOPs e CSTs que geram creditos sao automaticamente identificados e destacados.</p>
+      </div>
+    </a>
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Classificacao de Essencialidade</h4>
+        <p>Classifique itens como essenciais, insumos ou nao elegiveis para credito de PIS/COFINS.</p>
+      </div>
+    </a>
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Visualizacao de Divergencias</h4>
+        <p>Identifique automaticamente itens presentes no Fiscal mas ausentes no Contribuicoes.</p>
+      </div>
+    </a>
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Calculo de Aliquotas</h4>
+        <p>Visualize e compare aliquotas de PIS e COFINS aplicadas em cada operacao.</p>
+      </div>
+    </a>
+    <a href="index.html" class="benefit">
+      <div class="benefit-icon">+</div>
+      <div>
+        <h4>Modo Escuro Automatico</h4>
+        <p>Interface adaptavel automaticamente ao tema do seu sistema operacional.</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="tech-specs">
+    <div class="section-title">
+      <h2>Especificacoes Tecnicas</h2>
+      <p>Tecnologias modernas para processamento eficiente de grandes volumes de dados.</p>
+    </div>
+    <div class="specs-grid">
+      <a href="index.html" class="spec-item">
+        <div class="icon">1</div>
+        <h4>Processamento Local</h4>
+        <p>Todos os dados sao processados localmente no navegador. Nenhum dado e enviado para servidores externos.</p>
+      </a>
+      <a href="index.html" class="spec-item">
+        <div class="icon">2</div>
+        <h4>Seguranca de Dados</h4>
+        <p>Seus dados fiscais permanecem seguros. Processamento 100% client-side sem transmissao de informacoes sensiveis.</p>
+      </a>
+      <a href="index.html" class="spec-item">
+        <div class="icon">3</div>
+        <h4>Responsivo</h4>
+        <p>Interface adaptavel para desktop, tablet e dispositivos moveis.</p>
+      </a>
+      <a href="index.html" class="spec-item">
+        <div class="icon">4</div>
+        <h4>Alta Performance</h4>
+        <p>Processamento em lotes com renderizacao otimizada para arquivos de grande porte.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Pronto para Analisar seus SPEDs?</h2>
+    <p>Comece agora mesmo a analise dos seus arquivos SPED PIS/COFINS e identifique oportunidades de credito e reducao de base de calculo.</p>
+    <a href="index.html" class="cta-btn">Acessar o Analisador</a>
+  </div>
+</div>
+
+<footer>
+  <p>Analisador SPED PIS/COFINS - Ferramenta para analise e conferencia de escrituracoes SPED</p>
+  <p style="margin-top:8px;font-size:.8rem">Desenvolvido para profissionais contabeis e fiscais</p>
+</footer>
+
+</body>
+</html>
