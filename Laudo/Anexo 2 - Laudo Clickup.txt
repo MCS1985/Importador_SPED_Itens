@@ -1,0 +1,44 @@
+nome da empresa cliente: JGF LOG CARGAS
+CNPJ: 43.393.683/0001-05
+Período: 06/2026 à 06/2028
+
+Adapte o relatório
+Essencialides ECD (Adm) = R$ 196.996,30
+Créditos não utilizados nas entradas do Contribuições = R$ 24.247,02
+Exclusão do ICMS da base de cálculo do PIS/COFINS = R$ 7.262,08
+TOTAL DOS CRÉDITOS DE PIS/COFINS = R$ 228.505,40
+
+Em anexo tabela com valores
+Favor gerar o código em html para eu abrir com o navegador e imprimir já formatado.
+
+Prompt da Apresentação: Laudo de Revisão Tributária - Abrão & Silva
+Objetivo: Criar uma apresentação executiva baseada em um laudo técnico de recuperação de PIS/COFINS, utilizando a identidade visual oficial do escritório Abrão & Silva Advogados Associados.
+
+1. Identidade Visual (Branding):
+Cores Principais: Fundo Branco (#FFFFFF), detalhes em Preto (#000000) e Dourado (#D69E2E).
+Elementos Gráficos: Triângulos pretos nos cantos inferiores esquerdos, bordas inferiores douradas nos títulos e formas geométricas diagonais na capa.
+Tipografia: Fonte 'Montserrat' para títulos (negrito e maiúsculo) e 'Roboto' para o corpo do texto.
+Logotipo: Inserir o logo oficial da Abrão & Silva no canto superior direito de todos os slides (exceto na capa, onde deve ter maior destaque).
+Rodapé: Incluir o site "www.abraoesilvaadvogados.com.br" em todos os slides.
+
+2. Estrutura de Conteúdo (12 Slides):
+Capa: Título "REVISÃO TRIBUTÁRIA", <nome da empresa cliente>, <CNPJ> e <período analisado>.
+Oportunidades Identificadas: Destaque visual para o valor total da oportunidade.
+Objeto e Escopo: Detalhamento das 4 frentes de trabalho técnico.
+Ressaltar a oportunidade encontrada: Valores apurados e metodologia de reanálise técnica.
+Metodologia e Validação: Explicação do cruzamento EFD Contribuições e Registros A170, C170, C500, D100, F100 e F130.
+Naturezas de Insumos: Grid visual com ícones para as categorias de créditos identificadas.
+Consolidação Final: Tabela técnica e gráfico de rosca (Doughnut Chart) mostrando a composição dos créditos.
+Fundamentação Legal: Base jurídica citando (Exclusão do PIS/COFINS das próprias bases).
+Documentação e Rastreabilidade: Lista de documentos contábeis e fiscais que garantem a segurança da operação.
+Próximos Passos: Cronograma de 3 etapas (Aprovação, Acompanhamento, Implementação).
+Conclusão: Reforço do valor total recuperável e mensagem final de segurança jurídica.
+
+3. Requisitos Técnicos:
+Formato: Slides em HTML/CSS otimizados para exportação em PDF e PPTX sem erros de renderização ou overflow.
+Tom de Voz: Formal, técnico, jurídico e focado em resultados financeiros e segurança fiscal.
+Home - ABRÃO E SILVA | ADVOGADOS
+Constituído em 2017 pelos advogados e sócios: Pedro Panthio Abrão Costa, Edivaldo Bernardo da Silva e Erivaldo Bernardo da Silva, o escritório Abrão e Silva
+
+Utilizar como modelo o último html que foi validado, da CAPITAL QUIMICA.
+AS PÁGINAS DEVEM ESTAR EM MODO PAISAGEM JÁ PREPARADA PARA SLIDES

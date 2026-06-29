@@ -1,0 +1,58 @@
+Backup da Conversa - 28/06/2026
+================================
+
+Projeto: Importador_SPED_Com_Itens
+Repositório: https://github.com/MCS1985/Importador_SPED_Itens
+Ferramenta: https://mcs1985.github.io/Importador_SPED_Itens/
+
+RESUMO DAS ALTERAÇÕES REALIZADAS:
+----------------------------------
+
+1. CRIAÇÃO DA LANDING PAGE (home.html)
+   - Página informativa sobre o Analisador SPED PIS/COFINS
+   - Explica a redução de ICMS/ICMS-ST/IPI da base de cálculo
+   - Cards de funcionalidades clicáveis linkando para index.html
+   - Seção "Como Funciona" com 4 passos
+   - Lista de benefícios e especificações técnicas
+   - Botões CTA (Comecar Agora / Acessar o Analisador)
+   - Salva posição de scroll ao navegar para index.html
+
+2. ADIÇÃO DO BOTÃO "← HOME" NO INDEX.HTML
+   - Botão fixo no canto superior esquerdo
+   - Permite voltar para a landing page
+   - CSS: posição fixed, z-index:100, hover com destaque
+
+3. CORREÇÃO DA MENSAGEM DE PROGRESSO
+   - Removida mensagem "5% — Pronto. Aguardando arquivos..."
+   - Barra de progresso só aparece após importar arquivos
+
+4. DROPZONE COMPACTA E RECOLHÍVEL
+   - Layout flex com duas colunas:
+     * Esquerda: Elementos de importação (ícone, texto, botões)
+     * Direita: Lista de arquivos importados
+   - Tamanhos reduzidos:
+     * Header: 28px → 22px
+     * Container padding: 24px → 12px
+     * Dropzone padding: 24px → 12px
+     * Ícone: 32px → 24px
+     * Textos: 15px → 13px
+   - Recolhe automaticamente após importar arquivos
+   - Mostra apenas o resumo quando recolhida:
+     "📁 X arquivo(s) importado(s) · Y CNPJ · Z MB"
+   - Borda sólida quando recolhida (indica estado)
+   - Botão ▲ para expandir novamente
+
+5. ENVIO PARA O GITHUB
+   - Commit: "feat: landing page (home.html) + dropzone compacta e recolhivel apos importacao"
+   - Arquivos enviados: home.html, index.html, index_old.html
+
+ARQUIVOS MODIFICADOS:
+---------------------
+- Importador_SPED_Com_Itens/home.html (NOVO)
+- Importador_SPED_Com_Itens/index.html (MODIFICADO)
+- Importador_SPED_Com_Itens/index_old.html (BACKUP)
+
+REFERÊNCIA:
+-----------
+Documentação consultada sobre redução de ICMS/ICMS-ST/IPI:
+https://sisaudcon.atlassian.net/wiki/spaces/SS2/pages/804749352/2.4.4+-+SPED+PIS+COFINS+-+Redu+o+de+ICMS+ICMS-ST+e+IPI+da+Base+de+C+lculo

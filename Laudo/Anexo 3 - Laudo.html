@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Revisão Tributária - JGF LOG CARGAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #D69E2E;
+            --primary-black: #000000;
+            --primary-white: #FFFFFF;
+            --text-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            color: var(--text-gray);
+        }
+
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            background: var(--primary-white);
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            page-break-after: always;
+        }
+
+        /* Elementos Visuais Fixos */
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            text-align: right;
+            color: var(--primary-black);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-sub {
+            font-size: 10px;
+            color: var(--primary-gold);
+            display: block;
+        }
+
+        .bottom-triangle {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 150px 0 0 150px;
+            border-color: transparent transparent transparent var(--primary-black);
+            z-index: 1;
+        }
+
+        .footer-line {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* Conteúdo Geométrico da Capa */
+        .capa-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 50%, #f8f8f8 50%);
+            z-index: 0;
+        }
+
+        /* Estilização de Títulos */
+        h1, h2 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            color: var(--primary-black);
+        }
+
+        .title-container {
+            margin-top: 60px;
+            margin-left: 80px;
+            border-bottom: 4px solid var(--primary-gold);
+            display: inline-block;
+            padding-bottom: 5px;
+            z-index: 2;
+        }
+
+        .content {
+            margin: 40px 80px;
+            z-index: 2;
+            flex-grow: 1;
+        }
+
+        /* Tabelas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            font-family: 'Montserrat', sans-serif;
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .highlight-row {
+            background-color: #fcf8e3;
+            font-weight: bold;
+        }
+
+        .total-value {
+            font-size: 48px;
+            color: var(--primary-gold);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        /* Grid de Insumos */
+        .insumos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .insumo-item {
+            border: 1px solid var(--primary-gold);
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        /* Configuração de Impressão */
+        @media print {
+            body { background: none; }
+            .slide { 
+                margin: 0; 
+                box-shadow: none; 
+                page-break-after: always;
+            }
+            /* Ocultar rodapé do navegador na impressão */
+            @page {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <div class="capa-bg"></div>
+        <div class="header-logo" style="top: 80px; right: 80px; transform: scale(1.5);">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="content" style="margin-top: 150px;">
+            <h1 style="font-size: 55px; line-height: 1;">REVISÃO<br><span style="color: var(--primary-gold);">TRIBUTÁRIA</span></h1>
+            <div style="margin-top: 40px;">
+                <p style="font-weight: 700; font-size: 20px; color: var(--primary-black);">CLIENTE: JGF LOG CARGAS</p>
+                <p style="font-size: 18px;">CNPJ: 43.393.683/0001-05</p>
+                <p style="font-size: 18px;">PERÍODO: 09/2021 à 12/2025</p>
+            </div>
+        </div>
+        <div class="bottom-triangle"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Oportunidades Identificadas</h2></div>
+        <div class="content">
+            <p>Com base na análise técnica das obrigações acessórias e legislação vigente, identificamos o seguinte montante recuperável:</p>
+            <div class="total-value">R$ 228.505,40</div>
+            <p style="font-style: italic; color: #666;">*Valores apurados através da reanálise de créditos de insumos e ressarcimento de saldos credores.</p>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Objeto e Escopo Técnico</h2></div>
+        <div class="content">
+            <div style="display: flex; gap: 30px; margin-top: 20px;">
+                <div style="flex: 1; border-left: 4px solid var(--primary-gold); padding-left: 15px;">
+                    <h3 style="margin-bottom: 10px;">01. Insumos (Art. 3º Lei 10.833)</h3>
+                    <p style="font-size: 14px;">Identificação de custos essenciais e relevantes na atividade agropecuária não creditados.</p>
+                </div>
+                <div style="flex: 1; border-left: 4px solid var(--primary-gold); padding-left: 15px;">
+                    <h3 style="margin-bottom: 10px;">02. Essencialidade ECD</h3>
+                    <p style="font-size: 14px;">Cruzamento de contas contábeis administrativas para identificação de créditos extratemporais.</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 30px; margin-top: 40px;">
+                <div style="flex: 1; border-left: 4px solid var(--primary-gold); padding-left: 15px;">
+                    <h3 style="margin-bottom: 10px;">03. Saldo Credor / Ressarcimento</h3>
+                    <p style="font-size: 14px;">Auditoria de saldos acumulados e pedidos de ressarcimento via PER/DCOMP.</p>
+                </div>
+                <div style="flex: 1; border-left: 4px solid var(--primary-gold); padding-left: 15px;">
+                    <h3 style="margin-bottom: 10px;">04. Compliance EFD</h3>
+                    <p style="font-size: 14px;">Saneamento dos registros C170, C500 e F100 para garantir a rastreabilidade fiscal.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Metodologia de Apuração</h2></div>
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>NATUREZA DO CRÉDITO / OPORTUNIDADE</th>
+                        <th style="text-align: right;">VALOR APURADO (R$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Créditos não utilizados nas entradas do Contribuições</td>
+                        <td style="text-align: right;">R$ 24.247,02</td>
+                    </tr>
+                    <tr>
+                        <td>Exclusão do ICMS da base de cálculo do PIS/COFINS</td>
+                        <td style="text-align: right;">R$ 7.262,08</td>
+                    </tr>
+                    <tr>
+                        <td>Essencialides ECD</td>
+                        <td style="text-align: right;">R$ 196.996,30</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>TOTAL</td>
+                        <td style="text-align: right; color: var(--primary-gold);">R$ 228.505,40</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; font-size: 13px;">A metodologia consistiu no cruzamento massivo de dados entre a Escrituração Contábil Digital (ECD) e a Escrituração Fiscal Digital de Contribuições (EFD), validando a essencialidade de cada item conforme o Recurso Especial 1.221.170/PR (STJ).</p>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Rastreabilidade de Dados</h2></div>
+        <div class="content">
+            <p>Para a segurança jurídica da operação, foram auditados os seguintes registros:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                <span style="background: #000; color: #fff; padding: 10px 20px; border-radius: 5px;">A170 / C170</span>
+                <span style="background: var(--primary-gold); color: #fff; padding: 10px 20px; border-radius: 5px;">C500 (Energia)</span>
+                <span style="background: #000; color: #fff; padding: 10px 20px; border-radius: 5px;">D100 (Transporte)</span>
+                <span style="background: var(--primary-gold); color: #fff; padding: 10px 20px; border-radius: 5px;">F100 (Demais Doc)</span>
+                <span style="background: #000; color: #fff; padding: 10px 20px; border-radius: 5px;">F120 / F130 (Ativo Imobilizado)</span>
+            </div>
+            <div style="margin-top: 40px; border: 1px dashed #ccc; padding: 20px;">
+                <p><strong>Validação:</strong> Os créditos foram segregados por <strong>COD_CRED</strong> conforme as tabelas da Receita Federal, garantindo que não haja duplicidade com créditos já aproveitados em períodos anteriores.</p>
+            </div>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Categorias de Créditos</h2></div>
+        <div class="content">
+            <div class="insumos-grid">
+                <div class="insumo-item"><strong>Energia Elétrica</strong><br><small>Consumo na Produção</small></div>
+                <div class="insumo-item"><strong>Combustíveis</strong><br><small>Frota e Maquinário</small></div>
+                <div class="insumo-item"><strong>Manutenção</strong><br><small>Peças e Serviços</small></div>
+                <div class="insumo-item"><strong>Fretes</strong><br><small>Operações de Venda</small></div>
+                <div class="insumo-item"><strong>Armazenagem</strong><br><small>Logística Agrícola</small></div>
+                <div class="insumo-item"><strong>EPIs/Ferramentas</strong><br><small>Essencialidade Direta</small></div>
+            </div>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Consolidação da Oportunidade</h2></div>
+<div class="content" style="display: flex; align-items: center;">
+    <div style="flex: 1;">
+        <p style="font-size: 24px; color: var(--primary-black);">Composição Total:</p>
+        <ul style="margin-top: 20px; list-style: none; margin-left: 20px;">
+            <li style="margin-bottom: 10px;">● Insumos: <strong>67.6%</strong></li>
+            <li style="margin-bottom: 10px;">● Ressarcimento: <strong>28.6%</strong></li>
+            <li style="margin-bottom: 10px;">● Administrativo: <strong>3.8%</strong></li>
+        </ul>
+    </div>
+    <div style="flex: 1; text-align: center;">
+        <div style="width: 250px; height: 250px; border-radius: 50%; border: 40px solid var(--primary-gold); border-top-color: var(--primary-black); border-right-color: #555; margin: auto; display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: bold; font-size: 20px;">R$ 228.505.40</span>
+        </div>
+    </div>
+</div>
+            <div style="flex: 1; text-align: center;">
+                <div style="width: 250px; height: 250px; border-radius: 50%; border: 40px solid var(--primary-gold); border-top-color: var(--primary-black); border-right-color: #555; margin: auto; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-weight: bold; font-size: 20px;">R$ 5.1M</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Segurança Jurídica</h2></div>
+        <div class="content">
+            <div style="background: #f9f9f9; padding: 30px; border-left: 5px solid var(--primary-gold);">
+                <p style="font-size: 16px; line-height: 1.6;">
+                    "O conceito de insumo deve ser aferido à luz dos critérios de <strong>essencialidade</strong> ou <strong>relevância</strong>, ou seja, considerando-se a imprescindibilidade ou a importância de determinado item para o desenvolvimento da atividade econômica desempenhada pelo contribuinte."
+                </p>
+                <p style="margin-top: 15px; font-weight: bold;">— STJ, Recurso Especial 1.221.170/PR (Tema Repetitivo 779)</p>
+            </div>
+            <p style="margin-top: 30px;">A base legal utilizada contempla ainda as Instruções Normativas 1.911/2019 e 2.121/2022 da Receita Federal do Brasil.</p>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Rastreabilidade e Compliance</h2></div>
+        <div class="content">
+            <ul style="list-style: none;">
+                <li style="padding: 10px 0; border-bottom: 1px solid #eee;">✔ Arquivos Digitais: EFD Contribuições e ECD.</li>
+                <li style="padding: 10px 0; border-bottom: 1px solid #eee;">✔ XMLs de Notas Fiscais de Entrada e Saída.</li>
+                <li style="padding: 10px 0; border-bottom: 1px solid #eee;">✔ Memória de cálculo por item e por período.</li>
+                <li style="padding: 10px 0; border-bottom: 1px solid #eee;">✔ Conciliação com a contabilidade (Razão e Balancete).</li>
+            </ul>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Cronograma de Implementação</h2></div>
+        <div class="content">
+            <div style="display: flex; justify-content: space-between; margin-top: 50px; text-align: center;">
+                <div style="width: 30%;">
+                    <div style="background: var(--primary-black); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">1</div>
+                    <h4>Aprovação</h4>
+                    <p style="font-size: 12px; margin-top: 10px;">Validação técnica pelo comitê diretivo da empresa.</p>
+                </div>
+                <div style="width: 30%;">
+                    <div style="background: var(--primary-gold); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">2</div>
+                    <h4>Retificação</h4>
+                    <p style="font-size: 12px; margin-top: 10px;">Envio das obrigações retificadoras e PER/DCOMPs.</p>
+                </div>
+                <div style="width: 30%;">
+                    <div style="background: var(--primary-black); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">3</div>
+                    <h4>Aproveitamento</h4>
+                    <p style="font-size: 12px; margin-top: 10px;">Compensação tributária ou recebimento em conta corrente.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 80px 0 0 80px;"></div>
+    </div>
+
+    <div class="slide">
+        <div class="header-logo">
+            <span class="logo-text">ABRÃO & SILVA</span>
+            <span class="logo-sub">ADVOGADOS ASSOCIADOS</span>
+        </div>
+        <div class="title-container"><h2>Conclusão Técnica</h2></div>
+        <div class="content" style="text-align: center; margin-top: 80px;">
+            <p style="font-size: 20px;">Valor total recuperável identificado:</p>
+            <div class="total-value" style="font-size: 60px;">R$ 228.505,40</div>
+            <p style="max-width: 700px; margin: 30px auto; line-height: 1.6;">
+                O presente laudo demonstra a viabilidade imediata da recuperação desses ativos fiscais, pautada em sólida fundamentação jurídica e rastreabilidade técnica integral.
+            </p>
+        </div>
+        <div class="footer-line">www.abraoesilvaadvogados.com.br</div>
+        <div class="bottom-triangle" style="border-width: 150px 0 0 150px;"></div>
+    </div>
+
+</body>
+</html>
