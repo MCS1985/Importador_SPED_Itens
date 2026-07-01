@@ -1,0 +1,6669 @@
+{
+  "naturezas": [
+    {
+      "codigo": "REC1",
+      "grupo": "REC",
+      "descricao": "CPF - Remun. Salário / Pró-Labore",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC2",
+      "grupo": "REC",
+      "descricao": "CPF - Ajuda de custo - Combustível",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC3",
+      "grupo": "REC",
+      "descricao": "CPF - Ajuda de custo - Refeição",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC4",
+      "grupo": "REC",
+      "descricao": "CPF - Transf. Da conta PJ para a conta PF",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC5",
+      "grupo": "REC",
+      "descricao": "CPF - Outras receitas",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC6",
+      "grupo": "REC",
+      "descricao": "CPF - Pensão - Outras receitas",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "REC7",
+      "grupo": "REC",
+      "descricao": "CPF - Rec. Financeiras - Empréstimos",
+      "tipo": "receita"
+    },
+    {
+      "codigo": "OPF1",
+      "grupo": "OPF",
+      "descricao": "CPF - Desp. Alimentação / Refeição",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "OPF2",
+      "grupo": "OPF",
+      "descricao": "CPF - Desp. Transporte / Combustível",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "DESP1",
+      "grupo": "DESP",
+      "descricao": "CPF - Desp. Cartão de crédito",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "DESP2",
+      "grupo": "DESP",
+      "descricao": "CPF - Desp. Telefone / Internet",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "DESP3",
+      "grupo": "DESP",
+      "descricao": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "DESP4",
+      "grupo": "DESP",
+      "descricao": "CPF - Desp. Moradia",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "DESP5",
+      "grupo": "DESP",
+      "descricao": "CPF - Transf. Da conta PF para a conta PJ",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "GAST1",
+      "grupo": "GAST",
+      "descricao": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "GAST2",
+      "grupo": "GAST",
+      "descricao": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "FIN1",
+      "grupo": "FIN",
+      "descricao": "CPF - Desp. Financeiras - Empréstimos",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "FIN2",
+      "grupo": "FIN",
+      "descricao": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "FIN3",
+      "grupo": "FIN",
+      "descricao": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "TRI1",
+      "grupo": "TRI",
+      "descricao": "CPF - Desp. Impostos e Obrigações",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "OUG1",
+      "grupo": "OUG",
+      "descricao": "CPF - Outros gastos",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS1",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Aluguel",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS2",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Energia",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS3",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Plano de saúde",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS4",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Supermercado",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS5",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Água",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS6",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Farmácia e Saúde",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS7",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Internet",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS8",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Alimentação",
+      "tipo": "despesa"
+    },
+    {
+      "codigo": "PENS9",
+      "grupo": "PENS",
+      "descricao": "CPF - Pensão - Outros Gastos",
+      "tipo": "despesa"
+    }
+  ],
+  "entidades": [
+    "MCS"
+  ],
+  "transactions": [
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 1",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-02",
+      "obs": "Observação da despesa 1",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 2",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 2",
+      "valor": -86.64
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 3",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 3",
+      "valor": -38.13
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 4",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 4",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 5",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 5",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 6",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 6",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 7",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 7",
+      "valor": -23.33
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 8",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 8",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 9",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 9",
+      "valor": -14.49
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 10",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 10",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 11",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-01-05",
+      "obs": "Observação da despesa 11",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 12",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-06",
+      "obs": "Observação da despesa 12",
+      "valor": -40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 13",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-06",
+      "obs": "Observação da despesa 13",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 14",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-01-07",
+      "obs": "Observação da receita 14",
+      "valor": 3000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 15",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-07",
+      "obs": "Observação da despesa 15",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 16",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-07",
+      "obs": "Observação da despesa 16",
+      "valor": -28.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 17",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-01-07",
+      "obs": "Observação da despesa 17",
+      "valor": -123.35
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 18",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-01-07",
+      "obs": "Observação da despesa 18",
+      "valor": -506.56
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 19",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-08",
+      "obs": "Observação da despesa 19",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 20",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-08",
+      "obs": "Observação da despesa 20",
+      "valor": -63.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 21",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-08",
+      "obs": "Observação da despesa 21",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 22",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-09",
+      "obs": "Observação da despesa 22",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 23",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-09",
+      "obs": "Observação da despesa 23",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 24",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-01-09",
+      "obs": "Observação da despesa 24",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 25",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-09",
+      "obs": "Observação da despesa 25",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 26",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-09",
+      "obs": "Observação da despesa 26",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 27",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 27",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 28",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 28",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 29",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 29",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 30",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 30",
+      "valor": -22.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 31",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 31",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 32",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 32",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 33",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 33",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 34",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 34",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 35",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 35",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 36",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 36",
+      "valor": -6.4
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 37",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 37",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN1",
+      "descricao": "Despesa 38",
+      "cr": "CPF - Desp. Financeiras - Empréstimos",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 38",
+      "valor": -200.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 39",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 39",
+      "valor": -19.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 40",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 40",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 41",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 41",
+      "valor": -290.26
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 42",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 42",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 43",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 43",
+      "valor": -40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 44",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 44",
+      "valor": -700.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 45",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da receita 45",
+      "valor": 1900.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 46",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 46",
+      "valor": -816.87
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 47",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 47",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 48",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 48",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 49",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-12",
+      "obs": "Observação da despesa 49",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 50",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-13",
+      "obs": "Observação da despesa 50",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 51",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-14",
+      "obs": "Observação da despesa 51",
+      "valor": -23.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 52",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-14",
+      "obs": "Observação da despesa 52",
+      "valor": -31.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 53",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-15",
+      "obs": "Observação da despesa 53",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 54",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-15",
+      "obs": "Observação da despesa 54",
+      "valor": -23.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 55",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-16",
+      "obs": "Observação da despesa 55",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 56",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-01-16",
+      "obs": "Observação da despesa 56",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 57",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 57",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 58",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 58",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 59",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 59",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 60",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 60",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 61",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 61",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 62",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 62",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 63",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 63",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 64",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 64",
+      "valor": -35.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 65",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 65",
+      "valor": -2.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 66",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 66",
+      "valor": -7.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 67",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 67",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 68",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 68",
+      "valor": -23.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 69",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-19",
+      "obs": "Observação da despesa 69",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 70",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-20",
+      "obs": "Observação da despesa 70",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 71",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-20",
+      "obs": "Observação da despesa 71",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 72",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-20",
+      "obs": "Observação da despesa 72",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 73",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-21",
+      "obs": "Observação da despesa 73",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 74",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-21",
+      "obs": "Observação da despesa 74",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 75",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-21",
+      "obs": "Observação da despesa 75",
+      "valor": -45.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 76",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-22",
+      "obs": "Observação da despesa 76",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 77",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-22",
+      "obs": "Observação da despesa 77",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 78",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-23",
+      "obs": "Observação da despesa 78",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 79",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-23",
+      "obs": "Observação da despesa 79",
+      "valor": -22.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 80",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-23",
+      "obs": "Observação da despesa 80",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 81",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-23",
+      "obs": "Observação da despesa 81",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 82",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-23",
+      "obs": "Observação da despesa 82",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 83",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 83",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 84",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 84",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 85",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 85",
+      "valor": -5.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 86",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 86",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 87",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 87",
+      "valor": -36.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 88",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 88",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 89",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 89",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 90",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 90",
+      "valor": -16.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 91",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 91",
+      "valor": -8.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 92",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 92",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 93",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 93",
+      "valor": -9.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 94",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 94",
+      "valor": -11.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 95",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 95",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 96",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-26",
+      "obs": "Observação da despesa 96",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 97",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-27",
+      "obs": "Observação da despesa 97",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 98",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-27",
+      "obs": "Observação da despesa 98",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 99",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-28",
+      "obs": "Observação da despesa 99",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 100",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-28",
+      "obs": "Observação da despesa 100",
+      "valor": -19.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 101",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-28",
+      "obs": "Observação da despesa 101",
+      "valor": -49.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 102",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-01-29",
+      "obs": "Observação da despesa 102",
+      "valor": -19.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 103",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-01-29",
+      "obs": "Observação da despesa 103",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 104",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-29",
+      "obs": "Observação da despesa 104",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 105",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-29",
+      "obs": "Observação da despesa 105",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 106",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-01-30",
+      "obs": "Observação da despesa 106",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 107",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-30",
+      "obs": "Observação da despesa 107",
+      "valor": -60.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 108",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-01-30",
+      "obs": "Observação da despesa 108",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 109",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 109",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 110",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 110",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 111",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 111",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 112",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 112",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 113",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 113",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 114",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-02",
+      "obs": "Observação da despesa 114",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 115",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-03",
+      "obs": "Observação da despesa 115",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 116",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-03",
+      "obs": "Observação da despesa 116",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 117",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-03",
+      "obs": "Observação da despesa 117",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 118",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-03",
+      "obs": "Observação da despesa 118",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 119",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-04",
+      "obs": "Observação da despesa 119",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 120",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-02-05",
+      "obs": "Observação da receita 120",
+      "valor": 17.62
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 121",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da receita 121",
+      "valor": 100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 122",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da receita 122",
+      "valor": 4000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 123",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 123",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 124",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 124",
+      "valor": -60.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP1",
+      "descricao": "Despesa 125",
+      "cr": "CPF - Desp. Cartão de crédito",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 125",
+      "valor": -5.9
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 126",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 126",
+      "valor": -505.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 127",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 127",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 128",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 128",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 129",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-02-06",
+      "obs": "Observação da despesa 129",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 130",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 130",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 131",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 131",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 132",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 132",
+      "valor": -200.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 133",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 133",
+      "valor": -60.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 134",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 134",
+      "valor": -4.78
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 135",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 135",
+      "valor": -43.91
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 136",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 136",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 137",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 137",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 138",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 138",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 139",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 139",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 140",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 140",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 141",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 141",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 142",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 142",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 143",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 143",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 144",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 144",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 145",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 145",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Receita 146",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da receita 146",
+      "valor": 43.91
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 147",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 147",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 148",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 148",
+      "valor": -124.97
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 149",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 149",
+      "valor": -833.3
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 150",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-02-09",
+      "obs": "Observação da despesa 150",
+      "valor": -700.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 151",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 151",
+      "valor": -290.26
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 152",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 152",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 153",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 153",
+      "valor": -32.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 154",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 154",
+      "valor": -17.91
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 155",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 155",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 156",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 156",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 157",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 157",
+      "valor": -44.2
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 158",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-10",
+      "obs": "Observação da despesa 158",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 159",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-11",
+      "obs": "Observação da despesa 159",
+      "valor": -42.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 160",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-11",
+      "obs": "Observação da despesa 160",
+      "valor": -35.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 161",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-11",
+      "obs": "Observação da despesa 161",
+      "valor": -39.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 162",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-12",
+      "obs": "Observação da despesa 162",
+      "valor": -19.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 163",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-12",
+      "obs": "Observação da despesa 163",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 164",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-12",
+      "obs": "Observação da despesa 164",
+      "valor": -29.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 165",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-12",
+      "obs": "Observação da despesa 165",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 166",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-13",
+      "obs": "Observação da despesa 166",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 167",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-13",
+      "obs": "Observação da despesa 167",
+      "valor": -481.67
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 168",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-02-13",
+      "obs": "Observação da receita 168",
+      "valor": 1400.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 169",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-13",
+      "obs": "Observação da despesa 169",
+      "valor": -45.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 170",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 170",
+      "valor": -45.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP1",
+      "descricao": "Despesa 171",
+      "cr": "CPF - Desp. Cartão de crédito",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 171",
+      "valor": -197.59
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 172",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 172",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 173",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 173",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 174",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 174",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 175",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 175",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 176",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 176",
+      "valor": -8.49
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 177",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 177",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 178",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 178",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 179",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 179",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 180",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 180",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 181",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 181",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 182",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 182",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 183",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 183",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 184",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-18",
+      "obs": "Observação da despesa 184",
+      "valor": -7.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 185",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 185",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 186",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 186",
+      "valor": -40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 187",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 187",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 188",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 188",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 189",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 189",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 190",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-19",
+      "obs": "Observação da despesa 190",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 191",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 191",
+      "valor": -8.9
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 192",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 192",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 193",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 193",
+      "valor": -17.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 194",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 194",
+      "valor": -8.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 195",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 195",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 196",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-20",
+      "obs": "Observação da despesa 196",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 197",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 197",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 198",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 198",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 199",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 199",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 200",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 200",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 201",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 201",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 202",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 202",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 203",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 203",
+      "valor": -5.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 204",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 204",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 205",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 205",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 206",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 206",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 207",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 207",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 208",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 208",
+      "valor": -38.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 209",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 209",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 210",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 210",
+      "valor": -85.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 211",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 211",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 212",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 212",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 213",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-23",
+      "obs": "Observação da despesa 213",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 214",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-24",
+      "obs": "Observação da despesa 214",
+      "valor": -19.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 215",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-02-24",
+      "obs": "Observação da despesa 215",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 216",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-02-24",
+      "obs": "Observação da despesa 216",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 217",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-25",
+      "obs": "Observação da despesa 217",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 218",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-26",
+      "obs": "Observação da despesa 218",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 219",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-02-26",
+      "obs": "Observação da despesa 219",
+      "valor": -7.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 220",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-02-27",
+      "obs": "Observação da despesa 220",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 221",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-02-27",
+      "obs": "Observação da despesa 221",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 222",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 222",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 223",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da receita 223",
+      "valor": 56.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 224",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 224",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP1",
+      "descricao": "Despesa 225",
+      "cr": "CPF - Desp. Cartão de crédito",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 225",
+      "valor": -5.9
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 226",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 226",
+      "valor": -91.81
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 227",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 227",
+      "valor": -78.75
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 228",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 228",
+      "valor": -60.72
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 229",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da despesa 229",
+      "valor": -30.94
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 230",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-03-02",
+      "obs": "Observação da receita 230",
+      "valor": 40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 231",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-03-03",
+      "obs": "Observação da despesa 231",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 232",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-03-06",
+      "obs": "Observação da receita 232",
+      "valor": 2000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 233",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da despesa 233",
+      "valor": -507.72
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 234",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da despesa 234",
+      "valor": -700.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 235",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da receita 235",
+      "valor": 3000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 236",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da despesa 236",
+      "valor": -819.4
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 237",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da despesa 237",
+      "valor": -125.16
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 238",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-03-09",
+      "obs": "Observação da despesa 238",
+      "valor": -53.16
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 239",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-03-10",
+      "obs": "Observação da despesa 239",
+      "valor": -290.26
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 240",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-03-10",
+      "obs": "Observação da despesa 240",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 241",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-03-11",
+      "obs": "Observação da despesa 241",
+      "valor": -40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 242",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-03-12",
+      "obs": "Observação da despesa 242",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 243",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-16",
+      "obs": "Observação da despesa 243",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 244",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-03-16",
+      "obs": "Observação da despesa 244",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 245",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-03-17",
+      "obs": "Observação da despesa 245",
+      "valor": -274.61
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 246",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 246",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 247",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 247",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 248",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 248",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 249",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 249",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 250",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 250",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 251",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-20",
+      "obs": "Observação da despesa 251",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 252",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 252",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 253",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 253",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 254",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 254",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 255",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 255",
+      "valor": -36.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 256",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 256",
+      "valor": -286.68
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 257",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 257",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 258",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 258",
+      "valor": -100.59
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 259",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 259",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 260",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 260",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 261",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-23",
+      "obs": "Observação da despesa 261",
+      "valor": -4.9
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 262",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-03-26",
+      "obs": "Observação da despesa 262",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 263",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-03-27",
+      "obs": "Observação da despesa 263",
+      "valor": -59.02
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 264",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 264",
+      "valor": -91.55
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN1",
+      "descricao": "Despesa 265",
+      "cr": "CPF - Desp. Financeiras - Empréstimos",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 265",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 266",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 266",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN1",
+      "descricao": "Despesa 267",
+      "cr": "CPF - Desp. Financeiras - Empréstimos",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 267",
+      "valor": -150.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 268",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 268",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS5",
+      "descricao": "Despesa 269",
+      "cr": "CPF - Pensão - Água",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 269",
+      "valor": -284.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 270",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 270",
+      "valor": -35.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 271",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-03-30",
+      "obs": "Observação da despesa 271",
+      "valor": -25.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 272",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-03-31",
+      "obs": "Observação da despesa 272",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 273",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-31",
+      "obs": "Observação da despesa 273",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 274",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-31",
+      "obs": "Observação da despesa 274",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 275",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-03-31",
+      "obs": "Observação da despesa 275",
+      "valor": -81.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 276",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-01",
+      "obs": "Observação da despesa 276",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 277",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da despesa 277",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 278",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da despesa 278",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 279",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da receita 279",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 280",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da despesa 280",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 281",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da despesa 281",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 282",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-02",
+      "obs": "Observação da despesa 282",
+      "valor": -116.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 283",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 283",
+      "valor": -189.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 284",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 284",
+      "valor": -69.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 285",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 285",
+      "valor": -125.21
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 286",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 286",
+      "valor": -59.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 287",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 287",
+      "valor": -45.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 288",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 288",
+      "valor": -110.38
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 289",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 289",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 290",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 290",
+      "valor": -26.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 291",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 291",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 292",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 292",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 293",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 293",
+      "valor": -39.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 294",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 294",
+      "valor": -300.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 295",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da receita 295",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 296",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 296",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 297",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 297",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 298",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 298",
+      "valor": -5.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 299",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-06",
+      "obs": "Observação da despesa 299",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 300",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-07",
+      "obs": "Observação da despesa 300",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 301",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-04-08",
+      "obs": "Observação da despesa 301",
+      "valor": -535.39
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 302",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-08",
+      "obs": "Observação da despesa 302",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 303",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-08",
+      "obs": "Observação da despesa 303",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 304",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-09",
+      "obs": "Observação da despesa 304",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 305",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-09",
+      "obs": "Observação da despesa 305",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 306",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-09",
+      "obs": "Observação da despesa 306",
+      "valor": -95.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 307",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-09",
+      "obs": "Observação da despesa 307",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 308",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 308",
+      "valor": -77.33
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 309",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da receita 309",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 310",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 310",
+      "valor": -212.93
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 311",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 311",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 312",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 312",
+      "valor": -9.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 313",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 313",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 314",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-10",
+      "obs": "Observação da despesa 314",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 315",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 315",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 316",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 316",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 317",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 317",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 318",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 318",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 319",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 319",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 320",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 320",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 321",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 321",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 322",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 322",
+      "valor": -74.67
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 323",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 323",
+      "valor": -35.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 324",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 324",
+      "valor": -45.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 325",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 325",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 326",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 326",
+      "valor": -17.94
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN1",
+      "descricao": "Despesa 327",
+      "cr": "CPF - Desp. Financeiras - Empréstimos",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 327",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 328",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 328",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 329",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 329",
+      "valor": -13.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 330",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 330",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 331",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 331",
+      "valor": -68.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 332",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da receita 332",
+      "valor": 25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 333",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 333",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 334",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 334",
+      "valor": -78.84
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 335",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 335",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 336",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 336",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 337",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 337",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 338",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 338",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 339",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-13",
+      "obs": "Observação da despesa 339",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 340",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-14",
+      "obs": "Observação da receita 340",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 341",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-14",
+      "obs": "Observação da despesa 341",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 342",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-04-14",
+      "obs": "Observação da despesa 342",
+      "valor": -700.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 343",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-14",
+      "obs": "Observação da despesa 343",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 344",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-15",
+      "obs": "Observação da despesa 344",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 345",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-15",
+      "obs": "Observação da despesa 345",
+      "valor": -26.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 346",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-15",
+      "obs": "Observação da despesa 346",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 347",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-16",
+      "obs": "Observação da despesa 347",
+      "valor": -22.16
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 348",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-16",
+      "obs": "Observação da despesa 348",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 349",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-04-16",
+      "obs": "Observação da despesa 349",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 350",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-16",
+      "obs": "Observação da despesa 350",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 351",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-16",
+      "obs": "Observação da receita 351",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 352",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-17",
+      "obs": "Observação da despesa 352",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 353",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-17",
+      "obs": "Observação da despesa 353",
+      "valor": -18.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 354",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 354",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 355",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 355",
+      "valor": -12.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 356",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 356",
+      "valor": -13.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 357",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 357",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 358",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 358",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 359",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 359",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 360",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 360",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 361",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 361",
+      "valor": -13.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 362",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 362",
+      "valor": -60.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 363",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 363",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 364",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 364",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 365",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da receita 365",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 366",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 366",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 367",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 367",
+      "valor": -106.08
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 368",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 368",
+      "valor": -45.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 369",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 369",
+      "valor": -88.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 370",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 370",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 371",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-20",
+      "obs": "Observação da despesa 371",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 372",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 372",
+      "valor": -19.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 373",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 373",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 374",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 374",
+      "valor": -8.49
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 375",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 375",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 376",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 376",
+      "valor": -35.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 377",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 377",
+      "valor": -82.46
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "TRI1",
+      "descricao": "Despesa 378",
+      "cr": "CPF - Desp. Impostos e Obrigações",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 378",
+      "valor": -271.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "TRI1",
+      "descricao": "Despesa 379",
+      "cr": "CPF - Desp. Impostos e Obrigações",
+      "entidade": "MCS",
+      "data": "2026-04-22",
+      "obs": "Observação da despesa 379",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 380",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-23",
+      "obs": "Observação da despesa 380",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 381",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-23",
+      "obs": "Observação da despesa 381",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 382",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-23",
+      "obs": "Observação da despesa 382",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 383",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-23",
+      "obs": "Observação da despesa 383",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 384",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-24",
+      "obs": "Observação da despesa 384",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 385",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-24",
+      "obs": "Observação da despesa 385",
+      "valor": -22.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 386",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-04-24",
+      "obs": "Observação da despesa 386",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 387",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-24",
+      "obs": "Observação da despesa 387",
+      "valor": -18.55
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 388",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-24",
+      "obs": "Observação da despesa 388",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 389",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 389",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 390",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 390",
+      "valor": -694.16
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 391",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da receita 391",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 392",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 392",
+      "valor": -242.4
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 393",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 393",
+      "valor": -78.84
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 394",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 394",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 395",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 395",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 396",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 396",
+      "valor": -40.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 397",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 397",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 398",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 398",
+      "valor": -112.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 399",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 399",
+      "valor": -21.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 400",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 400",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 401",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 401",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 402",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-27",
+      "obs": "Observação da despesa 402",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 403",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-28",
+      "obs": "Observação da despesa 403",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 404",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-28",
+      "obs": "Observação da despesa 404",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 405",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-04-29",
+      "obs": "Observação da despesa 405",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 406",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-04-29",
+      "obs": "Observação da despesa 406",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 407",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-04-29",
+      "obs": "Observação da despesa 407",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 408",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-04-30",
+      "obs": "Observação da despesa 408",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 409",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-04-30",
+      "obs": "Observação da despesa 409",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 410",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da receita 410",
+      "valor": 120.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 411",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 411",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 412",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 412",
+      "valor": -157.95
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 413",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 413",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 414",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 414",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 415",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da receita 415",
+      "valor": 300.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 416",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 416",
+      "valor": -150.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 417",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 417",
+      "valor": -70.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 418",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da receita 418",
+      "valor": 49.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 419",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 419",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 420",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-04",
+      "obs": "Observação da despesa 420",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 421",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-05",
+      "obs": "Observação da despesa 421",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 422",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-05",
+      "obs": "Observação da despesa 422",
+      "valor": -18.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 423",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-05",
+      "obs": "Observação da despesa 423",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 424",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-05-05",
+      "obs": "Observação da despesa 424",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 425",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 425",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 426",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 426",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC7",
+      "descricao": "Receita 427",
+      "cr": "CPF - Rec. Financeiras - Empréstimos",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da receita 427",
+      "valor": 170.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 428",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 428",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 429",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 429",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 430",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 430",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 431",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-06",
+      "obs": "Observação da despesa 431",
+      "valor": -39.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 432",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-07",
+      "obs": "Observação da despesa 432",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 433",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-07",
+      "obs": "Observação da receita 433",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 434",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-08",
+      "obs": "Observação da despesa 434",
+      "valor": -2.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 435",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-08",
+      "obs": "Observação da despesa 435",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Receita 436",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-08",
+      "obs": "Observação da receita 436",
+      "valor": 20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 437",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-08",
+      "obs": "Observação da despesa 437",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 438",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-08",
+      "obs": "Observação da despesa 438",
+      "valor": -26.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Receita 439",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da receita 439",
+      "valor": 150.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 440",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 440",
+      "valor": -581.22
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 441",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 441",
+      "valor": -200.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 442",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 442",
+      "valor": -7.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 443",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 443",
+      "valor": -60.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 444",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 444",
+      "valor": -17.49
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 445",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 445",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 446",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 446",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 447",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 447",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 448",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 448",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 449",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 449",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 450",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 450",
+      "valor": -140.54
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 451",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da receita 451",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 452",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 452",
+      "valor": -300.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 453",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 453",
+      "valor": -45.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 454",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 454",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 455",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 455",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 456",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 456",
+      "valor": -290.26
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 457",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 457",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 458",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 458",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 459",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-11",
+      "obs": "Observação da despesa 459",
+      "valor": -29.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 460",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da despesa 460",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 461",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da despesa 461",
+      "valor": -184.1
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 462",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da despesa 462",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 463",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da despesa 463",
+      "valor": -18.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 464",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da receita 464",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 465",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-12",
+      "obs": "Observação da despesa 465",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 466",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-13",
+      "obs": "Observação da despesa 466",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 467",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-05-13",
+      "obs": "Observação da despesa 467",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 468",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-13",
+      "obs": "Observação da despesa 468",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 469",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-13",
+      "obs": "Observação da despesa 469",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS1",
+      "descricao": "Despesa 470",
+      "cr": "CPF - Pensão - Aluguel",
+      "entidade": "MCS",
+      "data": "2026-05-13",
+      "obs": "Observação da despesa 470",
+      "valor": -700.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 471",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-14",
+      "obs": "Observação da receita 471",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 472",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-14",
+      "obs": "Observação da despesa 472",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 473",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-14",
+      "obs": "Observação da despesa 473",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 474",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-14",
+      "obs": "Observação da despesa 474",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 475",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-14",
+      "obs": "Observação da despesa 475",
+      "valor": -42.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 476",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 476",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 477",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 477",
+      "valor": -35.35
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 478",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 478",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 479",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 479",
+      "valor": -3.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 480",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 480",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 481",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 481",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 482",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-15",
+      "obs": "Observação da despesa 482",
+      "valor": -7.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 483",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 483",
+      "valor": -42.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 484",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 484",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 485",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 485",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 486",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 486",
+      "valor": -7.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 487",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 487",
+      "valor": -124.92
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 488",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 488",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 489",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 489",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 490",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 490",
+      "valor": -3.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 491",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 491",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 492",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 492",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 493",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 493",
+      "valor": -48.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 494",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 494",
+      "valor": -48.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 495",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 495",
+      "valor": -72.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 496",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 496",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 497",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 497",
+      "valor": -23.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 498",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 498",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 499",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 499",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 500",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-18",
+      "obs": "Observação da despesa 500",
+      "valor": -44.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 501",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-19",
+      "obs": "Observação da despesa 501",
+      "valor": -23.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 502",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-19",
+      "obs": "Observação da despesa 502",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 503",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-20",
+      "obs": "Observação da despesa 503",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 504",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-20",
+      "obs": "Observação da despesa 504",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 505",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-20",
+      "obs": "Observação da despesa 505",
+      "valor": -26.8
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 506",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-21",
+      "obs": "Observação da despesa 506",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 507",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-21",
+      "obs": "Observação da despesa 507",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 508",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-21",
+      "obs": "Observação da receita 508",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 509",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-21",
+      "obs": "Observação da despesa 509",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 510",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-22",
+      "obs": "Observação da despesa 510",
+      "valor": -23.2
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 511",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-22",
+      "obs": "Observação da despesa 511",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 512",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-22",
+      "obs": "Observação da despesa 512",
+      "valor": -20.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 513",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-22",
+      "obs": "Observação da despesa 513",
+      "valor": -23.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 514",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-05-22",
+      "obs": "Observação da despesa 514",
+      "valor": -65.98
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 515",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 515",
+      "valor": -66.27
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 516",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 516",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 517",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 517",
+      "valor": -55.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 518",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 518",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 519",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 519",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 520",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 520",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 521",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 521",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 522",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 522",
+      "valor": -22.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 523",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 523",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 524",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 524",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 525",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 525",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 526",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 526",
+      "valor": -23.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 527",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 527",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 528",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 528",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 529",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 529",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 530",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-05-25",
+      "obs": "Observação da despesa 530",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 531",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-26",
+      "obs": "Observação da despesa 531",
+      "valor": -23.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 532",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-26",
+      "obs": "Observação da despesa 532",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 533",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-27",
+      "obs": "Observação da despesa 533",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 534",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-27",
+      "obs": "Observação da despesa 534",
+      "valor": -10.3
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 535",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-05-27",
+      "obs": "Observação da receita 535",
+      "valor": 20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 536",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-27",
+      "obs": "Observação da despesa 536",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 537",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-27",
+      "obs": "Observação da despesa 537",
+      "valor": -50.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 538",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-28",
+      "obs": "Observação da despesa 538",
+      "valor": -4.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 539",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-05-28",
+      "obs": "Observação da despesa 539",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 540",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-28",
+      "obs": "Observação da despesa 540",
+      "valor": -20.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 541",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-28",
+      "obs": "Observação da despesa 541",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 542",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 542",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 543",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 543",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 544",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 544",
+      "valor": -20.6
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 545",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 545",
+      "valor": -6.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 546",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da receita 546",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 547",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 547",
+      "valor": -78.84
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 548",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 548",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 549",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 549",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 550",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-05-29",
+      "obs": "Observação da despesa 550",
+      "valor": -48.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 551",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 551",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 552",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 552",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 553",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 553",
+      "valor": -52.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 554",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 554",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 555",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 555",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 556",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 556",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 557",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 557",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 558",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 558",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 559",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 559",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 560",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 560",
+      "valor": -73.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 561",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 561",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 562",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da despesa 562",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 563",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-06-01",
+      "obs": "Observação da receita 563",
+      "valor": 20.48
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 564",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-02",
+      "obs": "Observação da despesa 564",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 565",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-02",
+      "obs": "Observação da despesa 565",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN2",
+      "descricao": "Despesa 566",
+      "cr": "CPF - Desp. Financeiras - Juros / Tarifas",
+      "entidade": "MCS",
+      "data": "2026-06-02",
+      "obs": "Observação da despesa 566",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 567",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-03",
+      "obs": "Observação da despesa 567",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC5",
+      "descricao": "Receita 568",
+      "cr": "CPF - Outras receitas",
+      "entidade": "MCS",
+      "data": "2026-06-03",
+      "obs": "Observação da receita 568",
+      "valor": 372.66
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 569",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 569",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 570",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 570",
+      "valor": -300.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 571",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da receita 571",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 572",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 572",
+      "valor": -60.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS3",
+      "descricao": "Despesa 573",
+      "cr": "CPF - Pensão - Plano de saúde",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 573",
+      "valor": -614.34
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 574",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 574",
+      "valor": -35.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 575",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 575",
+      "valor": -87.86
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 576",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 576",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 577",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 577",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 578",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 578",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 579",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-05",
+      "obs": "Observação da despesa 579",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 580",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 580",
+      "valor": -5.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 581",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 581",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 582",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 582",
+      "valor": -31.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 583",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 583",
+      "valor": -10.99
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 584",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 584",
+      "valor": -13.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 585",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 585",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 586",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 586",
+      "valor": -45.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 587",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 587",
+      "valor": -4.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 588",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 588",
+      "valor": -6.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 589",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 589",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 590",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 590",
+      "valor": -26.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 591",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da receita 591",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 592",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 592",
+      "valor": -33.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 593",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 593",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 594",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 594",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 595",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 595",
+      "valor": -30.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 596",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 596",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 597",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 597",
+      "valor": -39.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP2",
+      "descricao": "Despesa 598",
+      "cr": "CPF - Desp. Telefone / Internet",
+      "entidade": "MCS",
+      "data": "2026-06-08",
+      "obs": "Observação da despesa 598",
+      "valor": -125.1
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 599",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-09",
+      "obs": "Observação da despesa 599",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 600",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-09",
+      "obs": "Observação da despesa 600",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 601",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-09",
+      "obs": "Observação da despesa 601",
+      "valor": -27.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 602",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 602",
+      "valor": -290.26
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "FIN3",
+      "descricao": "Despesa 603",
+      "cr": "CPF - Desp. Financeiras - Empréstimos bancários",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 603",
+      "valor": -6.79
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 604",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 604",
+      "valor": -48.39
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP1",
+      "descricao": "Despesa 605",
+      "cr": "CPF - Desp. Cartão de crédito",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 605",
+      "valor": -6.13
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 606",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 606",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 607",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 607",
+      "valor": -28.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 608",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-10",
+      "obs": "Observação da despesa 608",
+      "valor": -34.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 609",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-11",
+      "obs": "Observação da despesa 609",
+      "valor": -47.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 610",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-11",
+      "obs": "Observação da despesa 610",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 611",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-11",
+      "obs": "Observação da despesa 611",
+      "valor": -20.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 612",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-11",
+      "obs": "Observação da despesa 612",
+      "valor": -80.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 613",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-12",
+      "obs": "Observação da despesa 613",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 614",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-12",
+      "obs": "Observação da despesa 614",
+      "valor": -11.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 615",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 615",
+      "valor": -72.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 616",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 616",
+      "valor": -10.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 617",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 617",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 618",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 618",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 619",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 619",
+      "valor": -24.5
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 620",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 620",
+      "valor": -18.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 621",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da receita 621",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 622",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 622",
+      "valor": -8.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 623",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 623",
+      "valor": -82.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 624",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 624",
+      "valor": -66.1
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 625",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 625",
+      "valor": -66.2
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OUG1",
+      "descricao": "Despesa 626",
+      "cr": "CPF - Outros gastos",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 626",
+      "valor": -239.9
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 627",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 627",
+      "valor": -18.75
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF2",
+      "descricao": "Despesa 628",
+      "cr": "CPF - Desp. Transporte / Combustível",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 628",
+      "valor": -100.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST2",
+      "descricao": "Despesa 629",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Cigarro",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 629",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 630",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 630",
+      "valor": -82.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 631",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 631",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 632",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 632",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 633",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 633",
+      "valor": -12.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 634",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 634",
+      "valor": -16.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 635",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 635",
+      "valor": -35.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 636",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 636",
+      "valor": -42.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 637",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 637",
+      "valor": -42.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 638",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 638",
+      "valor": -16.43
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 639",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 639",
+      "valor": -25.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "GAST1",
+      "descricao": "Despesa 640",
+      "cr": "CPF - Desp. Lazer e Entretenimento - Bares",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 640",
+      "valor": -78.67
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 641",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 641",
+      "valor": -9.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 642",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 642",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "OPF1",
+      "descricao": "Despesa 643",
+      "cr": "CPF - Desp. Alimentação / Refeição",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 643",
+      "valor": -24.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS6",
+      "descricao": "Despesa 644",
+      "cr": "CPF - Pensão - Farmácia e Saúde",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 644",
+      "valor": -35.93
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP4",
+      "descricao": "Despesa 645",
+      "cr": "CPF - Desp. Moradia",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 645",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "DESP3",
+      "descricao": "Despesa 646",
+      "cr": "CPF - Desp. com veículo - Manut. / Gastos ",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 646",
+      "valor": -15.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "REC4",
+      "descricao": "Receita 647",
+      "cr": "CPF - Transf. Da conta PJ para a conta PF",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da receita 647",
+      "valor": 1000.0
+    },
+    {
+      "empresa": "MCS",
+      "natureza": "PENS2",
+      "descricao": "Despesa 648",
+      "cr": "CPF - Pensão - Energia",
+      "entidade": "MCS",
+      "data": "2026-06-15",
+      "obs": "Observação da despesa 648",
+      "valor": -490.89
+    }
+  ]
+}
